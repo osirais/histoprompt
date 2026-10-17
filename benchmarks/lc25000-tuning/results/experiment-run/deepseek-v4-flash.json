@@ -1,0 +1,392 @@
+{
+ "lumen_model": "deepseek-v4-flash",
+ "chosen": {
+  "benign lung tissue": "alveolar spaces intact",
+  "lung adenocarcinoma": "",
+  "lung squamous cell carcinoma": ""
+ },
+ "test": {
+  "histology showing {label}": {
+   "correct": 416,
+   "n": 450,
+   "errors": {
+    "lung adenocarcinoma -> lung squamous cell carcinoma": 20,
+    "lung adenocarcinoma -> benign lung tissue": 7,
+    "lung squamous cell carcinoma -> lung adenocarcinoma": 6,
+    "lung squamous cell carcinoma -> benign lung tissue": 1
+   },
+   "prompts": {
+    "benign lung tissue": "histology showing benign lung tissue",
+    "lung adenocarcinoma": "histology showing lung adenocarcinoma",
+    "lung squamous cell carcinoma": "histology showing lung squamous cell carcinoma"
+   }
+  },
+  "tuned v2": {
+   "correct": 423,
+   "n": 450,
+   "errors": {
+    "lung adenocarcinoma -> lung squamous cell carcinoma": 21,
+    "lung squamous cell carcinoma -> lung adenocarcinoma": 6
+   },
+   "prompts": {
+    "benign lung tissue": "histology showing benign lung tissue with alveolar spaces intact",
+    "lung adenocarcinoma": "histology showing lung adenocarcinoma",
+    "lung squamous cell carcinoma": "histology showing lung squamous cell carcinoma"
+   }
+  }
+ },
+ "test_fixes_vs_template": 7,
+ "test_breaks_vs_template": 0,
+ "test_sign_p": 0.0078125,
+ "bars": {
+  "accuracy_A": 0.01,
+  "p_A": 0.05,
+  "confirm_B": 0.005
+ },
+ "musk_calls": 3956,
+ "minutes": 18.7,
+ "log": [
+  {
+   "step": "baseline A",
+   "acc": 0.9077777777777778
+  },
+  {
+   "step": "candidates",
+   "candidates": {
+    "benign lung tissue": [
+     "alveolar spaces intact",
+     "thin septa",
+     "bronchial cartilage present",
+     "ciliated columnar epithelium",
+     "macrophages in alveoli",
+     "normal alveolar walls",
+     "goblet cells visible",
+     "elastic fibers in septa"
+    ],
+    "lung adenocarcinoma": [
+     "glandular formations",
+     "cribriform pattern",
+     "papillary structures",
+     "mucin pools",
+     "acinar structures",
+     "lepidic growth",
+     "signet ring cells",
+     "tubular lumens"
+    ],
+    "lung squamous cell carcinoma": [
+     "keratin pearls",
+     "intercellular bridges",
+     "squamous whorls",
+     "individual cell keratinization",
+     "layered squamous nests",
+     "pavement arrangement",
+     "eosinophilic cytoplasm",
+     "basaloid nests"
+    ]
+   },
+   "dropped": []
+  },
+  {
+   "step": "round 1",
+   "label": "benign lung tissue",
+   "phrase": "alveolar spaces intact",
+   "gain_A": 0.017777777777777778,
+   "fixes": 16,
+   "breaks": 0,
+   "p": 1.52587890625e-05
+  },
+  {
+   "step": "round 1",
+   "label": "benign lung tissue",
+   "phrase": "thin septa",
+   "gain_A": 0.01,
+   "fixes": 16,
+   "breaks": 7,
+   "p": 0.04656982421875
+  },
+  {
+   "step": "round 1",
+   "label": "benign lung tissue",
+   "phrase": "bronchial cartilage present",
+   "gain_A": -0.3088888888888889,
+   "fixes": 16,
+   "breaks": 294,
+   "p": 1.0
+  },
+  {
+   "step": "round 1",
+   "label": "benign lung tissue",
+   "phrase": "ciliated columnar epithelium",
+   "gain_A": -0.0033333333333333335,
+   "fixes": 6,
+   "breaks": 9,
+   "p": 0.84912109375
+  },
+  {
+   "step": "round 1",
+   "label": "benign lung tissue",
+   "phrase": "macrophages in alveoli",
+   "gain_A": 0.012222222222222223,
+   "fixes": 14,
+   "breaks": 3,
+   "p": 0.0063629150390625
+  },
+  {
+   "step": "round 1",
+   "label": "benign lung tissue",
+   "phrase": "normal alveolar walls",
+   "gain_A": 0.015555555555555555,
+   "fixes": 14,
+   "breaks": 0,
+   "p": 6.103515625e-05
+  },
+  {
+   "step": "round 1",
+   "label": "benign lung tissue",
+   "phrase": "goblet cells visible",
+   "gain_A": -0.03888888888888889,
+   "fixes": 14,
+   "breaks": 49,
+   "p": 0.9999984920239576
+  },
+  {
+   "step": "round 1",
+   "label": "benign lung tissue",
+   "phrase": "elastic fibers in septa",
+   "gain_A": 0.008888888888888889,
+   "fixes": 16,
+   "breaks": 8,
+   "p": 0.07579481601715088
+  },
+  {
+   "step": "round 1 confirm on B",
+   "label": "benign lung tissue",
+   "phrase": "alveolar spaces intact",
+   "gain_A": 0.017777777777777778,
+   "p_A": 1.52587890625e-05,
+   "gain_B": 0.011111111111111112,
+   "accepted": true
+  },
+  {
+   "step": "round 1",
+   "label": "lung adenocarcinoma",
+   "phrase": "glandular formations",
+   "gain_A": -0.006666666666666667,
+   "fixes": 9,
+   "breaks": 15,
+   "p": 0.9242051839828491
+  },
+  {
+   "step": "round 1",
+   "label": "lung adenocarcinoma",
+   "phrase": "cribriform pattern",
+   "gain_A": -0.11444444444444445,
+   "fixes": 15,
+   "breaks": 118,
+   "p": 1.0
+  },
+  {
+   "step": "round 1",
+   "label": "lung adenocarcinoma",
+   "phrase": "papillary structures",
+   "gain_A": -0.07111111111111111,
+   "fixes": 16,
+   "breaks": 80,
+   "p": 0.9999999999979867
+  },
+  {
+   "step": "round 1",
+   "label": "lung adenocarcinoma",
+   "phrase": "mucin pools",
+   "gain_A": -0.12444444444444444,
+   "fixes": 18,
+   "breaks": 130,
+   "p": 1.0
+  },
+  {
+   "step": "round 1",
+   "label": "lung adenocarcinoma",
+   "phrase": "acinar structures",
+   "gain_A": -0.04888888888888889,
+   "fixes": 17,
+   "breaks": 61,
+   "p": 0.9999999243510931
+  },
+  {
+   "step": "round 1",
+   "label": "lung adenocarcinoma",
+   "phrase": "lepidic growth",
+   "gain_A": -0.08222222222222222,
+   "fixes": 18,
+   "breaks": 92,
+   "p": 0.9999999999999638
+  },
+  {
+   "step": "round 1",
+   "label": "lung adenocarcinoma",
+   "phrase": "signet ring cells",
+   "gain_A": -0.03222222222222222,
+   "fixes": 20,
+   "breaks": 49,
+   "p": 0.9998778014917112
+  },
+  {
+   "step": "round 1",
+   "label": "lung adenocarcinoma",
+   "phrase": "tubular lumens",
+   "gain_A": -0.027777777777777776,
+   "fixes": 11,
+   "breaks": 36,
+   "p": 0.9999507556075358
+  },
+  {
+   "step": "round 1",
+   "label": "lung squamous cell carcinoma",
+   "phrase": "keratin pearls",
+   "gain_A": -0.11333333333333333,
+   "fixes": 42,
+   "breaks": 144,
+   "p": 0.999999999999996
+  },
+  {
+   "step": "round 1",
+   "label": "lung squamous cell carcinoma",
+   "phrase": "intercellular bridges",
+   "gain_A": -0.03111111111111111,
+   "fixes": 11,
+   "breaks": 39,
+   "p": 0.9999880693341616
+  },
+  {
+   "step": "round 1",
+   "label": "lung squamous cell carcinoma",
+   "phrase": "squamous whorls",
+   "gain_A": -0.05555555555555555,
+   "fixes": 44,
+   "breaks": 94,
+   "p": 0.9999943501982621
+  },
+  {
+   "step": "round 1",
+   "label": "lung squamous cell carcinoma",
+   "phrase": "individual cell keratinization",
+   "gain_A": -0.06888888888888889,
+   "fixes": 20,
+   "breaks": 82,
+   "p": 0.9999999999492087
+  },
+  {
+   "step": "round 1",
+   "label": "lung squamous cell carcinoma",
+   "phrase": "layered squamous nests",
+   "gain_A": -0.11666666666666667,
+   "fixes": 41,
+   "breaks": 146,
+   "p": 0.9999999999999993
+  },
+  {
+   "step": "round 1",
+   "label": "lung squamous cell carcinoma",
+   "phrase": "pavement arrangement",
+   "gain_A": -0.005555555555555556,
+   "fixes": 45,
+   "breaks": 50,
+   "p": 0.7308029868539159
+  },
+  {
+   "step": "round 1",
+   "label": "lung squamous cell carcinoma",
+   "phrase": "eosinophilic cytoplasm",
+   "gain_A": -0.04666666666666667,
+   "fixes": 10,
+   "breaks": 52,
+   "p": 0.9999999947463837
+  },
+  {
+   "step": "round 1",
+   "label": "lung squamous cell carcinoma",
+   "phrase": "basaloid nests",
+   "gain_A": 0.012222222222222223,
+   "fixes": 41,
+   "breaks": 30,
+   "p": 0.11754878120417092
+  },
+  {
+   "step": "feedback candidates",
+   "focus": "lung adenocarcinoma",
+   "confusion": "lung adenocarcinoma called lung squamous cell carcinoma (49x); lung squamous cell carcinoma called lung adenocarcinoma (18x)",
+   "candidates": [
+    "papillary structures",
+    "cribriform pattern",
+    "columnar cells",
+    "mucin pools",
+    "lepidic growth",
+    "acinar formations",
+    "honeycomb pattern"
+   ]
+  },
+  {
+   "step": "feedback",
+   "label": "lung adenocarcinoma",
+   "phrase": "papillary structures",
+   "gain_A": -0.07111111111111111,
+   "fixes": 16,
+   "breaks": 80,
+   "p": 0.9999999999979867
+  },
+  {
+   "step": "feedback",
+   "label": "lung adenocarcinoma",
+   "phrase": "cribriform pattern",
+   "gain_A": -0.11444444444444445,
+   "fixes": 15,
+   "breaks": 118,
+   "p": 1.0
+  },
+  {
+   "step": "feedback",
+   "label": "lung adenocarcinoma",
+   "phrase": "columnar cells",
+   "gain_A": -0.042222222222222223,
+   "fixes": 14,
+   "breaks": 52,
+   "p": 0.9999996381412382
+  },
+  {
+   "step": "feedback",
+   "label": "lung adenocarcinoma",
+   "phrase": "mucin pools",
+   "gain_A": -0.12444444444444444,
+   "fixes": 18,
+   "breaks": 130,
+   "p": 1.0
+  },
+  {
+   "step": "feedback",
+   "label": "lung adenocarcinoma",
+   "phrase": "lepidic growth",
+   "gain_A": -0.08222222222222222,
+   "fixes": 18,
+   "breaks": 92,
+   "p": 0.9999999999999638
+  },
+  {
+   "step": "feedback",
+   "label": "lung adenocarcinoma",
+   "phrase": "acinar formations",
+   "gain_A": -0.021111111111111112,
+   "fixes": 13,
+   "breaks": 32,
+   "p": 0.9987705498389516
+  },
+  {
+   "step": "feedback",
+   "label": "lung adenocarcinoma",
+   "phrase": "honeycomb pattern",
+   "gain_A": -0.16444444444444445,
+   "fixes": 17,
+   "breaks": 165,
+   "p": 1.0
+  }
+ ]
+}

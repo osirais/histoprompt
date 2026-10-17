@@ -43,6 +43,13 @@ Plain MUSK receives label-only prompts such as `herpes simplex esophagitis`. The
 
 The hosted hackathon service returns only its highest-ranked candidate per image. HistoPrompt therefore treats the score as model output to review, not calibrated diagnostic confidence.
 
+## Validated prompt tuning (lung)
+
+`scripts/tune_prompts.py` chooses label prompts against MUSK on labelled images, keeping a phrase only if it is at least
+1 point more accurate, statistically significant, and confirmed on a separate image set. On 450 held-out lung images it
+scored 423/450 (94.0%), versus 403 for original MUSK and 416 for `histology showing {label}`, fixing 20 and 7 images
+respectively and breaking none. Method, prompts and reproduction: [`benchmarks/lc25000-tuning/`](benchmarks/lc25000-tuning/README.md).
+
 ## Hosted MUSK on Delta
 
 The opening-session setup exposes MUSK only inside Delta. `scripts/start_delta_tunnel.sh` maps the service to `http://127.0.0.1:8801` on your laptop; HistoPrompt calls the server's `/health` and `/classify` routes using the official hackathon schema.
