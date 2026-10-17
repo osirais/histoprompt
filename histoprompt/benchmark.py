@@ -13,6 +13,8 @@ from .rag import EvidenceIndex
 STRATEGIES = (
     "label_only",
     "generic",
+    "histology_showing",
+    "pathology_slide_showing",
     "curated",
     "evidence_generated",
     "generic_with_features",
@@ -122,6 +124,10 @@ def prompts_for_strategy(
         return {label: label for label in labels}
     if strategy == "generic":
         return {label: _generic_prompt(label) for label in labels}
+    if strategy == "histology_showing":
+        return {label: f"histology showing {label}" for label in labels}
+    if strategy == "pathology_slide_showing":
+        return {label: f"a pathology slide showing {label}" for label in labels}
     if strategy == "curated":
         return dict(curated_prompts)
     if strategy == "evidence_generated":

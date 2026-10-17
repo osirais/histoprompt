@@ -42,6 +42,10 @@ def _generic_prompt(label: str) -> str:
     return f"a histopathology image showing {label}"
 
 
+def _histology_prompt(label: str) -> str:
+    return f"histology showing {label}"
+
+
 def _extract_prompts(value: dict[str, Any] | None, labels: list[str]) -> dict[str, str]:
     raw_features = value.get("features", {}) if isinstance(value, dict) else {}
     if not isinstance(raw_features, dict):
@@ -123,8 +127,10 @@ Keep each feature phrase under 25 words, do not repeat the diagnosis label insid
         )
         musk_prompts = _extract_prompts(_json_from_model(raw_prompt_plan), labels)
         generic_prompts = {label: _generic_prompt(label) for label in labels}
+        histology_prompts = {label: _histology_prompt(label) for label in labels}
         musk = make_musk_backend(self.settings)
         baseline_predictions = musk.classify(image, generic_prompts)
+        histology_predictions = musk.classify(image, histology_prompts)
         predictions = musk.classify(image, musk_prompts)
         baseline_text = "\n".join(
             f"- {item.label}: {item.probability:.4f}"
@@ -132,6 +138,10 @@ Keep each feature phrase under 25 words, do not repeat the diagnosis label insid
         )
         prediction_text = "\n".join(
             f"- {item.label}: {item.probability:.4f}" for item in predictions
+        )
+        histology_text = "\n".join(
+            f"- {item.label}: {item.probability:.4f}"
+            for item in histology_predictions
         )
         review_prompt = f"""Review this case.
 
@@ -146,6 +156,9 @@ CASE-SPECIFIC MUSK PROMPTS
 
 PROMPT-ENHANCED MUSK SCORES
 {prediction_text}
+
+SHORT HISTOLOGY-TEMPLATE MUSK SCORES
+{histology_text}
 
 RETRIEVED LOCAL EVIDENCE
 {evidence_text or 'No matching evidence was retrieved.'}
@@ -170,16 +183,18 @@ Confidence must be a number from 0 to 1 and must reflect both model uncertainty 
         structured = _json_from_model(raw)
         return {
             "musk_prompts": musk_prompts,
+            "primary_prompts": histology_prompts,
             "baseline_predictions": [
                 item.as_dict() for item in baseline_predictions
             ],
-            "musk_predictions": [item.as_dict() for item in predictions],
-            # Keep the measured MUSK result as the primary classification until a
-            # prompt variant has beaten it on a held-out benchmark.
+            "musk_predictions": [item.as_dict() for item in histology_predictions],
+            "evidence_predictions": [item.as_dict() for item in predictions],
+            # The short histology template is primary because it beat generic MUSK
+            # on the held-out portion of the 600-image benchmark.
             "primary_predictions": [
-                item.as_dict() for item in baseline_predictions
+                item.as_dict() for item in histology_predictions
             ],
-            "primary_classification_source": "generic MUSK baseline",
+            "primary_classification_source": "short histology-template MUSK",
             "evidence": [item.as_dict() for item in evidence],
             "synthesis": structured,
             "raw_synthesis": raw if structured is None else "",

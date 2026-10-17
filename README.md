@@ -39,7 +39,7 @@ The hosted path requires three things that cannot be created by cloning: an NCSA
 
 ## What it adds to MUSK
 
-Plain MUSK receives label-only prompts such as `herpes simplex esophagitis`. HistoPrompt can test either a replacement description or an appended description that preserves MUSK's generic template. The result page exposes every generated prompt, the measured primary MUSK result, retrieved sources, discrepancies, and recommended human review. Until a prompt variant beats the baseline on held-out data, the generic MUSK result remains primary.
+Plain MUSK receives label-only prompts such as `herpes simplex esophagitis`. The validated primary template is the short `histology showing {label}` form: on the fixed 600-image lung benchmark it scored 556/600 (92.7%), versus 538/600 (89.7%) for the generic template. HistoPrompt still exposes longer appended and evidence-generated prompts for experimentation, but those are not promoted unless they beat the short template on held-out data.
 
 The hosted hackathon service returns only its highest-ranked candidate per image. HistoPrompt therefore treats the score as model output to review, not calibrated diagnostic confidence.
 

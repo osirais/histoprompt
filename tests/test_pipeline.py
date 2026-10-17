@@ -77,8 +77,10 @@ def test_pipeline_enriches_prompts_before_musk(tmp_path):
 
         def classify(self, image, prompts):
             self.calls += 1
-            events.append("musk baseline" if self.calls == 1 else "musk enriched")
-            if self.calls == 2:
+            events.append(
+                {1: "musk baseline", 2: "musk short-template", 3: "musk enriched"}[self.calls]
+            )
+            if self.calls == 3:
                 captured.update(prompts)
             return [Prediction("tumor", 0.7)]
 
@@ -98,11 +100,13 @@ def test_pipeline_enriches_prompts_before_musk(tmp_path):
     assert events == [
         "prompt enrichment",
         "musk baseline",
+        "musk short-template",
         "musk enriched",
         "evidence review",
     ]
     assert captured["tumor"] == "tumor with malignant gland formation"
     assert result["musk_prompts"] == captured
-    assert result["primary_predictions"] == result["baseline_predictions"]
-    assert result["primary_classification_source"] == "generic MUSK baseline"
+    assert result["primary_prompts"]["tumor"] == "histology showing tumor"
+    assert result["primary_predictions"] == result["musk_predictions"]
+    assert result["primary_classification_source"] == "short histology-template MUSK"
 

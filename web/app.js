@@ -101,7 +101,7 @@ function render(data) {
 
   const promptCards = $("#musk-prompts");
   promptCards.innerHTML = "";
-  for (const [label, description] of Object.entries(data.musk_prompts || {})) {
+  for (const [label, description] of Object.entries(data.primary_prompts || {})) {
     const card = document.createElement("article");
     card.className = "evidence-card";
     const title = document.createElement("strong");

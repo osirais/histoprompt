@@ -77,12 +77,21 @@ Enhanced MUSK labeled 120/200 of these images as lung squamous cell carcinoma.
 
 The table shows the first 25 of 122 changed predictions. The raw JSON contains every case.
 
+## Prompt selection without test-set leakage
+
+The first 300 class-stratified images were used to compare prompt candidates. The remaining 300 images were kept hidden from selection.
+
+The development set selected **histology_showing** at 92.7% balanced accuracy.
+On the held-out images, that fixed choice scored **278/300 (92.7%)**, compared with **267/300 (89.0%)** for generic MUSK (+3.7 points).
+
+A prompt is considered an improvement only if this held-out result beats generic MUSK. Development accuracy by itself is not evidence of improvement.
+
 ## Runtime
 
-- Configured batch size: 32 images
-- Completed batches: 38
-- Total MUSK inference time: 469.0 seconds
-- Mean time per image and prompt strategy: 0.391 seconds
+- Configured batch size: 8 images
+- Completed batches: 75
+- Total MUSK inference time: 23.8 seconds
+- Mean time per image and prompt strategy: 0.040 seconds
 
 ## Reproducibility and sample size
 
@@ -107,4 +116,4 @@ All images come from the lung portion of LC25000. The dataset contains augmented
 - Evidence-generated prompts are created once per family without reports, image contents, or ground-truth labels, preventing answer leakage.
 - Results may vary when the remote model, preprocessing, or Lumen model changes.
 
-Run ID: `20261017T193401Z`
+Run ID: `20261017T204147Z`

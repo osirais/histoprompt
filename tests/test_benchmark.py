@@ -24,6 +24,8 @@ def test_prompt_strategies_are_deterministic_and_keep_labels() -> None:
         "disease": "disease",
     }
     assert prompts_for_strategy("generic", CURATED)["disease"] == "a histopathology image showing disease"
+    assert prompts_for_strategy("histology_showing", CURATED)["disease"] == "histology showing disease"
+    assert prompts_for_strategy("pathology_slide_showing", CURATED)["disease"] == "a pathology slide showing disease"
     assert prompts_for_strategy("curated", CURATED) == CURATED
     generated = {
         "normal": "normal with bland cells, preserved structure",
