@@ -87,6 +87,12 @@ def main() -> None:
     parser.add_argument("--cache-dir", type=Path, default=ROOT / ".benchmark-cache")
     parser.add_argument("--batch-size", type=int, default=1)
     parser.add_argument(
+        "--max-per-label",
+        type=int,
+        default=0,
+        help="Use only the first N fixed cases per family/label for rapid prompt screening.",
+    )
+    parser.add_argument(
         "--resume",
         action="store_true",
         help="Keep completed strategies from output-dir/latest.json and run only the requested strategies.",
@@ -100,8 +106,20 @@ def main() -> None:
     args = parser.parse_args()
     if args.batch_size < 1:
         parser.error("--batch-size must be at least 1")
+    if args.max_per_label < 0:
+        parser.error("--max-per-label cannot be negative")
     manifest_value = json.loads(args.manifest.read_text(encoding="utf-8"))
     cases, families = load_manifest(manifest_value)
+    if args.max_per_label:
+        counts: dict[tuple[str, str], int] = {}
+        limited_cases = []
+        for case in cases:
+            key = (case.family, case.ground_truth)
+            if counts.get(key, 0) >= args.max_per_label:
+                continue
+            counts[key] = counts.get(key, 0) + 1
+            limited_cases.append(case)
+        cases = limited_cases
     settings = Settings.from_env()
     lumen = LumenClient(settings)
     evidence_index = EvidenceIndex(settings.corpus_path)
@@ -221,6 +239,7 @@ def main() -> None:
         "benchmark_name": manifest_value.get("name", "HistoPrompt benchmark"),
         "report_context": manifest_value.get("report_context", {}),
         "manifest": display_path(args.manifest),
+        "max_per_label": args.max_per_label,
         "lumen_model": prompt_model,
         "musk_backend": settings.musk_backend,
         "musk_endpoint": settings.musk_endpoint,
