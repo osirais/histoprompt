@@ -7,10 +7,10 @@ import json
 import mimetypes
 import sys
 import urllib.request
-from urllib.parse import urlparse
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
@@ -21,10 +21,12 @@ from histoprompt.benchmark import (  # noqa: E402
     load_manifest,
     prompts_for_strategy,
     summarize_results,
+    verify_image_checksum,
 )
 from histoprompt.config import Settings  # noqa: E402
 from histoprompt.lumen import LumenClient  # noqa: E402
 from histoprompt.musk_backend import make_musk_backend  # noqa: E402
+from histoprompt.reporting import markdown_report  # noqa: E402
 from histoprompt.rag import EvidenceIndex  # noqa: E402
 
 
@@ -43,68 +45,22 @@ def image_data_url(raw: bytes, url: str) -> str:
     return f"data:{media_type};base64,{base64.b64encode(raw).decode('ascii')}"
 
 
-def markdown_report(result: dict[str, Any]) -> str:
-    generic = result["summary"]["generic"]
-    evidence_generated = result["summary"]["evidence_generated"]
-    delta = evidence_generated["accuracy"] - generic["accuracy"]
-    lines = [
-        "# HistoPrompt multi-disease pilot benchmark",
-        "",
-        f"Run: `{result['run_id']}`",
-        "",
-        f"Cases: {len(result['cases'])} fixed public images across lung, colon, and infectious esophagitis.",
-        "Primary metric: top-1 accuracy within each case's candidate family.",
-        "",
-        "| Strategy | Correct | Successful | Accuracy | Mean returned top score |",
-        "|---|---:|---:|---:|---:|",
-    ]
-    for strategy in STRATEGIES:
-        item = result["summary"][strategy]
-        lines.append(
-            f"| {strategy} | {item['correct']} | {item['successful']} | "
-            f"{item['accuracy']:.1%} | {item['mean_top_score']:.4f} |"
-        )
-    lines.extend(
-        [
-            "",
-            "## Observed result",
-            "",
-            f"Evidence-generated prompts scored {evidence_generated['accuracy']:.1%} versus "
-            f"{generic['accuracy']:.1%} for generic prompts ({delta:+.1%}).",
-            "Both morphology-rich strategies changed the lung adenocarcinoma example to the wrong squamous-cell label. The returned top score increased slightly even as accuracy fell, so the score should not be read as calibrated confidence.",
-            "",
-            "## Per-case results",
-            "",
-            "| Case | Truth | Strategy | Prediction | Score | Correct |",
-            "|---|---|---|---|---:|:---:|",
-        ]
-    )
-    for row in result["results"]:
-        prediction = row.get("prediction", "ERROR")
-        score = f"{row['score']:.4f}" if row.get("score") is not None else "—"
-        lines.append(
-            f"| {row['case_id']} | {row['ground_truth']} | {row['strategy']} | "
-            f"{prediction} | {score} | {'yes' if row.get('correct') else 'no'} |"
-        )
-    lines.extend(
-        [
-            "",
-            "## Interpretation limits",
-            "",
-            "- This is an eight-image integration pilot, not a clinical validation study.",
-            "- The five LC25000 items are catalog example images, not a random sample; the three infectious-esophagitis items are published educational figures.",
-            "- Candidate sets differ by organ family, so the task measures within-family discrimination rather than unrestricted diagnosis.",
-            "- The hosted hackathon API returns only the winning label and one score. Scores from two-label and three-label families are not directly comparable; calibration, margins, and rank changes cannot be measured.",
-            "- Evidence-generated prompts are created once per family without reports, image contents, or ground-truth labels, preventing answer leakage.",
-            "- Results may vary when the remote model, preprocessing, or Lumen model changes.",
-            "",
-        ]
-    )
-    return "\n".join(lines)
+def case_image(case: Any, cache_dir: Path) -> tuple[bytes, str]:
+    if case.image_path:
+        path = ROOT / case.image_path
+        raw = path.read_bytes()
+        reference = str(path)
+    else:
+        suffix = Path(urlparse(case.image_url).path).suffix or ".img"
+        path = cache_dir / f"{case.case_id}{suffix}"
+        raw = download_image(case.image_url, path)
+        reference = case.image_url
+    verify_image_checksum(raw, case.sha256, case.case_id)
+    return raw, reference
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Run the HistoPrompt multi-disease pilot benchmark.")
+    parser = argparse.ArgumentParser(description="Run the HistoPrompt multi-disease benchmark.")
     parser.add_argument("--manifest", type=Path, default=ROOT / "benchmarks" / "manifest.json")
     parser.add_argument("--output-dir", type=Path, default=ROOT / "benchmarks" / "results")
     parser.add_argument("--cache-dir", type=Path, default=ROOT / ".benchmark-cache")
@@ -130,9 +86,8 @@ def main() -> None:
 
     rows: list[dict[str, Any]] = []
     for case in cases:
-        suffix = Path(urlparse(case.image_url).path).suffix or ".img"
-        raw = download_image(case.image_url, args.cache_dir / f"{case.case_id}{suffix}")
-        encoded = image_data_url(raw, case.image_url)
+        raw, reference = case_image(case, args.cache_dir)
+        encoded = image_data_url(raw, reference)
         for strategy in STRATEGIES:
             prompts = prompts_for_strategy(
                 strategy, families[case.family], generated_by_family[case.family]

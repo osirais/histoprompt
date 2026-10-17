@@ -10,3 +10,13 @@
 Risks: the hackathon API returns only one label and score per image; the benchmark will be small and heterogeneous; source images must be public and attributable; no result will be described as clinical validation.
 
 Observed pilot result: label-only and generic prompts were 8/8; curated and evidence-generated prompts were 7/8 because both flipped the lung adenocarcinoma example to squamous cell carcinoma. The higher returned top score did not correspond to higher accuracy.
+
+## Report readability follow-up
+
+- [x] State the tested organs, conditions, benign controls, and candidate sets before showing scores.
+- [x] Put original MUSK and enhanced MUSK in one clear side-by-side table.
+- [x] Replace the raw strategy dump with clinical-group results and only the cases where predictions changed.
+- [x] Expand the benchmark from 8 to 34 fixed images across lung, colon, infectious esophagitis, and skin cancer.
+- [x] Store the exact image bytes, SHA-256 checksums, source links, selection method, and license notes in the repository.
+- [x] Explain why sample counts remain small and specify the next credible benchmark.
+- [x] Run final checks, self-review, commit, push, and verify CI.

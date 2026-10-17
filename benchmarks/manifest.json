@@ -1,6 +1,6 @@
 {
-  "name": "HistoPrompt multi-disease pilot",
-  "version": 1,
+  "name": "HistoPrompt multi-disease benchmark",
+  "version": 2,
   "families": {
     "lung histopathology": {
       "prompts": {
@@ -21,72 +21,376 @@
         "herpes simplex virus esophagitis": "herpes simplex virus esophagitis with multinucleated squamous cells, nuclear molding, chromatin margination, and ground-glass intranuclear inclusions",
         "cytomegalovirus esophagitis": "cytomegalovirus esophagitis with enlarged stromal or endothelial cells containing basophilic owl-eye intranuclear inclusions and clear halos"
       }
+    },
+    "skin cancer histopathology": {
+      "prompts": {
+        "basal cell carcinoma": "basal cell carcinoma with dermal islands of basaloid cells, peripheral nuclear palisading, stromal retraction, and mucinous stroma",
+        "cutaneous squamous cell carcinoma": "cutaneous squamous cell carcinoma with invasive islands of pleomorphic keratinocytes, prominent nucleoli, mitotic activity, and keratinization",
+        "melanoma": "melanoma with atypical pigmented melanocytes in irregular nests and single cells across the epidermis and dermis with prominent nucleoli"
+      }
     }
   },
-  "cases": [
+  "case_sets": [
     {
-      "id": "lc25000-colon-adenocarcinoma-example",
-      "family": "colon histopathology",
-      "ground_truth": "colorectal adenocarcinoma",
-      "image_url": "https://raw.githubusercontent.com/openmedlab/Awesome-Medical-Dataset/main/resources/appendix/LC25000_1.webp",
-      "source_url": "https://github.com/tampapath/lung_colon_image_set",
-      "source_note": "LC25000 example image reproduced by the OpenMedLab dataset catalog."
-    },
-    {
-      "id": "lc25000-benign-colon-example",
-      "family": "colon histopathology",
-      "ground_truth": "benign colonic tissue",
-      "image_url": "https://raw.githubusercontent.com/openmedlab/Awesome-Medical-Dataset/main/resources/appendix/LC25000_2.webp",
-      "source_url": "https://github.com/tampapath/lung_colon_image_set",
-      "source_note": "LC25000 example image reproduced by the OpenMedLab dataset catalog."
-    },
-    {
-      "id": "lc25000-lung-adenocarcinoma-example",
+      "id_prefix": "lc25000-lung-adenocarcinoma",
       "family": "lung histopathology",
       "ground_truth": "lung adenocarcinoma",
-      "image_url": "https://raw.githubusercontent.com/openmedlab/Awesome-Medical-Dataset/main/resources/appendix/LC25000_3.webp",
-      "source_url": "https://github.com/tampapath/lung_colon_image_set",
-      "source_note": "LC25000 example image reproduced by the OpenMedLab dataset catalog."
+      "source_url": "https://huggingface.co/datasets/1aurent/LC25000",
+      "source_note": "Fixed evenly spaced rows from LC25000 commit 2387ffed63932faa8fd05c679ffec85fc3153f61.",
+      "source_license": "Unlicense",
+      "images": [
+        {
+          "id": "lc25000-lung-adenocarcinoma-row-0",
+          "image_path": "benchmarks/images/lc25000/lung-adenocarcinoma/lungaca57.jpeg",
+          "sha256": "b1d7a760977f3188da7df2279016d244f53413064cf45937c16723853d2140e6",
+          "dataset_global_row": 0,
+          "class_rank": 0,
+          "source_name": "lungaca57.jpeg"
+        },
+        {
+          "id": "lc25000-lung-adenocarcinoma-row-1000",
+          "image_path": "benchmarks/images/lc25000/lung-adenocarcinoma/lungaca11.jpeg",
+          "sha256": "81b0a3c3d7f5ad50bf808f9726063103ea3a778ef7d7ea6b674f07ae08194f61",
+          "dataset_global_row": 1000,
+          "class_rank": 1000,
+          "source_name": "lungaca11.jpeg"
+        },
+        {
+          "id": "lc25000-lung-adenocarcinoma-row-2000",
+          "image_path": "benchmarks/images/lc25000/lung-adenocarcinoma/lungaca145.jpeg",
+          "sha256": "103d04a59bebc55644ec31304f0f68a9ba41e38def81691a10f273e5e0f4b288",
+          "dataset_global_row": 2000,
+          "class_rank": 2000,
+          "source_name": "lungaca145.jpeg"
+        },
+        {
+          "id": "lc25000-lung-adenocarcinoma-row-3000",
+          "image_path": "benchmarks/images/lc25000/lung-adenocarcinoma/lungaca165.jpeg",
+          "sha256": "8845bf36130a02d79ed30793b211d3c3437ad5ede6e253147fbcdbe3a3a9780f",
+          "dataset_global_row": 3000,
+          "class_rank": 3000,
+          "source_name": "lungaca165.jpeg"
+        },
+        {
+          "id": "lc25000-lung-adenocarcinoma-row-4000",
+          "image_path": "benchmarks/images/lc25000/lung-adenocarcinoma/lungaca91.jpeg",
+          "sha256": "fd69645e53a85779703748657af177550143f36be874c340416f256b17f2a0fd",
+          "dataset_global_row": 4000,
+          "class_rank": 4000,
+          "source_name": "lungaca91.jpeg"
+        }
+      ]
     },
     {
-      "id": "lc25000-lung-squamous-example",
-      "family": "lung histopathology",
-      "ground_truth": "lung squamous cell carcinoma",
-      "image_url": "https://raw.githubusercontent.com/openmedlab/Awesome-Medical-Dataset/main/resources/appendix/LC25000_4.webp",
-      "source_url": "https://github.com/tampapath/lung_colon_image_set",
-      "source_note": "LC25000 example image reproduced by the OpenMedLab dataset catalog."
-    },
-    {
-      "id": "lc25000-benign-lung-example",
+      "id_prefix": "lc25000-benign-lung",
       "family": "lung histopathology",
       "ground_truth": "benign lung tissue",
-      "image_url": "https://raw.githubusercontent.com/openmedlab/Awesome-Medical-Dataset/main/resources/appendix/LC25000_5.webp",
-      "source_url": "https://github.com/tampapath/lung_colon_image_set",
-      "source_note": "LC25000 example image reproduced by the OpenMedLab dataset catalog."
+      "source_url": "https://huggingface.co/datasets/1aurent/LC25000",
+      "source_note": "Fixed evenly spaced rows from LC25000 commit 2387ffed63932faa8fd05c679ffec85fc3153f61.",
+      "source_license": "Unlicense",
+      "images": [
+        {
+          "id": "lc25000-benign-lung-row-5000",
+          "image_path": "benchmarks/images/lc25000/benign-lung/lungn64.jpeg",
+          "sha256": "65aa5b439b6872a8df90cb6ca986ffcf71407396bb19d240605c836eda69045b",
+          "dataset_global_row": 5000,
+          "class_rank": 0,
+          "source_name": "lungn64.jpeg"
+        },
+        {
+          "id": "lc25000-benign-lung-row-6000",
+          "image_path": "benchmarks/images/lc25000/benign-lung/lungn20.jpeg",
+          "sha256": "c630d9eee2822e9e295d98b6e03ae0b22b29fca2040907166f9c22eedb5fb823",
+          "dataset_global_row": 6000,
+          "class_rank": 1000,
+          "source_name": "lungn20.jpeg"
+        },
+        {
+          "id": "lc25000-benign-lung-row-7000",
+          "image_path": "benchmarks/images/lc25000/benign-lung/lungn78.jpeg",
+          "sha256": "7d4b7901a9997e9e48bdfb2aa77628010e700280ab531266317a4fb5495ac88e",
+          "dataset_global_row": 7000,
+          "class_rank": 2000,
+          "source_name": "lungn78.jpeg"
+        },
+        {
+          "id": "lc25000-benign-lung-row-8000",
+          "image_path": "benchmarks/images/lc25000/benign-lung/lungn167.jpeg",
+          "sha256": "7aef2125666104065dd59776f4571517d7cfbcf63b2a45dc5fa25f98a8d84da0",
+          "dataset_global_row": 8000,
+          "class_rank": 3000,
+          "source_name": "lungn167.jpeg"
+        },
+        {
+          "id": "lc25000-benign-lung-row-9000",
+          "image_path": "benchmarks/images/lc25000/benign-lung/lungn82.jpeg",
+          "sha256": "5ff2f998942b302cac9986d3dd05e91edbc75b0d4e4d79cc4d06620c71c87e2e",
+          "dataset_global_row": 9000,
+          "class_rank": 4000,
+          "source_name": "lungn82.jpeg"
+        }
+      ]
     },
     {
-      "id": "pmc7005969-candida-he",
+      "id_prefix": "lc25000-lung-squamous-cell-carcinoma",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "source_url": "https://huggingface.co/datasets/1aurent/LC25000",
+      "source_note": "Fixed evenly spaced rows from LC25000 commit 2387ffed63932faa8fd05c679ffec85fc3153f61.",
+      "source_license": "Unlicense",
+      "images": [
+        {
+          "id": "lc25000-lung-squamous-cell-carcinoma-row-10000",
+          "image_path": "benchmarks/images/lc25000/lung-squamous-cell-carcinoma/lungscc88.jpeg",
+          "sha256": "999ed19d812e3b8b2cccb3ee189a265b1194f1f3b7373b4fbc74505a6ec9ac29",
+          "dataset_global_row": 10000,
+          "class_rank": 0,
+          "source_name": "lungscc88.jpeg"
+        },
+        {
+          "id": "lc25000-lung-squamous-cell-carcinoma-row-11000",
+          "image_path": "benchmarks/images/lc25000/lung-squamous-cell-carcinoma/lungscc100.jpeg",
+          "sha256": "698dc1f3bfb0976b600f23d51ff775281b8bd0be7424c16d24e1e360ffcadee0",
+          "dataset_global_row": 11000,
+          "class_rank": 1000,
+          "source_name": "lungscc100.jpeg"
+        },
+        {
+          "id": "lc25000-lung-squamous-cell-carcinoma-row-12000",
+          "image_path": "benchmarks/images/lc25000/lung-squamous-cell-carcinoma/lungscc12.jpeg",
+          "sha256": "d08da7b549e5582f70df525a53032bbdf5263bc298fc10f41e0c3890d0ae087f",
+          "dataset_global_row": 12000,
+          "class_rank": 2000,
+          "source_name": "lungscc12.jpeg"
+        },
+        {
+          "id": "lc25000-lung-squamous-cell-carcinoma-row-13000",
+          "image_path": "benchmarks/images/lc25000/lung-squamous-cell-carcinoma/lungscc267.jpeg",
+          "sha256": "f38662eafcf82d428edfc21d57a219820dd498c3cef8de13f7d3a7f47d68ec0c",
+          "dataset_global_row": 13000,
+          "class_rank": 3000,
+          "source_name": "lungscc267.jpeg"
+        },
+        {
+          "id": "lc25000-lung-squamous-cell-carcinoma-row-14000",
+          "image_path": "benchmarks/images/lc25000/lung-squamous-cell-carcinoma/lungscc109.jpeg",
+          "sha256": "bdc4f47cd2a20e1d6c141f7d777addfd604a49a4a7e3afd23afb48ae27e36866",
+          "dataset_global_row": 14000,
+          "class_rank": 4000,
+          "source_name": "lungscc109.jpeg"
+        }
+      ]
+    },
+    {
+      "id_prefix": "lc25000-colorectal-adenocarcinoma",
+      "family": "colon histopathology",
+      "ground_truth": "colorectal adenocarcinoma",
+      "source_url": "https://huggingface.co/datasets/1aurent/LC25000",
+      "source_note": "Fixed evenly spaced rows from LC25000 commit 2387ffed63932faa8fd05c679ffec85fc3153f61.",
+      "source_license": "Unlicense",
+      "images": [
+        {
+          "id": "lc25000-colorectal-adenocarcinoma-row-15000",
+          "image_path": "benchmarks/images/lc25000/colorectal-adenocarcinoma/colonca17.jpeg",
+          "sha256": "defc5ac4f23406ee262a26cf97e63c43f709e25e90472bf0cc339e1d73a5b286",
+          "dataset_global_row": 15000,
+          "class_rank": 0,
+          "source_name": "colonca17.jpeg"
+        },
+        {
+          "id": "lc25000-colorectal-adenocarcinoma-row-16000",
+          "image_path": "benchmarks/images/lc25000/colorectal-adenocarcinoma/colonca54.jpeg",
+          "sha256": "08a68a45840dbe6ddf123be83e56f5ef3ac95c3100f405d0bd7d83f6419f17c8",
+          "dataset_global_row": 16000,
+          "class_rank": 1000,
+          "source_name": "colonca54.jpeg"
+        },
+        {
+          "id": "lc25000-colorectal-adenocarcinoma-row-17000",
+          "image_path": "benchmarks/images/lc25000/colorectal-adenocarcinoma/colonca10.jpeg",
+          "sha256": "e1502e6b9a474e6e9627509427eec41a3ef14c38ab05c9d361874c393f92fd40",
+          "dataset_global_row": 17000,
+          "class_rank": 2000,
+          "source_name": "colonca10.jpeg"
+        },
+        {
+          "id": "lc25000-colorectal-adenocarcinoma-row-18000",
+          "image_path": "benchmarks/images/lc25000/colorectal-adenocarcinoma/colonca30.jpeg",
+          "sha256": "918df787deb9e6deb14909f0c34fd2be708b5ff46dd8e2e76c00d95964311fa4",
+          "dataset_global_row": 18000,
+          "class_rank": 3000,
+          "source_name": "colonca30.jpeg"
+        },
+        {
+          "id": "lc25000-colorectal-adenocarcinoma-row-19000",
+          "image_path": "benchmarks/images/lc25000/colorectal-adenocarcinoma/colonca12.jpeg",
+          "sha256": "a87db854ed890641605c3c6fbdfe38e93ddd3793271afedafcb06414ebd87c89",
+          "dataset_global_row": 19000,
+          "class_rank": 4000,
+          "source_name": "colonca12.jpeg"
+        }
+      ]
+    },
+    {
+      "id_prefix": "lc25000-benign-colon",
+      "family": "colon histopathology",
+      "ground_truth": "benign colonic tissue",
+      "source_url": "https://huggingface.co/datasets/1aurent/LC25000",
+      "source_note": "Fixed evenly spaced rows from LC25000 commit 2387ffed63932faa8fd05c679ffec85fc3153f61.",
+      "source_license": "Unlicense",
+      "images": [
+        {
+          "id": "lc25000-benign-colon-row-20000",
+          "image_path": "benchmarks/images/lc25000/benign-colon/colonn55.jpeg",
+          "sha256": "fe942829c4cbc62e0fa840be9c686050ccf6913054b449e15f2001a8b88198b2",
+          "dataset_global_row": 20000,
+          "class_rank": 0,
+          "source_name": "colonn55.jpeg"
+        },
+        {
+          "id": "lc25000-benign-colon-row-21000",
+          "image_path": "benchmarks/images/lc25000/benign-colon/colonn82.jpeg",
+          "sha256": "d723c6fc68917c05f65b7790e04b7ac9df53938e7b049499411ad5d32adbf034",
+          "dataset_global_row": 21000,
+          "class_rank": 1000,
+          "source_name": "colonn82.jpeg"
+        },
+        {
+          "id": "lc25000-benign-colon-row-22000",
+          "image_path": "benchmarks/images/lc25000/benign-colon/colonn139.jpeg",
+          "sha256": "d5feb3b697c32dd7bae4e1054c74fbe14672a8c859c2da116cdd6675125b884e",
+          "dataset_global_row": 22000,
+          "class_rank": 2000,
+          "source_name": "colonn139.jpeg"
+        },
+        {
+          "id": "lc25000-benign-colon-row-23000",
+          "image_path": "benchmarks/images/lc25000/benign-colon/colonn158.jpeg",
+          "sha256": "f24a15e2ce284fb7e0106bf08d217cc87db98e33a8494b283b2e7e9aef0bb551",
+          "dataset_global_row": 23000,
+          "class_rank": 3000,
+          "source_name": "colonn158.jpeg"
+        },
+        {
+          "id": "lc25000-benign-colon-row-24000",
+          "image_path": "benchmarks/images/lc25000/benign-colon/colonn191.jpeg",
+          "sha256": "87cea5f5ccc7c0b9d9e4878b5762b724bb3f33d10527d746ed0930dea18ea0d9",
+          "dataset_global_row": 24000,
+          "class_rank": 4000,
+          "source_name": "colonn191.jpeg"
+        }
+      ]
+    },
+    {
+      "id_prefix": "pmc7005969-candida",
       "family": "infectious esophagitis",
       "ground_truth": "Candida esophagitis",
-      "image_url": "https://cdn.ncbi.nlm.nih.gov/pmc/blobs/4ebe/7005969/be4cf99f8d3f/10.1177_2374289520903438-fig1.jpg",
       "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7005969/",
-      "source_note": "Educational Case: Infectious Esophagitis, Figure 1, H&E."
+      "source_note": "Educational Case: Infectious Esophagitis.",
+      "source_license": "CC BY-NC-ND 4.0; reproduced without alteration for non-commercial evaluation",
+      "images": [
+        {
+          "id": "pmc7005969-candida-fig1",
+          "image_path": "benchmarks/images/pmc7005969/fig1.jpg",
+          "sha256": "ca0b7a3ad29f36e74008a92c24191d6a46c301368e425802bb1302ddd46d1c1b",
+          "source_note": "Educational Case: Infectious Esophagitis, Figure 1, H&E."
+        },
+        {
+          "id": "pmc7005969-candida-fig2",
+          "image_path": "benchmarks/images/pmc7005969/fig2.jpg",
+          "sha256": "bb8433377439420a9961ea6c865eba9bcdf51ce9c3f3ca4f279d10ec1f324ea3",
+          "source_note": "Educational Case: Infectious Esophagitis, Figure 2, GMS."
+        }
+      ]
     },
     {
-      "id": "pmc7005969-hsv-he",
+      "id_prefix": "pmc7005969-hsv",
       "family": "infectious esophagitis",
       "ground_truth": "herpes simplex virus esophagitis",
-      "image_url": "https://cdn.ncbi.nlm.nih.gov/pmc/blobs/4ebe/7005969/7586d580845f/10.1177_2374289520903438-fig3.jpg",
       "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7005969/",
-      "source_note": "Educational Case: Infectious Esophagitis, Figure 3, H&E."
+      "source_note": "Educational Case: Infectious Esophagitis.",
+      "source_license": "CC BY-NC-ND 4.0; reproduced without alteration for non-commercial evaluation",
+      "images": [
+        {
+          "id": "pmc7005969-hsv-fig3",
+          "image_path": "benchmarks/images/pmc7005969/fig3.jpg",
+          "sha256": "ead28fe854aeedf8ef96104a4f821e725c7a169c5c7624dc5b6bdc1a3621a21a",
+          "source_note": "Educational Case: Infectious Esophagitis, Figure 3, H&E."
+        },
+        {
+          "id": "pmc7005969-hsv-fig4",
+          "image_path": "benchmarks/images/pmc7005969/fig4.jpg",
+          "sha256": "879ae94058fb5280bb1b082d962759e1df028690621b293e1f8b959250a0a5c1",
+          "source_note": "Educational Case: Infectious Esophagitis, Figure 4, immunohistochemistry."
+        }
+      ]
     },
     {
-      "id": "pmc7005969-cmv-he",
+      "id_prefix": "pmc7005969-cmv",
       "family": "infectious esophagitis",
       "ground_truth": "cytomegalovirus esophagitis",
-      "image_url": "https://cdn.ncbi.nlm.nih.gov/pmc/blobs/4ebe/7005969/a7d83357cd91/10.1177_2374289520903438-fig5.jpg",
       "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7005969/",
-      "source_note": "Educational Case: Infectious Esophagitis, Figure 5, H&E."
+      "source_note": "Educational Case: Infectious Esophagitis.",
+      "source_license": "CC BY-NC-ND 4.0; reproduced without alteration for non-commercial evaluation",
+      "images": [
+        {
+          "id": "pmc7005969-cmv-fig5",
+          "image_path": "benchmarks/images/pmc7005969/fig5.jpg",
+          "sha256": "bd874420a58d18237aa248c1f736c302fa9c2a4b8cba576c6282dd2c6508dd2a",
+          "source_note": "Educational Case: Infectious Esophagitis, Figure 5, H&E."
+        },
+        {
+          "id": "pmc7005969-cmv-fig6",
+          "image_path": "benchmarks/images/pmc7005969/fig6.jpg",
+          "sha256": "59b4debc4fa2eacc8627e15d887082a3b9350548543b06158d30ba66aa5f9a23",
+          "source_note": "Educational Case: Infectious Esophagitis, Figure 6, immunohistochemistry."
+        }
+      ]
+    },
+    {
+      "id_prefix": "pmc7944528-basal-cell-carcinoma",
+      "family": "skin cancer histopathology",
+      "ground_truth": "basal cell carcinoma",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7944528/",
+      "source_note": "Educational Case: Basal Cell Carcinoma, Figure 2, H&E.",
+      "source_license": "CC BY-NC-ND 4.0; reproduced without alteration for non-commercial evaluation",
+      "images": [
+        {
+          "id": "pmc7944528-basal-cell-carcinoma-fig2",
+          "image_path": "benchmarks/images/pmc7944528/fig2.jpg",
+          "sha256": "6492e7c2cdc97c1b7a76e7367979539c0dd0cdc640e1bc853ddf49d16ff8388a"
+        }
+      ]
+    },
+    {
+      "id_prefix": "pmc7944528-cutaneous-squamous-cell-carcinoma",
+      "family": "skin cancer histopathology",
+      "ground_truth": "cutaneous squamous cell carcinoma",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7944528/",
+      "source_note": "Educational Case: Basal Cell Carcinoma, Figure 4, H&E.",
+      "source_license": "CC BY-NC-ND 4.0; reproduced without alteration for non-commercial evaluation",
+      "images": [
+        {
+          "id": "pmc7944528-cutaneous-squamous-cell-carcinoma-fig4",
+          "image_path": "benchmarks/images/pmc7944528/fig4.jpg",
+          "sha256": "deccd5f68a3599c3213d4e6316d6e6f4c9ef622bd98f8533621225716e3fe796"
+        }
+      ]
+    },
+    {
+      "id_prefix": "pmc7944528-melanoma",
+      "family": "skin cancer histopathology",
+      "ground_truth": "melanoma",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7944528/",
+      "source_note": "Educational Case: Basal Cell Carcinoma, Figure 5, H&E.",
+      "source_license": "CC BY-NC-ND 4.0; reproduced without alteration for non-commercial evaluation",
+      "images": [
+        {
+          "id": "pmc7944528-melanoma-fig5",
+          "image_path": "benchmarks/images/pmc7944528/fig5.jpg",
+          "sha256": "6c7c4b2c763ccd55942da7f39cda0495ff893d2433a77df4e25e6b597612f7af"
+        }
+      ]
     }
   ]
 }

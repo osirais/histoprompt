@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 from dataclasses import dataclass
 from typing import Any
@@ -12,21 +13,35 @@ from .rag import EvidenceIndex
 STRATEGIES = ("label_only", "generic", "curated", "evidence_generated")
 
 
+def verify_image_checksum(raw: bytes, expected: str, case_id: str) -> None:
+    if not expected:
+        return
+    actual = hashlib.sha256(raw).hexdigest()
+    if actual != expected:
+        raise ValueError(
+            f"Image checksum mismatch for {case_id}: expected {expected}, got {actual}."
+        )
+
+
 @dataclass(frozen=True)
 class BenchmarkCase:
     case_id: str
     family: str
     ground_truth: str
-    image_url: str
     source_url: str
     source_note: str
+    image_path: str = ""
+    image_url: str = ""
+    sha256: str = ""
+    source_license: str = ""
 
 
 def load_manifest(value: dict[str, Any]) -> tuple[list[BenchmarkCase], dict[str, dict[str, str]]]:
     families = value.get("families")
-    cases = value.get("cases")
-    if not isinstance(families, dict) or not isinstance(cases, list):
-        raise ValueError("Benchmark manifest requires families and cases.")
+    cases = value.get("cases", [])
+    case_sets = value.get("case_sets", [])
+    if not isinstance(families, dict) or not isinstance(cases, list) or not isinstance(case_sets, list):
+        raise ValueError("Benchmark manifest requires families and cases or case_sets.")
 
     normalized_families: dict[str, dict[str, str]] = {}
     for family, item in families.items():
@@ -41,21 +56,42 @@ def load_manifest(value: dict[str, Any]) -> tuple[list[BenchmarkCase], dict[str,
             raise ValueError(f"Benchmark family {family!r} requires at least two labels.")
         normalized_families[str(family)] = prompts
 
+    expanded_cases = list(cases)
+    for case_set in case_sets:
+        if not isinstance(case_set, dict) or not isinstance(case_set.get("images"), list):
+            raise ValueError("Every benchmark case set requires an images list.")
+        prefix = str(case_set.get("id_prefix", "")).strip()
+        for index, image in enumerate(case_set["images"], 1):
+            if not isinstance(image, dict):
+                raise ValueError(f"Every image in case set {prefix!r} must be an object.")
+            expanded_cases.append(
+                {
+                    **case_set,
+                    **image,
+                    "id": str(image.get("id") or f"{prefix}-{index:02d}"),
+                }
+            )
+
     normalized_cases: list[BenchmarkCase] = []
     seen: set[str] = set()
-    for item in cases:
+    for item in expanded_cases:
         if not isinstance(item, dict):
             raise ValueError("Every benchmark case must be an object.")
         case = BenchmarkCase(
             case_id=str(item.get("id", "")).strip(),
             family=str(item.get("family", "")).strip(),
             ground_truth=str(item.get("ground_truth", "")).strip(),
-            image_url=str(item.get("image_url", "")).strip(),
             source_url=str(item.get("source_url", "")).strip(),
             source_note=str(item.get("source_note", "")).strip(),
+            image_path=str(item.get("image_path", "")).strip(),
+            image_url=str(item.get("image_url", "")).strip(),
+            sha256=str(item.get("sha256", "")).strip().lower(),
+            source_license=str(item.get("source_license", "")).strip(),
         )
-        if not all((case.case_id, case.family, case.ground_truth, case.image_url, case.source_url)):
-            raise ValueError("Every benchmark case requires id, family, ground_truth, image_url, and source_url.")
+        if not all((case.case_id, case.family, case.ground_truth, case.source_url)):
+            raise ValueError("Every benchmark case requires id, family, ground_truth, and source_url.")
+        if not case.image_path and not case.image_url:
+            raise ValueError(f"Benchmark case {case.case_id!r} requires image_path or image_url.")
         if case.case_id in seen:
             raise ValueError(f"Duplicate benchmark case id: {case.case_id}")
         if case.family not in normalized_families:
