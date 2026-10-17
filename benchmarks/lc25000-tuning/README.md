@@ -9,9 +9,19 @@ MUSK it fixed 20 images and broke none (sign test p ≈ 1e-6); against the plain
 
 | Prompts | Correct | Errors | Fixed / broken vs original | Fixed / broken vs template |
 |---|---:|---:|---:|---:|
+| Enhanced MUSK, gemma-4-31b-it (descriptions from the team's 600-image run) | 356 (79.1%) | 94 | 21 / 68 | 11 / 71 |
+| Enhanced MUSK, gemma-4-31b-it (descriptions from a 99-image rerun) | 375 (83.3%) | 75 | 23 / 51 | 13 / 54 |
+| Enhanced MUSK, ornith-1.0-35b | 387 (86.0%) | 63 | 26 / 42 | 14 / 43 |
+| Enhanced MUSK, nemotron-3-super-120b-a12b | 395 (87.8%) | 55 | 22 / 30 | 11 / 32 |
 | Original MUSK: `a histopathology image showing {label}` | 403 (89.6%) | 47 | — | |
 | Template: `histology showing {label}` | 416 (92.4%) | 34 | 13 / 0 | — |
 | **Validated tuning** (ornith-1.0-35b, deepseek-v4-flash or gemma-4-31b-it) | **423 (94.0%)** | **27** | **20 / 0** | **7 / 0** |
+
+Enhanced MUSK is the repo's `evidence_generated` strategy: long LLM-written evidence descriptions for every label,
+scored here with the exact descriptions each LLM wrote earlier (`results/enhanced_450.json`). On these 450 images it
+is below original MUSK whichever LLM writes the descriptions: each version fixes some images but breaks more.
+Validated tuning breaks none. (On a 99-image subset, ornith's and nemotron's Enhanced versions had looked better than
+original MUSK; that didn't hold on 450 images.)
 
 ## Tuned prompts
 
