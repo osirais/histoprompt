@@ -224,6 +224,12 @@ def main() -> None:
 
     now = datetime.now(timezone.utc)
     benchmark_wall_seconds = time.perf_counter() - benchmark_started
+    report_context = dict(manifest_value.get("report_context", {}))
+    if args.max_per_label:
+        report_context["sample_note"] = (
+            f"This rapid screen uses the first {args.max_per_label} fixed images per "
+            "family/label and verifies each SHA-256 checksum before inference."
+        )
     all_strategies = list(
         dict.fromkeys([*previous.get("strategies", []), *args.strategies])
     )
@@ -237,7 +243,7 @@ def main() -> None:
         "run_id": now.strftime("%Y%m%dT%H%M%SZ"),
         "created_at": now.isoformat(),
         "benchmark_name": manifest_value.get("name", "HistoPrompt benchmark"),
-        "report_context": manifest_value.get("report_context", {}),
+        "report_context": report_context,
         "manifest": display_path(args.manifest),
         "max_per_label": args.max_per_label,
         "lumen_model": prompt_model,

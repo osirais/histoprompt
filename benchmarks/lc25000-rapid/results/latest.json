@@ -1,0 +1,2872 @@
+{
+  "run_id": "20261017T203328Z",
+  "created_at": "2026-10-17T20:33:28.300919+00:00",
+  "benchmark_name": "HistoPrompt LC25000 600-image lung benchmark",
+  "report_context": {
+    "sample_note": "This rapid screen uses the first 10 fixed images per family/label and verifies each SHA-256 checksum before inference.",
+    "source_note": "All images come from the lung portion of LC25000. The dataset contains augmented derivatives of a smaller original collection, so samples are not patient-independent."
+  },
+  "manifest": "benchmarks/lc25000-600/manifest.json",
+  "max_per_label": 10,
+  "lumen_model": "gemma-4-31b-it",
+  "musk_backend": "remote",
+  "musk_endpoint": "http://127.0.0.1:8801",
+  "cases": [
+    {
+      "case_id": "lc25000-benign-lung-rank-0",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "source_url": "https://huggingface.co/datasets/1aurent/LC25000",
+      "source_note": "Every 25th class row from LC25000 commit 2387ffed63932faa8fd05c679ffec85fc3153f61, selected before model inference.",
+      "image_path": "benchmarks/lc25000-1000/images/benign-lung/0000-lungn64.jpeg",
+      "image_url": "",
+      "sha256": "65aa5b439b6872a8df90cb6ca986ffcf71407396bb19d240605c836eda69045b",
+      "source_license": "Unlicense"
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-25",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "source_url": "https://huggingface.co/datasets/1aurent/LC25000",
+      "source_note": "Every 25th class row from LC25000 commit 2387ffed63932faa8fd05c679ffec85fc3153f61, selected before model inference.",
+      "image_path": "benchmarks/lc25000-1000/images/benign-lung/0025-lungn1899.jpeg",
+      "image_url": "",
+      "sha256": "49c33932bb03a4166d12dd05ced77e4e7b4198f42425b6c99228ba8ed14a9e3f",
+      "source_license": "Unlicense"
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-50",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "source_url": "https://huggingface.co/datasets/1aurent/LC25000",
+      "source_note": "Every 25th class row from LC25000 commit 2387ffed63932faa8fd05c679ffec85fc3153f61, selected before model inference.",
+      "image_path": "benchmarks/lc25000-1000/images/benign-lung/0050-lungn703.jpeg",
+      "image_url": "",
+      "sha256": "3b1997348b66d5ba4d2806553d5ef41ed7e5b85ddd1376f94ca504985193efc5",
+      "source_license": "Unlicense"
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-75",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "source_url": "https://huggingface.co/datasets/1aurent/LC25000",
+      "source_note": "Every 25th class row from LC25000 commit 2387ffed63932faa8fd05c679ffec85fc3153f61, selected before model inference.",
+      "image_path": "benchmarks/lc25000-1000/images/benign-lung/0075-lungn3442.jpeg",
+      "image_url": "",
+      "sha256": "84b9c22d9342f83fa661146c5698a13ac40b0f301baa1b9032e5c10cff7dcf19",
+      "source_license": "Unlicense"
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-100",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "source_url": "https://huggingface.co/datasets/1aurent/LC25000",
+      "source_note": "Every 25th class row from LC25000 commit 2387ffed63932faa8fd05c679ffec85fc3153f61, selected before model inference.",
+      "image_path": "benchmarks/lc25000-1000/images/benign-lung/0100-lungn2333.jpeg",
+      "image_url": "",
+      "sha256": "48f580fb1fe4c75b2a6a7560b59274e457731aaf9c7577e066db518fb6f513bb",
+      "source_license": "Unlicense"
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-125",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "source_url": "https://huggingface.co/datasets/1aurent/LC25000",
+      "source_note": "Every 25th class row from LC25000 commit 2387ffed63932faa8fd05c679ffec85fc3153f61, selected before model inference.",
+      "image_path": "benchmarks/lc25000-1000/images/benign-lung/0125-lungn1249.jpeg",
+      "image_url": "",
+      "sha256": "b0fc8e55f71c4aecf97473b0a392bd23991d5eaa10110a98cdf0ebd9860cb5df",
+      "source_license": "Unlicense"
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-150",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "source_url": "https://huggingface.co/datasets/1aurent/LC25000",
+      "source_note": "Every 25th class row from LC25000 commit 2387ffed63932faa8fd05c679ffec85fc3153f61, selected before model inference.",
+      "image_path": "benchmarks/lc25000-1000/images/benign-lung/0150-lungn3263.jpeg",
+      "image_url": "",
+      "sha256": "d8d54cea234c55d5663846c76f15d807603ef59661985b38ee55891a24914559",
+      "source_license": "Unlicense"
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-175",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "source_url": "https://huggingface.co/datasets/1aurent/LC25000",
+      "source_note": "Every 25th class row from LC25000 commit 2387ffed63932faa8fd05c679ffec85fc3153f61, selected before model inference.",
+      "image_path": "benchmarks/lc25000-1000/images/benign-lung/0175-lungn1607.jpeg",
+      "image_url": "",
+      "sha256": "84cfc7d2c38e7491baf761038430ff28a2d00c1eded64cdc589dc3039e720ded",
+      "source_license": "Unlicense"
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-200",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "source_url": "https://huggingface.co/datasets/1aurent/LC25000",
+      "source_note": "Every 25th class row from LC25000 commit 2387ffed63932faa8fd05c679ffec85fc3153f61, selected before model inference.",
+      "image_path": "benchmarks/lc25000-1000/images/benign-lung/0200-lungn1068.jpeg",
+      "image_url": "",
+      "sha256": "b30c0af366443f16427cf8251f361e0ad641a56831f419c1fa7a9cba5f05ba9e",
+      "source_license": "Unlicense"
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-225",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "source_url": "https://huggingface.co/datasets/1aurent/LC25000",
+      "source_note": "Every 25th class row from LC25000 commit 2387ffed63932faa8fd05c679ffec85fc3153f61, selected before model inference.",
+      "image_path": "benchmarks/lc25000-1000/images/benign-lung/0225-lungn4435.jpeg",
+      "image_url": "",
+      "sha256": "e5d83071ca44688fac064ccb8a042359ddf46f4c57ec243741f139729f69b787",
+      "source_license": "Unlicense"
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-0",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "source_url": "https://huggingface.co/datasets/1aurent/LC25000",
+      "source_note": "Every 25th class row from LC25000 commit 2387ffed63932faa8fd05c679ffec85fc3153f61, selected before model inference.",
+      "image_path": "benchmarks/lc25000-1000/images/lung-adenocarcinoma/0000-lungaca57.jpeg",
+      "image_url": "",
+      "sha256": "b1d7a760977f3188da7df2279016d244f53413064cf45937c16723853d2140e6",
+      "source_license": "Unlicense"
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-25",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "source_url": "https://huggingface.co/datasets/1aurent/LC25000",
+      "source_note": "Every 25th class row from LC25000 commit 2387ffed63932faa8fd05c679ffec85fc3153f61, selected before model inference.",
+      "image_path": "benchmarks/lc25000-1000/images/lung-adenocarcinoma/0025-lungaca3245.jpeg",
+      "image_url": "",
+      "sha256": "63721b444c0a365f72259d2755a0f9d22ed6ad60f948c7f49f612ab1fda74b68",
+      "source_license": "Unlicense"
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-50",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "source_url": "https://huggingface.co/datasets/1aurent/LC25000",
+      "source_note": "Every 25th class row from LC25000 commit 2387ffed63932faa8fd05c679ffec85fc3153f61, selected before model inference.",
+      "image_path": "benchmarks/lc25000-1000/images/lung-adenocarcinoma/0050-lungaca1647.jpeg",
+      "image_url": "",
+      "sha256": "0dad963edcc54f3078f5fc095f09083a84dbc3ff8e44adff8fff0d288c26d4c3",
+      "source_license": "Unlicense"
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-75",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "source_url": "https://huggingface.co/datasets/1aurent/LC25000",
+      "source_note": "Every 25th class row from LC25000 commit 2387ffed63932faa8fd05c679ffec85fc3153f61, selected before model inference.",
+      "image_path": "benchmarks/lc25000-1000/images/lung-adenocarcinoma/0075-lungaca4592.jpeg",
+      "image_url": "",
+      "sha256": "26581f9809fd40cdb1a1acd6439db1451dca4c2e28fd6b5a0cdc8ed2c3dc727c",
+      "source_license": "Unlicense"
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-100",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "source_url": "https://huggingface.co/datasets/1aurent/LC25000",
+      "source_note": "Every 25th class row from LC25000 commit 2387ffed63932faa8fd05c679ffec85fc3153f61, selected before model inference.",
+      "image_path": "benchmarks/lc25000-1000/images/lung-adenocarcinoma/0100-lungaca2519.jpeg",
+      "image_url": "",
+      "sha256": "8bd84ba9a7092fef0c3b61f88f2a5296863c2a63a94528b7028c23db109961ef",
+      "source_license": "Unlicense"
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-125",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "source_url": "https://huggingface.co/datasets/1aurent/LC25000",
+      "source_note": "Every 25th class row from LC25000 commit 2387ffed63932faa8fd05c679ffec85fc3153f61, selected before model inference.",
+      "image_path": "benchmarks/lc25000-1000/images/lung-adenocarcinoma/0125-lungaca1360.jpeg",
+      "image_url": "",
+      "sha256": "348e7da19c0c62aea9853ca847c335e829f9d2f583ba1a26a14a7da0a424ce74",
+      "source_license": "Unlicense"
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-150",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "source_url": "https://huggingface.co/datasets/1aurent/LC25000",
+      "source_note": "Every 25th class row from LC25000 commit 2387ffed63932faa8fd05c679ffec85fc3153f61, selected before model inference.",
+      "image_path": "benchmarks/lc25000-1000/images/lung-adenocarcinoma/0150-lungaca4057.jpeg",
+      "image_url": "",
+      "sha256": "a6ef465538f01099849fbc6c550392ad9d38b938905e2e76a5f2c03bc7aee5b4",
+      "source_license": "Unlicense"
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-175",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "source_url": "https://huggingface.co/datasets/1aurent/LC25000",
+      "source_note": "Every 25th class row from LC25000 commit 2387ffed63932faa8fd05c679ffec85fc3153f61, selected before model inference.",
+      "image_path": "benchmarks/lc25000-1000/images/lung-adenocarcinoma/0175-lungaca2621.jpeg",
+      "image_url": "",
+      "sha256": "9e0a36592e0e5fcc848260ba267de9ab0617e73032321c9f000102a47415e296",
+      "source_license": "Unlicense"
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-200",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "source_url": "https://huggingface.co/datasets/1aurent/LC25000",
+      "source_note": "Every 25th class row from LC25000 commit 2387ffed63932faa8fd05c679ffec85fc3153f61, selected before model inference.",
+      "image_path": "benchmarks/lc25000-1000/images/lung-adenocarcinoma/0200-lungaca718.jpeg",
+      "image_url": "",
+      "sha256": "6783a1fc7de12fa2895a10abbd9ff1e92503113c35dd9af5545da2c20bec721d",
+      "source_license": "Unlicense"
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-225",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "source_url": "https://huggingface.co/datasets/1aurent/LC25000",
+      "source_note": "Every 25th class row from LC25000 commit 2387ffed63932faa8fd05c679ffec85fc3153f61, selected before model inference.",
+      "image_path": "benchmarks/lc25000-1000/images/lung-adenocarcinoma/0225-lungaca4392.jpeg",
+      "image_url": "",
+      "sha256": "cbff1a7557afa689ddf102b3612dd5d89e6908d6b523dfa9e24ab14966b42f78",
+      "source_license": "Unlicense"
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-0",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "source_url": "https://huggingface.co/datasets/1aurent/LC25000",
+      "source_note": "Every 25th class row from LC25000 commit 2387ffed63932faa8fd05c679ffec85fc3153f61, selected before model inference.",
+      "image_path": "benchmarks/lc25000-1000/images/lung-squamous-cell-carcinoma/0000-lungscc88.jpeg",
+      "image_url": "",
+      "sha256": "999ed19d812e3b8b2cccb3ee189a265b1194f1f3b7373b4fbc74505a6ec9ac29",
+      "source_license": "Unlicense"
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-25",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "source_url": "https://huggingface.co/datasets/1aurent/LC25000",
+      "source_note": "Every 25th class row from LC25000 commit 2387ffed63932faa8fd05c679ffec85fc3153f61, selected before model inference.",
+      "image_path": "benchmarks/lc25000-1000/images/lung-squamous-cell-carcinoma/0025-lungscc3410.jpeg",
+      "image_url": "",
+      "sha256": "55f103af130fddc773a77c6fb38274bd2641032dec74b2c8def653930c171048",
+      "source_license": "Unlicense"
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-50",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "source_url": "https://huggingface.co/datasets/1aurent/LC25000",
+      "source_note": "Every 25th class row from LC25000 commit 2387ffed63932faa8fd05c679ffec85fc3153f61, selected before model inference.",
+      "image_path": "benchmarks/lc25000-1000/images/lung-squamous-cell-carcinoma/0050-lungscc1874.jpeg",
+      "image_url": "",
+      "sha256": "d11027faf9f0a27c1479145608d8c04e51944f160263e6e4b16b48860cf6a2fc",
+      "source_license": "Unlicense"
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-75",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "source_url": "https://huggingface.co/datasets/1aurent/LC25000",
+      "source_note": "Every 25th class row from LC25000 commit 2387ffed63932faa8fd05c679ffec85fc3153f61, selected before model inference.",
+      "image_path": "benchmarks/lc25000-1000/images/lung-squamous-cell-carcinoma/0075-lungscc36.jpeg",
+      "image_url": "",
+      "sha256": "77250677cc30adc8ffa561042a9b4eceb0c0c5f92be678972eed55bd86911188",
+      "source_license": "Unlicense"
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-100",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "source_url": "https://huggingface.co/datasets/1aurent/LC25000",
+      "source_note": "Every 25th class row from LC25000 commit 2387ffed63932faa8fd05c679ffec85fc3153f61, selected before model inference.",
+      "image_path": "benchmarks/lc25000-1000/images/lung-squamous-cell-carcinoma/0100-lungscc2403.jpeg",
+      "image_url": "",
+      "sha256": "4579b87358b20fc773459f9800f1df0a04f260562026304d835454bafe24c791",
+      "source_license": "Unlicense"
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-125",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "source_url": "https://huggingface.co/datasets/1aurent/LC25000",
+      "source_note": "Every 25th class row from LC25000 commit 2387ffed63932faa8fd05c679ffec85fc3153f61, selected before model inference.",
+      "image_path": "benchmarks/lc25000-1000/images/lung-squamous-cell-carcinoma/0125-lungscc3996.jpeg",
+      "image_url": "",
+      "sha256": "3dd9edeb37cc8897aa58eacee23ca9017647e8db94b23dcd65d2f4c03179362c",
+      "source_license": "Unlicense"
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-150",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "source_url": "https://huggingface.co/datasets/1aurent/LC25000",
+      "source_note": "Every 25th class row from LC25000 commit 2387ffed63932faa8fd05c679ffec85fc3153f61, selected before model inference.",
+      "image_path": "benchmarks/lc25000-1000/images/lung-squamous-cell-carcinoma/0150-lungscc2398.jpeg",
+      "image_url": "",
+      "sha256": "2762913265d150d20dc8a050116479c9813d2a6760575d4c47ab52f1ce7077ec",
+      "source_license": "Unlicense"
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-175",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "source_url": "https://huggingface.co/datasets/1aurent/LC25000",
+      "source_note": "Every 25th class row from LC25000 commit 2387ffed63932faa8fd05c679ffec85fc3153f61, selected before model inference.",
+      "image_path": "benchmarks/lc25000-1000/images/lung-squamous-cell-carcinoma/0175-lungscc1485.jpeg",
+      "image_url": "",
+      "sha256": "49860b4f1b99011d91e7dbd7dd0ffb61d443e6dbb4fbe89c0439d8cfd3f5eefc",
+      "source_license": "Unlicense"
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-200",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "source_url": "https://huggingface.co/datasets/1aurent/LC25000",
+      "source_note": "Every 25th class row from LC25000 commit 2387ffed63932faa8fd05c679ffec85fc3153f61, selected before model inference.",
+      "image_path": "benchmarks/lc25000-1000/images/lung-squamous-cell-carcinoma/0200-lungscc4201.jpeg",
+      "image_url": "",
+      "sha256": "202b7ce1d00703057e9261d670753dc944b0e78712f332c54091b8dfa2639bdb",
+      "source_license": "Unlicense"
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-225",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "source_url": "https://huggingface.co/datasets/1aurent/LC25000",
+      "source_note": "Every 25th class row from LC25000 commit 2387ffed63932faa8fd05c679ffec85fc3153f61, selected before model inference.",
+      "image_path": "benchmarks/lc25000-1000/images/lung-squamous-cell-carcinoma/0225-lungscc2712.jpeg",
+      "image_url": "",
+      "sha256": "01505b358c725e0dca4a97606f73b0ebba1084bc5fdd04ea6d614526646a8752",
+      "source_license": "Unlicense"
+    }
+  ],
+  "evidence_generated_prompts": {
+    "lung histopathology": {
+      "benign lung tissue": "benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+      "lung adenocarcinoma": "lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+      "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+    }
+  },
+  "retrieved_evidence": {
+    "lung histopathology": [
+      {
+        "source_id": "PMID:26447895",
+        "title": "Various antibody clones of Napsin A, TTF-1, and p40 in non-small cell lung carcinoma",
+        "text": "This tissue-microarray study evaluated CK5, p63, and p40 as squamous markers and Napsin A and TTF-1 as lung adenocarcinoma markers. Reported performance varied by marker and antibody clone, and combining Napsin A with TTF-1 improved sensitivity.",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/26447895/",
+        "year": "2016",
+        "score": 8.6424
+      },
+      {
+        "source_id": "PMID:22966403",
+        "title": "Value of napsin A and thyroid transcription factor-1 in the identification of primary lung adenocarcinoma",
+        "text": "In a cohort containing primary lung cancers and metastases, Napsin A and TTF-1 were frequently expressed in primary lung adenocarcinoma. The study also observed TTF-1 expression outside lung adenocarcinoma, supporting interpretation as a panel rather than as an isolated marker.",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/22966403/",
+        "year": "2012",
+        "score": 6.7078
+      },
+      {
+        "source_id": "PMID:26137020",
+        "title": "Immunostaining for TTF-1, Napsin A, p40, and cytokeratin 5 aids differential diagnosis of NSCLC",
+        "text": "The study compared marker combinations for separating lung adenocarcinoma from squamous cell carcinoma. TTF-1 and Napsin A supported adenocarcinoma, while p40 and CK5 supported squamous differentiation; the combined panel was more informative than a single stain.",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/26137020/",
+        "year": "2015",
+        "score": 6.3936
+      },
+      {
+        "source_id": "PMC:7944528-SkinCancerMorphology",
+        "title": "Educational case: basal cell carcinoma and its histologic differential",
+        "text": "Basal cell carcinoma shows dermal islands of basophilic tumor cells with peripheral nuclear palisading, stromal retraction, and loose mucinous stroma. Cutaneous squamous cell carcinoma shows invasive islands of pleomorphic keratinocytes arising from the epidermis with prominent nucleoli and increased mitoses. Melanoma can show irregular nests and single pleomorphic pigmented melanocytes within the epidermis and dermis.",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7944528/",
+        "year": "2021",
+        "score": 4.8235
+      },
+      {
+        "source_id": "PMC:3418538-ColorectalMorphology",
+        "title": "Colorectal carcinoma: pathologic aspects",
+        "text": "Colorectal adenocarcinoma commonly forms malignant glands. Invasion can be accompanied by desmoplastic stroma, and glandular lumina frequently contain characteristic dirty necrosis. Benign colonic mucosa retains orderly crypt architecture and mature goblet cells without dysplasia.",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3418538/",
+        "year": "2012",
+        "score": 4.7007
+      },
+      {
+        "source_id": "PMC:7158322-Sampling",
+        "title": "Sampling and confirmation in infectious esophagitis",
+        "text": "For suspected HSV esophagitis, diagnostic cytopathic changes are most likely at the ulcer edge and in sloughed squamous cells. Candida requires demonstration of pseudohyphae or true hyphae and assessment of tissue invasion rather than isolated budding yeasts in exudate. Histology may require organism-specific immunostaining, in situ hybridization, culture, or special stains for confirmation.",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7158322/",
+        "year": "2020",
+        "score": 2.603
+      }
+    ]
+  },
+  "strategies": [
+    "generic",
+    "evidence_generated",
+    "generic_with_features",
+    "generic_with_primary_feature"
+  ],
+  "performance": {
+    "scope": "latest invocation",
+    "configured_batch_size": 8,
+    "completed_batches": 16,
+    "inference_seconds": 5.551,
+    "benchmark_wall_seconds": 5.577,
+    "mean_inference_seconds_per_image_strategy": 0.046262
+  },
+  "results": [
+    {
+      "case_id": "lc25000-benign-lung-rank-0",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "generic",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.34787020087242126,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.450755,
+      "seconds_per_image": 0.056344
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-25",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "generic",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.3414810299873352,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.450755,
+      "seconds_per_image": 0.056344
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-50",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "generic",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.34534314274787903,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.450755,
+      "seconds_per_image": 0.056344
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-75",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "generic",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.3502032458782196,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.450755,
+      "seconds_per_image": 0.056344
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-100",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "generic",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.35389378666877747,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.450755,
+      "seconds_per_image": 0.056344
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-125",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "generic",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.34720125794410706,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.450755,
+      "seconds_per_image": 0.056344
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-150",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "generic",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.35052841901779175,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.450755,
+      "seconds_per_image": 0.056344
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-175",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "generic",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.35181358456611633,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.450755,
+      "seconds_per_image": 0.056344
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-200",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "generic",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.34747299551963806,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.409263,
+      "seconds_per_image": 0.051158
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-225",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "generic",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.34541574120521545,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.409263,
+      "seconds_per_image": 0.051158
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-0",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "generic",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.3425757884979248,
+      "correct": false,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.409263,
+      "seconds_per_image": 0.051158
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-25",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "generic",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.3432711660861969,
+      "correct": false,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.409263,
+      "seconds_per_image": 0.051158
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-50",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "generic",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma"
+      },
+      "prediction": "lung adenocarcinoma",
+      "score": 0.34516751766204834,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.409263,
+      "seconds_per_image": 0.051158
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-75",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "generic",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma"
+      },
+      "prediction": "lung adenocarcinoma",
+      "score": 0.3417021334171295,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.409263,
+      "seconds_per_image": 0.051158
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-100",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "generic",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma"
+      },
+      "prediction": "lung adenocarcinoma",
+      "score": 0.3402309715747833,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.409263,
+      "seconds_per_image": 0.051158
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-125",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "generic",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma"
+      },
+      "prediction": "lung adenocarcinoma",
+      "score": 0.3399847447872162,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.409263,
+      "seconds_per_image": 0.051158
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-150",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "generic",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma"
+      },
+      "prediction": "lung adenocarcinoma",
+      "score": 0.33929237723350525,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.339819,
+      "seconds_per_image": 0.042477
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-175",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "generic",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.3422841429710388,
+      "correct": false,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.339819,
+      "seconds_per_image": 0.042477
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-200",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "generic",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.34237781167030334,
+      "correct": false,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.339819,
+      "seconds_per_image": 0.042477
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-225",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "generic",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma"
+      },
+      "prediction": "lung adenocarcinoma",
+      "score": 0.3372642993927002,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.339819,
+      "seconds_per_image": 0.042477
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-0",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "generic",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.34017443656921387,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.339819,
+      "seconds_per_image": 0.042477
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-25",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "generic",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.34582239389419556,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.339819,
+      "seconds_per_image": 0.042477
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-50",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "generic",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.3445087969303131,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.339819,
+      "seconds_per_image": 0.042477
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-75",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "generic",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.3465169370174408,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.339819,
+      "seconds_per_image": 0.042477
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-100",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "generic",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.34504374861717224,
+      "correct": true,
+      "error": "",
+      "batch_size": 6,
+      "batch_seconds": 0.386655,
+      "seconds_per_image": 0.064442
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-125",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "generic",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.34251752495765686,
+      "correct": true,
+      "error": "",
+      "batch_size": 6,
+      "batch_seconds": 0.386655,
+      "seconds_per_image": 0.064442
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-150",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "generic",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.3409827947616577,
+      "correct": true,
+      "error": "",
+      "batch_size": 6,
+      "batch_seconds": 0.386655,
+      "seconds_per_image": 0.064442
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-175",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "generic",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.34619981050491333,
+      "correct": true,
+      "error": "",
+      "batch_size": 6,
+      "batch_seconds": 0.386655,
+      "seconds_per_image": 0.064442
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-200",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "generic",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.3382824957370758,
+      "correct": true,
+      "error": "",
+      "batch_size": 6,
+      "batch_seconds": 0.386655,
+      "seconds_per_image": 0.064442
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-225",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "generic",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.3380289673805237,
+      "correct": true,
+      "error": "",
+      "batch_size": 6,
+      "batch_seconds": 0.386655,
+      "seconds_per_image": 0.064442
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-0",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "evidence_generated",
+      "prompts": {
+        "benign lung tissue": "benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.35018181800842285,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.313483,
+      "seconds_per_image": 0.039185
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-25",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "evidence_generated",
+      "prompts": {
+        "benign lung tissue": "benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.34190434217453003,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.313483,
+      "seconds_per_image": 0.039185
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-50",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "evidence_generated",
+      "prompts": {
+        "benign lung tissue": "benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.34596821665763855,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.313483,
+      "seconds_per_image": 0.039185
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-75",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "evidence_generated",
+      "prompts": {
+        "benign lung tissue": "benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.3433575928211212,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.313483,
+      "seconds_per_image": 0.039185
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-100",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "evidence_generated",
+      "prompts": {
+        "benign lung tissue": "benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.35711362957954407,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.313483,
+      "seconds_per_image": 0.039185
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-125",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "evidence_generated",
+      "prompts": {
+        "benign lung tissue": "benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.3463846743106842,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.313483,
+      "seconds_per_image": 0.039185
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-150",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "evidence_generated",
+      "prompts": {
+        "benign lung tissue": "benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.35414668917655945,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.313483,
+      "seconds_per_image": 0.039185
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-175",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "evidence_generated",
+      "prompts": {
+        "benign lung tissue": "benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.34740108251571655,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.313483,
+      "seconds_per_image": 0.039185
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-200",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "evidence_generated",
+      "prompts": {
+        "benign lung tissue": "benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.35210129618644714,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.308747,
+      "seconds_per_image": 0.038593
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-225",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "evidence_generated",
+      "prompts": {
+        "benign lung tissue": "benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.3455544710159302,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.308747,
+      "seconds_per_image": 0.038593
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-0",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "evidence_generated",
+      "prompts": {
+        "benign lung tissue": "benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.3650650382041931,
+      "correct": false,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.308747,
+      "seconds_per_image": 0.038593
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-25",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "evidence_generated",
+      "prompts": {
+        "benign lung tissue": "benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.3672305941581726,
+      "correct": false,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.308747,
+      "seconds_per_image": 0.038593
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-50",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "evidence_generated",
+      "prompts": {
+        "benign lung tissue": "benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung adenocarcinoma",
+      "score": 0.35004591941833496,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.308747,
+      "seconds_per_image": 0.038593
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-75",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "evidence_generated",
+      "prompts": {
+        "benign lung tissue": "benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung adenocarcinoma",
+      "score": 0.34608152508735657,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.308747,
+      "seconds_per_image": 0.038593
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-100",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "evidence_generated",
+      "prompts": {
+        "benign lung tissue": "benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.34433627128601074,
+      "correct": false,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.308747,
+      "seconds_per_image": 0.038593
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-125",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "evidence_generated",
+      "prompts": {
+        "benign lung tissue": "benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.3439687192440033,
+      "correct": false,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.308747,
+      "seconds_per_image": 0.038593
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-150",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "evidence_generated",
+      "prompts": {
+        "benign lung tissue": "benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.34880390763282776,
+      "correct": false,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.318529,
+      "seconds_per_image": 0.039816
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-175",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "evidence_generated",
+      "prompts": {
+        "benign lung tissue": "benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung adenocarcinoma",
+      "score": 0.33736929297447205,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.318529,
+      "seconds_per_image": 0.039816
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-200",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "evidence_generated",
+      "prompts": {
+        "benign lung tissue": "benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung adenocarcinoma",
+      "score": 0.3534497320652008,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.318529,
+      "seconds_per_image": 0.039816
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-225",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "evidence_generated",
+      "prompts": {
+        "benign lung tissue": "benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.35030174255371094,
+      "correct": false,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.318529,
+      "seconds_per_image": 0.039816
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-0",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "evidence_generated",
+      "prompts": {
+        "benign lung tissue": "benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.3546876013278961,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.318529,
+      "seconds_per_image": 0.039816
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-25",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "evidence_generated",
+      "prompts": {
+        "benign lung tissue": "benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.35712161660194397,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.318529,
+      "seconds_per_image": 0.039816
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-50",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "evidence_generated",
+      "prompts": {
+        "benign lung tissue": "benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.366689532995224,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.318529,
+      "seconds_per_image": 0.039816
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-75",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "evidence_generated",
+      "prompts": {
+        "benign lung tissue": "benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.36337122321128845,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.318529,
+      "seconds_per_image": 0.039816
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-100",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "evidence_generated",
+      "prompts": {
+        "benign lung tissue": "benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.36442863941192627,
+      "correct": true,
+      "error": "",
+      "batch_size": 6,
+      "batch_seconds": 0.270551,
+      "seconds_per_image": 0.045092
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-125",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "evidence_generated",
+      "prompts": {
+        "benign lung tissue": "benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.35300734639167786,
+      "correct": true,
+      "error": "",
+      "batch_size": 6,
+      "batch_seconds": 0.270551,
+      "seconds_per_image": 0.045092
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-150",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "evidence_generated",
+      "prompts": {
+        "benign lung tissue": "benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.35630062222480774,
+      "correct": true,
+      "error": "",
+      "batch_size": 6,
+      "batch_seconds": 0.270551,
+      "seconds_per_image": 0.045092
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-175",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "evidence_generated",
+      "prompts": {
+        "benign lung tissue": "benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.3687184751033783,
+      "correct": true,
+      "error": "",
+      "batch_size": 6,
+      "batch_seconds": 0.270551,
+      "seconds_per_image": 0.045092
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-200",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "evidence_generated",
+      "prompts": {
+        "benign lung tissue": "benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.34716370701789856,
+      "correct": true,
+      "error": "",
+      "batch_size": 6,
+      "batch_seconds": 0.270551,
+      "seconds_per_image": 0.045092
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-225",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "evidence_generated",
+      "prompts": {
+        "benign lung tissue": "benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.3529827892780304,
+      "correct": true,
+      "error": "",
+      "batch_size": 6,
+      "batch_seconds": 0.270551,
+      "seconds_per_image": 0.045092
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-0",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "generic_with_features",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.35559582710266113,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.337065,
+      "seconds_per_image": 0.042133
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-25",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "generic_with_features",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.34819915890693665,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.337065,
+      "seconds_per_image": 0.042133
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-50",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "generic_with_features",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.34990185499191284,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.337065,
+      "seconds_per_image": 0.042133
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-75",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "generic_with_features",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.34981074929237366,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.337065,
+      "seconds_per_image": 0.042133
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-100",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "generic_with_features",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.36100465059280396,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.337065,
+      "seconds_per_image": 0.042133
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-125",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "generic_with_features",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.35324186086654663,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.337065,
+      "seconds_per_image": 0.042133
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-150",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "generic_with_features",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.35813775658607483,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.337065,
+      "seconds_per_image": 0.042133
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-175",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "generic_with_features",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.3544420301914215,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.337065,
+      "seconds_per_image": 0.042133
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-200",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "generic_with_features",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.3560584485530853,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.365356,
+      "seconds_per_image": 0.04567
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-225",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "generic_with_features",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.351828396320343,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.365356,
+      "seconds_per_image": 0.04567
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-0",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "generic_with_features",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.3575935661792755,
+      "correct": false,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.365356,
+      "seconds_per_image": 0.04567
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-25",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "generic_with_features",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.359435498714447,
+      "correct": false,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.365356,
+      "seconds_per_image": 0.04567
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-50",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "generic_with_features",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung adenocarcinoma",
+      "score": 0.34788060188293457,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.365356,
+      "seconds_per_image": 0.04567
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-75",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "generic_with_features",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung adenocarcinoma",
+      "score": 0.34399381279945374,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.365356,
+      "seconds_per_image": 0.04567
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-100",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "generic_with_features",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung adenocarcinoma",
+      "score": 0.34204643964767456,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.365356,
+      "seconds_per_image": 0.04567
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-125",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "generic_with_features",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung adenocarcinoma",
+      "score": 0.34146562218666077,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.365356,
+      "seconds_per_image": 0.04567
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-150",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "generic_with_features",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung adenocarcinoma",
+      "score": 0.3431817591190338,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.318016,
+      "seconds_per_image": 0.039752
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-175",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "generic_with_features",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.3385081887245178,
+      "correct": false,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.318016,
+      "seconds_per_image": 0.039752
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-200",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "generic_with_features",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung adenocarcinoma",
+      "score": 0.3510175347328186,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.318016,
+      "seconds_per_image": 0.039752
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-225",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "generic_with_features",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.34219998121261597,
+      "correct": false,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.318016,
+      "seconds_per_image": 0.039752
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-0",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "generic_with_features",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.3483361601829529,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.318016,
+      "seconds_per_image": 0.039752
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-25",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "generic_with_features",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.3519752621650696,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.318016,
+      "seconds_per_image": 0.039752
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-50",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "generic_with_features",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.359016478061676,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.318016,
+      "seconds_per_image": 0.039752
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-75",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "generic_with_features",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.3563890755176544,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.318016,
+      "seconds_per_image": 0.039752
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-100",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "generic_with_features",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.358945369720459,
+      "correct": true,
+      "error": "",
+      "batch_size": 6,
+      "batch_seconds": 0.298263,
+      "seconds_per_image": 0.049711
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-125",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "generic_with_features",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.3496597707271576,
+      "correct": true,
+      "error": "",
+      "batch_size": 6,
+      "batch_seconds": 0.298263,
+      "seconds_per_image": 0.049711
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-150",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "generic_with_features",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.3526512384414673,
+      "correct": true,
+      "error": "",
+      "batch_size": 6,
+      "batch_seconds": 0.298263,
+      "seconds_per_image": 0.049711
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-175",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "generic_with_features",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.3615618348121643,
+      "correct": true,
+      "error": "",
+      "batch_size": 6,
+      "batch_seconds": 0.298263,
+      "seconds_per_image": 0.049711
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-200",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "generic_with_features",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.3434463143348694,
+      "correct": true,
+      "error": "",
+      "batch_size": 6,
+      "batch_seconds": 0.298263,
+      "seconds_per_image": 0.049711
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-225",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "generic_with_features",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.34616944193840027,
+      "correct": true,
+      "error": "",
+      "batch_size": 6,
+      "batch_seconds": 0.298263,
+      "seconds_per_image": 0.049711
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-0",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "generic_with_primary_feature",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.3584389090538025,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.356466,
+      "seconds_per_image": 0.044558
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-25",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "generic_with_primary_feature",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.3495071530342102,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.356466,
+      "seconds_per_image": 0.044558
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-50",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "generic_with_primary_feature",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.3536251485347748,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.356466,
+      "seconds_per_image": 0.044558
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-75",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "generic_with_primary_feature",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.3586098551750183,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.356466,
+      "seconds_per_image": 0.044558
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-100",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "generic_with_primary_feature",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.3636087477207184,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.356466,
+      "seconds_per_image": 0.044558
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-125",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "generic_with_primary_feature",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.3571774959564209,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.356466,
+      "seconds_per_image": 0.044558
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-150",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "generic_with_primary_feature",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.36020419001579285,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.356466,
+      "seconds_per_image": 0.044558
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-175",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "generic_with_primary_feature",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.3592773377895355,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.356466,
+      "seconds_per_image": 0.044558
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-200",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "generic_with_primary_feature",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.35653164982795715,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.362313,
+      "seconds_per_image": 0.045289
+    },
+    {
+      "case_id": "lc25000-benign-lung-rank-225",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "strategy": "generic_with_primary_feature",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.3551022410392761,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.362313,
+      "seconds_per_image": 0.045289
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-0",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "generic_with_primary_feature",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.3438176214694977,
+      "correct": false,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.362313,
+      "seconds_per_image": 0.045289
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-25",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "generic_with_primary_feature",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.3456621468067169,
+      "correct": false,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.362313,
+      "seconds_per_image": 0.045289
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-50",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "generic_with_primary_feature",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls"
+      },
+      "prediction": "lung adenocarcinoma",
+      "score": 0.35083553194999695,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.362313,
+      "seconds_per_image": 0.045289
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-75",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "generic_with_primary_feature",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls"
+      },
+      "prediction": "lung adenocarcinoma",
+      "score": 0.34635090827941895,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.362313,
+      "seconds_per_image": 0.045289
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-100",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "generic_with_primary_feature",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls"
+      },
+      "prediction": "lung adenocarcinoma",
+      "score": 0.34447410702705383,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.362313,
+      "seconds_per_image": 0.045289
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-125",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "generic_with_primary_feature",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls"
+      },
+      "prediction": "lung adenocarcinoma",
+      "score": 0.34139975905418396,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.362313,
+      "seconds_per_image": 0.045289
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-150",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "generic_with_primary_feature",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls"
+      },
+      "prediction": "lung adenocarcinoma",
+      "score": 0.34099453687667847,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.379735,
+      "seconds_per_image": 0.047467
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-175",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "generic_with_primary_feature",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls"
+      },
+      "prediction": "benign lung tissue",
+      "score": 0.34072914719581604,
+      "correct": false,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.379735,
+      "seconds_per_image": 0.047467
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-200",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "generic_with_primary_feature",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls"
+      },
+      "prediction": "lung adenocarcinoma",
+      "score": 0.344154953956604,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.379735,
+      "seconds_per_image": 0.047467
+    },
+    {
+      "case_id": "lc25000-lung-adenocarcinoma-rank-225",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "strategy": "generic_with_primary_feature",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls"
+      },
+      "prediction": "lung adenocarcinoma",
+      "score": 0.3401893377304077,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.379735,
+      "seconds_per_image": 0.047467
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-0",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "generic_with_primary_feature",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.3404439687728882,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.379735,
+      "seconds_per_image": 0.047467
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-25",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "generic_with_primary_feature",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.3494262397289276,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.379735,
+      "seconds_per_image": 0.047467
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-50",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "generic_with_primary_feature",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.34783416986465454,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.379735,
+      "seconds_per_image": 0.047467
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-75",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "generic_with_primary_feature",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.34590643644332886,
+      "correct": true,
+      "error": "",
+      "batch_size": 8,
+      "batch_seconds": 0.379735,
+      "seconds_per_image": 0.047467
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-100",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "generic_with_primary_feature",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.34539464116096497,
+      "correct": true,
+      "error": "",
+      "batch_size": 6,
+      "batch_seconds": 0.336478,
+      "seconds_per_image": 0.05608
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-125",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "generic_with_primary_feature",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.34551072120666504,
+      "correct": true,
+      "error": "",
+      "batch_size": 6,
+      "batch_seconds": 0.336478,
+      "seconds_per_image": 0.05608
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-150",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "generic_with_primary_feature",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.3428630232810974,
+      "correct": true,
+      "error": "",
+      "batch_size": 6,
+      "batch_seconds": 0.336478,
+      "seconds_per_image": 0.05608
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-175",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "generic_with_primary_feature",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.34736305475234985,
+      "correct": true,
+      "error": "",
+      "batch_size": 6,
+      "batch_seconds": 0.336478,
+      "seconds_per_image": 0.05608
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-200",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "generic_with_primary_feature",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls"
+      },
+      "prediction": "lung adenocarcinoma",
+      "score": 0.3386215567588806,
+      "correct": false,
+      "error": "",
+      "batch_size": 6,
+      "batch_seconds": 0.336478,
+      "seconds_per_image": 0.05608
+    },
+    {
+      "case_id": "lc25000-lung-squamous-cell-carcinoma-rank-225",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "strategy": "generic_with_primary_feature",
+      "prompts": {
+        "benign lung tissue": "a histopathology image showing benign lung tissue with thin alveolar walls",
+        "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma with malignant glandular structures",
+        "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma with keratin pearls"
+      },
+      "prediction": "lung squamous cell carcinoma",
+      "score": 0.3384063243865967,
+      "correct": true,
+      "error": "",
+      "batch_size": 6,
+      "batch_seconds": 0.336478,
+      "seconds_per_image": 0.05608
+    }
+  ],
+  "summary": {
+    "label_only": {
+      "attempted": 0,
+      "successful": 0,
+      "correct": 0,
+      "accuracy": 0.0,
+      "mean_top_score": 0.0
+    },
+    "generic": {
+      "attempted": 30,
+      "successful": 30,
+      "correct": 26,
+      "accuracy": 0.8667,
+      "mean_top_score": 0.344115
+    },
+    "curated": {
+      "attempted": 0,
+      "successful": 0,
+      "correct": 0,
+      "accuracy": 0.0,
+      "mean_top_score": 0.0
+    },
+    "evidence_generated": {
+      "attempted": 30,
+      "successful": 30,
+      "correct": 24,
+      "accuracy": 0.8,
+      "mean_top_score": 0.352508
+    },
+    "generic_with_features": {
+      "attempted": 30,
+      "successful": 30,
+      "correct": 26,
+      "accuracy": 0.8667,
+      "mean_top_score": 0.351123
+    },
+    "generic_with_primary_feature": {
+      "attempted": 30,
+      "successful": 30,
+      "correct": 26,
+      "accuracy": 0.8667,
+      "mean_top_score": 0.348415
+    }
+  },
+  "prompt_selection": {
+    "method": "class-stratified first-half development / second-half held-out test",
+    "selection_metric": "development balanced accuracy",
+    "development_cases": 15,
+    "test_cases": 15,
+    "candidates": [
+      {
+        "strategies": [
+          "generic"
+        ],
+        "correct": 13,
+        "attempted": 15,
+        "accuracy": 0.8666666666666667,
+        "balanced_accuracy": 0.8666666666666667,
+        "per_label": {
+          "benign lung tissue": {
+            "correct": 5,
+            "attempted": 5
+          },
+          "lung adenocarcinoma": {
+            "correct": 3,
+            "attempted": 5
+          },
+          "lung squamous cell carcinoma": {
+            "correct": 5,
+            "attempted": 5
+          }
+        }
+      },
+      {
+        "strategies": [
+          "evidence_generated"
+        ],
+        "correct": 12,
+        "attempted": 15,
+        "accuracy": 0.8,
+        "balanced_accuracy": 0.7999999999999999,
+        "per_label": {
+          "benign lung tissue": {
+            "correct": 5,
+            "attempted": 5
+          },
+          "lung adenocarcinoma": {
+            "correct": 2,
+            "attempted": 5
+          },
+          "lung squamous cell carcinoma": {
+            "correct": 5,
+            "attempted": 5
+          }
+        }
+      },
+      {
+        "strategies": [
+          "generic_with_features"
+        ],
+        "correct": 13,
+        "attempted": 15,
+        "accuracy": 0.8666666666666667,
+        "balanced_accuracy": 0.8666666666666667,
+        "per_label": {
+          "benign lung tissue": {
+            "correct": 5,
+            "attempted": 5
+          },
+          "lung adenocarcinoma": {
+            "correct": 3,
+            "attempted": 5
+          },
+          "lung squamous cell carcinoma": {
+            "correct": 5,
+            "attempted": 5
+          }
+        }
+      },
+      {
+        "strategies": [
+          "generic_with_primary_feature"
+        ],
+        "correct": 13,
+        "attempted": 15,
+        "accuracy": 0.8666666666666667,
+        "balanced_accuracy": 0.8666666666666667,
+        "per_label": {
+          "benign lung tissue": {
+            "correct": 5,
+            "attempted": 5
+          },
+          "lung adenocarcinoma": {
+            "correct": 3,
+            "attempted": 5
+          },
+          "lung squamous cell carcinoma": {
+            "correct": 5,
+            "attempted": 5
+          }
+        }
+      },
+      {
+        "strategies": [
+          "generic",
+          "evidence_generated",
+          "generic_with_features"
+        ],
+        "correct": 13,
+        "attempted": 15,
+        "accuracy": 0.8666666666666667,
+        "balanced_accuracy": 0.8666666666666667,
+        "per_label": {
+          "benign lung tissue": {
+            "correct": 5,
+            "attempted": 5
+          },
+          "lung adenocarcinoma": {
+            "correct": 3,
+            "attempted": 5
+          },
+          "lung squamous cell carcinoma": {
+            "correct": 5,
+            "attempted": 5
+          }
+        }
+      },
+      {
+        "strategies": [
+          "generic",
+          "evidence_generated",
+          "generic_with_primary_feature"
+        ],
+        "correct": 13,
+        "attempted": 15,
+        "accuracy": 0.8666666666666667,
+        "balanced_accuracy": 0.8666666666666667,
+        "per_label": {
+          "benign lung tissue": {
+            "correct": 5,
+            "attempted": 5
+          },
+          "lung adenocarcinoma": {
+            "correct": 3,
+            "attempted": 5
+          },
+          "lung squamous cell carcinoma": {
+            "correct": 5,
+            "attempted": 5
+          }
+        }
+      },
+      {
+        "strategies": [
+          "generic",
+          "generic_with_features",
+          "generic_with_primary_feature"
+        ],
+        "correct": 13,
+        "attempted": 15,
+        "accuracy": 0.8666666666666667,
+        "balanced_accuracy": 0.8666666666666667,
+        "per_label": {
+          "benign lung tissue": {
+            "correct": 5,
+            "attempted": 5
+          },
+          "lung adenocarcinoma": {
+            "correct": 3,
+            "attempted": 5
+          },
+          "lung squamous cell carcinoma": {
+            "correct": 5,
+            "attempted": 5
+          }
+        }
+      }
+    ],
+    "selected_strategies": [
+      "generic"
+    ],
+    "development": {
+      "strategies": [
+        "generic"
+      ],
+      "correct": 13,
+      "attempted": 15,
+      "accuracy": 0.8666666666666667,
+      "balanced_accuracy": 0.8666666666666667,
+      "per_label": {
+        "benign lung tissue": {
+          "correct": 5,
+          "attempted": 5
+        },
+        "lung adenocarcinoma": {
+          "correct": 3,
+          "attempted": 5
+        },
+        "lung squamous cell carcinoma": {
+          "correct": 5,
+          "attempted": 5
+        }
+      }
+    },
+    "held_out_test": {
+      "strategies": [
+        "generic"
+      ],
+      "correct": 13,
+      "attempted": 15,
+      "accuracy": 0.8666666666666667,
+      "balanced_accuracy": 0.8666666666666667,
+      "per_label": {
+        "benign lung tissue": {
+          "correct": 5,
+          "attempted": 5
+        },
+        "lung adenocarcinoma": {
+          "correct": 3,
+          "attempted": 5
+        },
+        "lung squamous cell carcinoma": {
+          "correct": 5,
+          "attempted": 5
+        }
+      }
+    },
+    "generic_held_out_test": {
+      "strategies": [
+        "generic"
+      ],
+      "correct": 13,
+      "attempted": 15,
+      "accuracy": 0.8666666666666667,
+      "balanced_accuracy": 0.8666666666666667,
+      "per_label": {
+        "benign lung tissue": {
+          "correct": 5,
+          "attempted": 5
+        },
+        "lung adenocarcinoma": {
+          "correct": 3,
+          "attempted": 5
+        },
+        "lung squamous cell carcinoma": {
+          "correct": 5,
+          "attempted": 5
+        }
+      }
+    }
+  }
+}
