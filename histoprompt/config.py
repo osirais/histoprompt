@@ -40,12 +40,12 @@ class Settings:
     def from_env(cls) -> "Settings":
         _load_dotenv(ROOT / ".env.local")
         _load_dotenv(ROOT / ".env")
-        corpus = Path(os.getenv("ASHBY_CORPUS", "data/corpus.jsonl"))
+        corpus = Path(os.getenv("HISTOPROMPT_CORPUS", "data/corpus.jsonl"))
         if not corpus.is_absolute():
             corpus = ROOT / corpus
         return cls(
-            host=os.getenv("ASHBY_HOST", "127.0.0.1"),
-            port=int(os.getenv("ASHBY_PORT", "8787")),
+            host=os.getenv("HISTOPROMPT_HOST", "127.0.0.1"),
+            port=int(os.getenv("HISTOPROMPT_PORT", "8787")),
             corpus_path=corpus,
             lumen_api_key=os.getenv("LUMEN_API_KEY", ""),
             lumen_base_url=os.getenv(

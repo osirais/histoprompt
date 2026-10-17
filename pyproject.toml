@@ -3,7 +3,7 @@ requires = ["setuptools>=69"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "ashby"
+name = "histoprompt"
 version = "0.1.0"
 description = "Evidence-grounded pathology classification layer for MUSK"
 requires-python = ">=3.10"
@@ -26,10 +26,10 @@ musk = [
 dev = ["pytest>=8"]
 
 [project.scripts]
-ashby = "ashby.server:main"
+histoprompt = "histoprompt.server:main"
 
 [tool.setuptools.packages.find]
-include = ["ashby*"]
+include = ["histoprompt*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

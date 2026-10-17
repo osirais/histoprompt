@@ -5,13 +5,13 @@ project_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$project_dir"
 
 if ! command -v uv >/dev/null 2>&1; then
-  echo "Ashby needs uv. Install it from https://docs.astral.sh/uv/getting-started/installation/"
+  echo "HistoPrompt needs uv. Install it from https://docs.astral.sh/uv/getting-started/installation/"
   exit 1
 fi
 
 if [[ ! -f .env.local ]]; then
   cp .env.example .env.local
-  echo "Created .env.local. Add DELTA_USERNAME, then restart Ashby."
+  echo "Created .env.local. Add DELTA_USERNAME, then restart HistoPrompt."
 fi
 
 # shellcheck disable=SC1091

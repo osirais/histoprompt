@@ -1,7 +1,7 @@
 from types import SimpleNamespace
 from unittest.mock import patch
 
-from ashby.musk_backend import RemoteMusk
+from histoprompt.musk_backend import RemoteMusk
 
 
 def test_remote_musk_uses_ncsa_contract():
@@ -15,9 +15,13 @@ def test_remote_musk_uses_ncsa_contract():
         captured.update(url=url, payload=payload, headers=headers)
         return {"results": [{"predicted_label": "tumor", "score": 0.72}]}
 
-    with patch("ashby.musk_backend._post_json", side_effect=fake_post):
+    with patch("histoprompt.musk_backend._post_json", side_effect=fake_post):
         predictions = RemoteMusk(settings).classify(
-            "data:image/jpeg;base64,YQ==", ["tumor", "benign tissue"]
+            "data:image/jpeg;base64,YQ==",
+            {
+                "tumor": "a histopathology image showing malignant tumor cells",
+                "benign tissue": "a histopathology image showing benign tissue",
+            },
         )
 
     assert captured["url"] == "http://127.0.0.1:8801/classify"
@@ -25,8 +29,8 @@ def test_remote_musk_uses_ncsa_contract():
     assert captured["payload"] == {
         "images": ["YQ=="],
         "prompts": {
-            "tumor": "a histopathology image of tumor",
-            "benign tissue": "a histopathology image of benign tissue",
+            "tumor": "a histopathology image showing malignant tumor cells",
+            "benign tissue": "a histopathology image showing benign tissue",
         },
     }
     assert predictions[0].label == "tumor"

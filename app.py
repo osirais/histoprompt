@@ -1,4 +1,4 @@
-from ashby.server import main
+from histoprompt.server import main
 
 
 if __name__ == "__main__":

@@ -68,6 +68,19 @@ function fillList(selector, items, fallback = "None noted.") {
   }
 }
 
+function renderPredictions(selector, predictions) {
+  const bars = $(selector);
+  bars.innerHTML = "";
+  for (const prediction of predictions || []) {
+    const row = document.createElement("div");
+    row.className = "prediction";
+    row.innerHTML = `<span></span><div class="bar"><i></i></div><strong>${Math.round(prediction.probability * 100)}%</strong>`;
+    row.querySelector("span").textContent = prediction.label;
+    row.querySelector("i").style.width = `${prediction.probability * 100}%`;
+    bars.append(row);
+  }
+}
+
 function render(data) {
   const result = data.synthesis || {
     classification: "Unstructured model response",
@@ -84,15 +97,30 @@ function render(data) {
   fillList("#discrepancies", result.discrepancies);
   fillList("#review", result.recommended_review, "Human pathology review remains required.");
 
-  const bars = $("#prediction-bars");
-  bars.innerHTML = "";
-  for (const prediction of data.musk_predictions) {
-    const row = document.createElement("div");
-    row.className = "prediction";
-    row.innerHTML = `<span></span><div class="bar"><i></i></div><strong>${Math.round(prediction.probability * 100)}%</strong>`;
-    row.querySelector("span").textContent = prediction.label;
-    row.querySelector("i").style.width = `${prediction.probability * 100}%`;
-    bars.append(row);
+  const promptCards = $("#musk-prompts");
+  promptCards.innerHTML = "";
+  for (const [label, description] of Object.entries(data.musk_prompts || {})) {
+    const card = document.createElement("article");
+    card.className = "evidence-card";
+    const title = document.createElement("strong");
+    title.textContent = label;
+    const text = document.createElement("p");
+    text.textContent = description;
+    card.append(title, text);
+    promptCards.append(card);
+  }
+
+  renderPredictions("#baseline-prediction-bars", data.baseline_predictions);
+  renderPredictions("#prediction-bars", data.musk_predictions);
+  const baseline = data.baseline_predictions?.[0];
+  const enhanced = data.musk_predictions?.[0];
+  if (baseline && enhanced && baseline.label === enhanced.label) {
+    const delta = (enhanced.probability - baseline.probability) * 100;
+    $("#prompt-effect").textContent = `Prompt effect: same top label; ${delta >= 0 ? "+" : ""}${delta.toFixed(2)} percentage points.`;
+  } else if (baseline && enhanced) {
+    $("#prompt-effect").textContent = `Prompt effect: top label changed from ${baseline.label} to ${enhanced.label}.`;
+  } else {
+    $("#prompt-effect").textContent = "Prompt effect could not be calculated.";
   }
 
   const cards = $("#evidence-cards");
@@ -111,7 +139,8 @@ function render(data) {
     cards.append(card);
   }
   $("#model-used").textContent = `Synthesized by ${data.llm_model}`;
-  $("#prompt").textContent = data.prompt;
+  $("#prompt-generation-prompt").textContent = data.prompt_generation_prompt;
+  $("#review-prompt").textContent = data.review_prompt;
   showOnly("#results");
 }
 

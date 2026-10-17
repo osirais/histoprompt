@@ -17,5 +17,5 @@ jobs:
           enable-cache: true
       - run: uv sync --extra dev
       - run: uv run pytest -q
-      - run: uv run python -m compileall -q ashby app.py scripts tests
+      - run: uv run python -m compileall -q histoprompt app.py scripts tests
 

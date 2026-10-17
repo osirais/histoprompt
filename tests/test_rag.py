@@ -1,6 +1,6 @@
 import json
 
-from ashby.rag import EvidenceIndex
+from histoprompt.rag import EvidenceIndex
 
 
 def test_retrieval_ranks_matching_marker_document(tmp_path):

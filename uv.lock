@@ -8,49 +8,6 @@ resolution-markers = [
 ]
 
 [[package]]
-name = "ashby"
-version = "0.1.0"
-source = { editable = "." }
-
-[package.optional-dependencies]
-dev = [
-    { name = "pytest" },
-]
-musk = [
-    { name = "einops" },
-    { name = "fairscale" },
-    { name = "huggingface-hub" },
-    { name = "musk" },
-    { name = "numpy" },
-    { name = "pillow", version = "12.3.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
-    { name = "pillow", version = "13.0.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "safetensors" },
-    { name = "sentencepiece" },
-    { name = "timm" },
-    { name = "torch" },
-    { name = "torchvision" },
-    { name = "transformers" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "einops", marker = "extra == 'musk'" },
-    { name = "fairscale", marker = "extra == 'musk'" },
-    { name = "huggingface-hub", marker = "extra == 'musk'" },
-    { name = "musk", marker = "extra == 'musk'", git = "https://github.com/lilab-stanford/MUSK.git" },
-    { name = "numpy", marker = "extra == 'musk'", specifier = "==1.26.4" },
-    { name = "pillow", marker = "extra == 'musk'" },
-    { name = "pytest", marker = "extra == 'dev'", specifier = ">=8" },
-    { name = "safetensors", marker = "extra == 'musk'" },
-    { name = "sentencepiece", marker = "extra == 'musk'" },
-    { name = "timm", marker = "extra == 'musk'", specifier = "==0.9.8" },
-    { name = "torch", marker = "extra == 'musk'", specifier = "==2.0.1" },
-    { name = "torchvision", marker = "extra == 'musk'", specifier = "==0.15.2" },
-    { name = "transformers", marker = "extra == 'musk'", specifier = "==4.39.3" },
-]
-provides-extras = ["musk", "dev"]
-
-[[package]]
 name = "certifi"
 version = "2026.7.22"
 source = { registry = "https://pypi.org/simple" }
@@ -329,6 +286,49 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/4d/59/b35106dfa71b6eef605dc88bd038fe99c7f86fb132a15b60d0bf2f235b2c/hf_xet-1.7.0-cp38-abi3-win_amd64.whl", hash = "sha256:2b7bb5727889b0f2436dbaaad8fc4c3e66b8240d992716989e0c086b4278b1bc", size = 3822644, upload-time = "2026-10-06T20:18:40.052Z" },
     { url = "https://files.pythonhosted.org/packages/48/cd/072313585f74fe9d441e2eb5e0a4703c30586cd709810ea369675f61b74e/hf_xet-1.7.0-cp38-abi3-win_arm64.whl", hash = "sha256:acc3851cf2576a8fb2ae926da863f4efabe21303cf292e9a44332802ab0dcc6a", size = 3662436, upload-time = "2026-10-06T20:18:42.205Z" },
 ]
+
+[[package]]
+name = "histoprompt"
+version = "0.1.0"
+source = { editable = "." }
+
+[package.optional-dependencies]
+dev = [
+    { name = "pytest" },
+]
+musk = [
+    { name = "einops" },
+    { name = "fairscale" },
+    { name = "huggingface-hub" },
+    { name = "musk" },
+    { name = "numpy" },
+    { name = "pillow", version = "12.3.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
+    { name = "pillow", version = "13.0.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "safetensors" },
+    { name = "sentencepiece" },
+    { name = "timm" },
+    { name = "torch" },
+    { name = "torchvision" },
+    { name = "transformers" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "einops", marker = "extra == 'musk'" },
+    { name = "fairscale", marker = "extra == 'musk'" },
+    { name = "huggingface-hub", marker = "extra == 'musk'" },
+    { name = "musk", marker = "extra == 'musk'", git = "https://github.com/lilab-stanford/MUSK.git" },
+    { name = "numpy", marker = "extra == 'musk'", specifier = "==1.26.4" },
+    { name = "pillow", marker = "extra == 'musk'" },
+    { name = "pytest", marker = "extra == 'dev'", specifier = ">=8" },
+    { name = "safetensors", marker = "extra == 'musk'" },
+    { name = "sentencepiece", marker = "extra == 'musk'" },
+    { name = "timm", marker = "extra == 'musk'", specifier = "==0.9.8" },
+    { name = "torch", marker = "extra == 'musk'", specifier = "==2.0.1" },
+    { name = "torchvision", marker = "extra == 'musk'", specifier = "==0.15.2" },
+    { name = "transformers", marker = "extra == 'musk'", specifier = "==4.39.3" },
+]
+provides-extras = ["musk", "dev"]
 
 [[package]]
 name = "huggingface-hub"

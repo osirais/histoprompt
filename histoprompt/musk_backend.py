@@ -66,7 +66,9 @@ class RemoteMusk:
         self.endpoint = settings.musk_endpoint.rstrip("/")
         self.api_key = settings.musk_api_key
 
-    def classify(self, image_data_url: str, labels: list[str]) -> list[Prediction]:
+    def classify(
+        self, image_data_url: str, prompts: dict[str, str]
+    ) -> list[Prediction]:
         headers = {}
         if self.api_key:
             headers["Authorization"] = f"Bearer {self.api_key}"
@@ -78,9 +80,7 @@ class RemoteMusk:
             endpoint,
             {
                 "images": [image_b64],
-                "prompts": {
-                    label: f"a histopathology image of {label}" for label in labels
-                },
+                "prompts": prompts,
             },
             headers,
         )
@@ -177,9 +177,12 @@ class LocalMusk:
             self.__class__._loaded = (torch, Image, model, tokenizer, (transform, utils, device, dtype))
             return self.__class__._loaded
 
-    def classify(self, image_data_url: str, labels: list[str]) -> list[Prediction]:
+    def classify(
+        self, image_data_url: str, prompts: dict[str, str]
+    ) -> list[Prediction]:
         torch, Image, model, tokenizer, helpers = self._load()
         transform, utils, device, dtype = helpers
+        labels = list(prompts)
         try:
             image = Image.open(io.BytesIO(decode_image(image_data_url))).convert("RGB")
         except Exception as exc:
@@ -187,9 +190,9 @@ class LocalMusk:
         image_tensor = transform(image).unsqueeze(0).to(device=device, dtype=dtype)
         text_ids = []
         paddings = []
-        for label in labels:
+        for label, description in prompts.items():
             ids, padding = utils.xlm_tokenizer(
-                f"histopathology image of {label}", tokenizer, max_len=100
+                description, tokenizer, max_len=100
             )
             text_ids.append(torch.tensor(ids).unsqueeze(0))
             paddings.append(torch.tensor(padding).unsqueeze(0))

@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ashby · Evidence layer for MUSK</title>
+  <title>HistoPrompt · Evidence-guided MUSK</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="/" aria-label="Ashby home">
-      <span class="brand-mark">A</span>
-      <span>Ashby</span>
+    <a class="brand" href="/" aria-label="HistoPrompt home">
+      <span class="brand-mark">H</span>
+      <span>HistoPrompt</span>
     </a>
     <div class="pipeline-status" id="pipeline-status" aria-live="polite">
       <span class="status-dot waiting"></span>
@@ -21,16 +21,16 @@
   <main>
     <section class="hero">
       <p class="eyebrow">PATHOLOGY DECISION SUPPORT · RESEARCH PROTOTYPE</p>
-      <h1>Make the model show its work.</h1>
-      <p class="lede">MUSK reads the slide. Ashby retrieves local evidence, checks the model against the report, and produces a traceable assessment for human review.</p>
+      <h1>Give MUSK better questions.</h1>
+      <p class="lede">HistoPrompt combines the report with local evidence to create case-specific visual prompts, sends those prompts to MUSK, and checks the result for human review.</p>
       <div class="flow" aria-label="Analysis flow">
         <div><span>01</span><strong>Slide + report</strong></div>
         <i>→</i>
-        <div><span>02</span><strong>MUSK scores</strong></div>
+        <div><span>02</span><strong>Retrieve evidence</strong></div>
         <i>→</i>
-        <div><span>03</span><strong>Local evidence</strong></div>
+        <div><span>03</span><strong>Enrich prompts</strong></div>
         <i>→</i>
-        <div><span>04</span><strong>Grounded review</strong></div>
+        <div><span>04</span><strong>MUSK + review</strong></div>
       </div>
     </section>
 
@@ -83,7 +83,7 @@ benign lung tissue</textarea>
         </div>
 
         <button class="primary-button" type="submit" id="run-button">
-          <span>Run evidence review</span><b>→</b>
+          <span>Run prompt-enhanced review</span><b>→</b>
         </button>
         <p class="privacy-note">Use de-identified or public research data only. This prototype is not validated for clinical use.</p>
       </form>
@@ -97,8 +97,8 @@ benign lung tissue</textarea>
 
         <div class="loading-state hidden" id="loading-state">
           <div class="scan-card"><div></div></div>
-          <h2 id="loading-title">Running MUSK inference…</h2>
-          <p>First use can take several minutes while model weights load.</p>
+          <h2 id="loading-title">Building case-specific prompts…</h2>
+          <p>Retrieving evidence, enriching the candidate descriptions, then running MUSK.</p>
         </div>
 
         <div class="error-card hidden" id="error-card">
@@ -118,9 +118,21 @@ benign lung tissue</textarea>
           <p class="assessment" id="assessment"></p>
 
           <div class="result-section">
-            <h3>MUSK zero-shot result</h3>
-            <div id="prediction-bars" class="prediction-bars"></div>
+            <h3>Case-specific prompts sent to MUSK</h3>
+            <div id="musk-prompts" class="evidence-cards"></div>
           </div>
+
+          <div class="result-grid">
+            <div class="result-section">
+              <h3>Plain MUSK baseline</h3>
+              <div id="baseline-prediction-bars" class="prediction-bars"></div>
+            </div>
+            <div class="result-section">
+              <h3>HistoPrompt-enhanced MUSK</h3>
+              <div id="prediction-bars" class="prediction-bars"></div>
+            </div>
+          </div>
+          <p class="privacy-note" id="prompt-effect"></p>
 
           <div class="result-grid">
             <div class="result-section">
@@ -143,8 +155,12 @@ benign lung tissue</textarea>
           </div>
 
           <details>
-            <summary>Show generated RAG prompt</summary>
-            <pre id="prompt"></pre>
+            <summary>Show prompt-generation request</summary>
+            <pre id="prompt-generation-prompt"></pre>
+          </details>
+          <details>
+            <summary>Show final review request</summary>
+            <pre id="review-prompt"></pre>
           </details>
         </div>
       </section>

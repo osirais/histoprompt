@@ -18,15 +18,15 @@ WEB_ROOT = ROOT / "web"
 MAX_REQUEST_BYTES = 35 * 1024 * 1024
 
 
-class AshbyServer(ThreadingHTTPServer):
+class HistoPromptServer(ThreadingHTTPServer):
     def __init__(self, address: tuple[str, int], settings: Settings):
-        super().__init__(address, AshbyHandler)
+        super().__init__(address, HistoPromptHandler)
         self.settings = settings
         self.pipeline = AnalysisPipeline.create(settings)
 
 
-class AshbyHandler(BaseHTTPRequestHandler):
-    server: AshbyServer
+class HistoPromptHandler(BaseHTTPRequestHandler):
+    server: HistoPromptServer
 
     def log_message(self, format: str, *args: Any) -> None:
         print(f"[{self.log_date_time_string()}] {format % args}")
@@ -114,8 +114,8 @@ class AshbyHandler(BaseHTTPRequestHandler):
 
 def main() -> None:
     settings = Settings.from_env()
-    server = AshbyServer((settings.host, settings.port), settings)
-    print(f"Ashby is running at http://{settings.host}:{settings.port}")
+    server = HistoPromptServer((settings.host, settings.port), settings)
+    print(f"HistoPrompt is running at http://{settings.host}:{settings.port}")
     print("Research prototype only; do not use for patient care.")
     try:
         server.serve_forever()

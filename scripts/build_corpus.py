@@ -29,7 +29,7 @@ def fetch(pmids: list[str]) -> list[dict[str, str]]:
         {"db": "pubmed", "id": ",".join(pmids), "retmode": "xml"}
     )
     request = urllib.request.Request(
-        f"{EUTILS}?{query}", headers={"User-Agent": "ashby-prototype/0.1"}
+        f"{EUTILS}?{query}", headers={"User-Agent": "histoprompt-prototype/0.1"}
     )
     with urllib.request.urlopen(request, timeout=60) as response:
         root = ET.fromstring(response.read())
