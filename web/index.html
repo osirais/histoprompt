@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ashby · Evidence layer for MUSK</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Ashby home">
+      <span class="brand-mark">A</span>
+      <span>Ashby</span>
+    </a>
+    <div class="pipeline-status" id="pipeline-status" aria-live="polite">
+      <span class="status-dot waiting"></span>
+      Checking pipeline…
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">PATHOLOGY DECISION SUPPORT · RESEARCH PROTOTYPE</p>
+      <h1>Make the model show its work.</h1>
+      <p class="lede">MUSK reads the slide. Ashby retrieves local evidence, checks the model against the report, and produces a traceable assessment for human review.</p>
+      <div class="flow" aria-label="Analysis flow">
+        <div><span>01</span><strong>Slide + report</strong></div>
+        <i>→</i>
+        <div><span>02</span><strong>MUSK scores</strong></div>
+        <i>→</i>
+        <div><span>03</span><strong>Local evidence</strong></div>
+        <i>→</i>
+        <div><span>04</span><strong>Grounded review</strong></div>
+      </div>
+    </section>
+
+    <section class="workspace">
+      <form id="case-form" class="case-panel">
+        <div class="section-heading">
+          <div>
+            <p class="step">CASE INPUT</p>
+            <h2>Analyze a de-identified case</h2>
+          </div>
+          <button class="text-button" type="button" id="load-sample">Load sample text</button>
+        </div>
+
+        <label class="dropzone" id="dropzone" for="image-input">
+          <input id="image-input" type="file" accept="image/png,image/jpeg,image/webp" required>
+          <img id="preview" alt="Selected pathology image preview">
+          <div id="drop-copy">
+            <span class="upload-icon">↥</span>
+            <strong>Drop a pathology image here</strong>
+            <small>PNG, JPEG, or WebP · max 25 MB</small>
+          </div>
+        </label>
+
+        <label>
+          <span>De-identified pathology report</span>
+          <textarea id="report" rows="8" placeholder="Paste morphology, immunostains, and relevant clinical context…" required></textarea>
+        </label>
+
+        <label>
+          <span>Candidate labels <em>one per line</em></span>
+          <textarea id="labels" rows="4" required>lung adenocarcinoma
+lung squamous cell carcinoma
+metastatic colorectal adenocarcinoma
+benign lung tissue</textarea>
+        </label>
+
+        <div class="form-row">
+          <label>
+            <span>Lumen model</span>
+            <select id="model"><option value="">Auto-select available model</option></select>
+          </label>
+          <label>
+            <span>Evidence results</span>
+            <select id="top-k">
+              <option>3</option>
+              <option selected>5</option>
+              <option>7</option>
+            </select>
+          </label>
+        </div>
+
+        <button class="primary-button" type="submit" id="run-button">
+          <span>Run evidence review</span><b>→</b>
+        </button>
+        <p class="privacy-note">Use de-identified or public research data only. This prototype is not validated for clinical use.</p>
+      </form>
+
+      <section class="results-panel" aria-live="polite">
+        <div class="empty-state" id="empty-state">
+          <div class="empty-orbit"><span></span></div>
+          <h2>Your evidence trail will appear here</h2>
+          <p>Run a case to compare MUSK’s image classification with the report and local literature.</p>
+        </div>
+
+        <div class="loading-state hidden" id="loading-state">
+          <div class="scan-card"><div></div></div>
+          <h2 id="loading-title">Running MUSK inference…</h2>
+          <p>First use can take several minutes while model weights load.</p>
+        </div>
+
+        <div class="error-card hidden" id="error-card">
+          <p class="step">PIPELINE NEEDS ATTENTION</p>
+          <h2>Couldn’t complete the review</h2>
+          <p id="error-message"></p>
+        </div>
+
+        <div class="results hidden" id="results">
+          <div class="result-header">
+            <div>
+              <p class="step">EVIDENCE-GROUNDED REVIEW</p>
+              <h2 id="classification">—</h2>
+            </div>
+            <div class="confidence-ring" id="confidence-ring"><span id="confidence">—</span><small>confidence</small></div>
+          </div>
+          <p class="assessment" id="assessment"></p>
+
+          <div class="result-section">
+            <h3>MUSK zero-shot result</h3>
+            <div id="prediction-bars" class="prediction-bars"></div>
+          </div>
+
+          <div class="result-grid">
+            <div class="result-section">
+              <h3>Why this assessment</h3>
+              <ul id="rationale"></ul>
+            </div>
+            <div class="result-section">
+              <h3>Discrepancies & review</h3>
+              <ul id="discrepancies"></ul>
+              <ul id="review"></ul>
+            </div>
+          </div>
+
+          <div class="result-section">
+            <div class="section-heading compact">
+              <h3>Retrieved evidence</h3>
+              <span id="model-used"></span>
+            </div>
+            <div id="evidence-cards" class="evidence-cards"></div>
+          </div>
+
+          <details>
+            <summary>Show generated RAG prompt</summary>
+            <pre id="prompt"></pre>
+          </details>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>
+

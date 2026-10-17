@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ashby"
+version = "0.1.0"
+description = "Evidence-grounded pathology classification layer for MUSK"
+requires-python = ">=3.10"
+
+[project.optional-dependencies]
+musk = [
+  "Pillow",
+  "torch==2.0.1",
+  "torchvision==0.15.2",
+  "timm==0.9.8",
+  "numpy==1.26.4",
+  "einops",
+  "fairscale",
+  "transformers==4.39.3",
+  "sentencepiece",
+  "huggingface-hub",
+  "safetensors",
+  "musk @ git+https://github.com/lilab-stanford/MUSK.git",
+]
+dev = ["pytest>=8"]
+
+[project.scripts]
+ashby = "ashby.server:main"
+
+[tool.setuptools.packages.find]
+include = ["ashby*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
