@@ -1,0 +1,92 @@
+{
+  "name": "HistoPrompt multi-disease pilot",
+  "version": 1,
+  "families": {
+    "lung histopathology": {
+      "prompts": {
+        "benign lung tissue": "benign lung tissue with open alveolar spaces, delicate septa, bland pneumocytes, and no cytologic atypia",
+        "lung adenocarcinoma": "lung adenocarcinoma with malignant gland formation, acinar or lepidic growth, atypical columnar cells, and possible mucin",
+        "lung squamous cell carcinoma": "lung squamous cell carcinoma with atypical squamous nests, keratin pearls, intercellular bridges, and eosinophilic cytoplasm"
+      }
+    },
+    "colon histopathology": {
+      "prompts": {
+        "benign colonic tissue": "benign colonic tissue with orderly parallel crypts, uniform goblet cells, preserved lamina propria, and no dysplasia",
+        "colorectal adenocarcinoma": "colorectal adenocarcinoma with infiltrative irregular glands, hyperchromatic stratified nuclei, luminal dirty necrosis, and desmoplastic stroma"
+      }
+    },
+    "infectious esophagitis": {
+      "prompts": {
+        "Candida esophagitis": "Candida esophagitis with pseudohyphae and budding yeast invading squamous epithelium with neutrophilic inflammation",
+        "herpes simplex virus esophagitis": "herpes simplex virus esophagitis with multinucleated squamous cells, nuclear molding, chromatin margination, and ground-glass intranuclear inclusions",
+        "cytomegalovirus esophagitis": "cytomegalovirus esophagitis with enlarged stromal or endothelial cells containing basophilic owl-eye intranuclear inclusions and clear halos"
+      }
+    }
+  },
+  "cases": [
+    {
+      "id": "lc25000-colon-adenocarcinoma-example",
+      "family": "colon histopathology",
+      "ground_truth": "colorectal adenocarcinoma",
+      "image_url": "https://raw.githubusercontent.com/openmedlab/Awesome-Medical-Dataset/main/resources/appendix/LC25000_1.webp",
+      "source_url": "https://github.com/tampapath/lung_colon_image_set",
+      "source_note": "LC25000 example image reproduced by the OpenMedLab dataset catalog."
+    },
+    {
+      "id": "lc25000-benign-colon-example",
+      "family": "colon histopathology",
+      "ground_truth": "benign colonic tissue",
+      "image_url": "https://raw.githubusercontent.com/openmedlab/Awesome-Medical-Dataset/main/resources/appendix/LC25000_2.webp",
+      "source_url": "https://github.com/tampapath/lung_colon_image_set",
+      "source_note": "LC25000 example image reproduced by the OpenMedLab dataset catalog."
+    },
+    {
+      "id": "lc25000-lung-adenocarcinoma-example",
+      "family": "lung histopathology",
+      "ground_truth": "lung adenocarcinoma",
+      "image_url": "https://raw.githubusercontent.com/openmedlab/Awesome-Medical-Dataset/main/resources/appendix/LC25000_3.webp",
+      "source_url": "https://github.com/tampapath/lung_colon_image_set",
+      "source_note": "LC25000 example image reproduced by the OpenMedLab dataset catalog."
+    },
+    {
+      "id": "lc25000-lung-squamous-example",
+      "family": "lung histopathology",
+      "ground_truth": "lung squamous cell carcinoma",
+      "image_url": "https://raw.githubusercontent.com/openmedlab/Awesome-Medical-Dataset/main/resources/appendix/LC25000_4.webp",
+      "source_url": "https://github.com/tampapath/lung_colon_image_set",
+      "source_note": "LC25000 example image reproduced by the OpenMedLab dataset catalog."
+    },
+    {
+      "id": "lc25000-benign-lung-example",
+      "family": "lung histopathology",
+      "ground_truth": "benign lung tissue",
+      "image_url": "https://raw.githubusercontent.com/openmedlab/Awesome-Medical-Dataset/main/resources/appendix/LC25000_5.webp",
+      "source_url": "https://github.com/tampapath/lung_colon_image_set",
+      "source_note": "LC25000 example image reproduced by the OpenMedLab dataset catalog."
+    },
+    {
+      "id": "pmc7005969-candida-he",
+      "family": "infectious esophagitis",
+      "ground_truth": "Candida esophagitis",
+      "image_url": "https://cdn.ncbi.nlm.nih.gov/pmc/blobs/4ebe/7005969/be4cf99f8d3f/10.1177_2374289520903438-fig1.jpg",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7005969/",
+      "source_note": "Educational Case: Infectious Esophagitis, Figure 1, H&E."
+    },
+    {
+      "id": "pmc7005969-hsv-he",
+      "family": "infectious esophagitis",
+      "ground_truth": "herpes simplex virus esophagitis",
+      "image_url": "https://cdn.ncbi.nlm.nih.gov/pmc/blobs/4ebe/7005969/7586d580845f/10.1177_2374289520903438-fig3.jpg",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7005969/",
+      "source_note": "Educational Case: Infectious Esophagitis, Figure 3, H&E."
+    },
+    {
+      "id": "pmc7005969-cmv-he",
+      "family": "infectious esophagitis",
+      "ground_truth": "cytomegalovirus esophagitis",
+      "image_url": "https://cdn.ncbi.nlm.nih.gov/pmc/blobs/4ebe/7005969/a7d83357cd91/10.1177_2374289520903438-fig5.jpg",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7005969/",
+      "source_note": "Educational Case: Infectious Esophagitis, Figure 5, H&E."
+    }
+  ]
+}

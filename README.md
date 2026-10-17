@@ -85,3 +85,15 @@ uv run pytest
 ```
 
 Tests cover retrieval, structured response parsing, prompt enrichment order, fallback prompts, and the NCSA MUSK request schema. GitHub Actions does not download the gated checkpoint or call live services.
+
+## Multi-disease prompt benchmark
+
+The repository includes a fixed eight-image pilot spanning lung cancer, colon cancer, and infectious esophagitis. It compares label-only, generic histology, hand-curated morphology, and locally retrieved evidence converted into morphology prompts by Lumen. Evidence prompts are generated once per candidate family and never receive a report, image contents, or the correct label.
+
+With the Delta tunnel open, run:
+
+```bash
+uv run python scripts/run_benchmark.py
+```
+
+The runner caches public source images outside Git and writes auditable raw output to `benchmarks/results/latest.json` plus a readable comparison to `benchmarks/results/latest.md`. This is an integration pilot, not clinical validation: it uses only eight selected educational/example images, each task has an organ-specific candidate list, and the hosted API exposes only its winning label and score.
