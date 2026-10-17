@@ -20,3 +20,13 @@ Observed pilot result: label-only and generic prompts were 8/8; curated and evid
 - [x] Store the exact image bytes, SHA-256 checksums, source links, selection method, and license notes in the repository.
 - [x] Explain why sample counts remain small and specify the next credible benchmark.
 - [x] Run final checks, self-review, commit, push, and verify CI.
+
+## 1,000-image benchmark
+
+- [x] Add an additive batched remote-inference interface and tests for response ordering and failures.
+- [x] Generate a fixed, balanced 1,000-image LC25000 manifest with local image bytes and checksums.
+- [x] Update the benchmark runner to process same-family images in configurable batches and record latency.
+- [x] At the user's direction, run Original and Enhanced MUSK on the fixed 600-image lung subset and save a readable report.
+- [x] Verify image checksums, tests, results, repository size, and credentials; then commit, push, and verify CI.
+
+Risks: the hosted endpoint may limit request size or GPU batch size; LC25000 contains augmented derivatives and is not a patient-independent clinical dataset; batching must preserve image/result order; a failed batch must remain auditable rather than silently dropping cases.

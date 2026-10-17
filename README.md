@@ -18,14 +18,10 @@ You need an NCSA account with Delta access, Duo, [Git](https://git-scm.com/), an
 ```bash
 git clone git@github.com:osirais/histoprompt.git
 cd histoprompt
-cp .env.example .env.local
+./scripts/setup.sh
 ```
 
-Edit `.env.local` and fill in your Delta username:
-
-```dotenv
-DELTA_USERNAME=your_ncsa_username
-```
+The setup asks for a Lumen API key and either the hosted MUSK credentials or a Hugging Face token for local MUSK. It saves them only in the ignored `.env.local` file. Credentials are not included in Git, even for a private repository.
 
 Then use two terminals:
 
@@ -39,7 +35,7 @@ Then use two terminals:
 
 Open <http://127.0.0.1:8787>. The status strip should show MUSK, Lumen, and the evidence corpus as ready before analysis.
 
-The shared MUSK host, event-wide bearer key, and current Lumen key are bundled in `.env.example` by request so the private-repo clone works immediately. The hosted MUSK service is expected to stop working Sunday at 6 PM. Rotate or remove the committed credentials after the event.
+The hosted path requires three things that cannot be created by cloning: an NCSA account with Delta access, a Lumen API key, and the shared MUSK bearer key. Obtain those separately from the project owner or event organizers. The setup script reports any missing value before starting the app.
 
 ## What it adds to MUSK
 
@@ -99,3 +95,17 @@ uv run python scripts/run_benchmark.py
 The exact benchmark images are stored in `benchmarks/images/`. The manifest records a SHA-256 checksum for every image, and the runner verifies it before inference. This lets another model receive the same image bytes later. Source, selection, and license details are in `benchmarks/images/SOURCES.md`.
 
 The runner writes auditable raw output to `benchmarks/results/latest.json` plus a readable comparison to `benchmarks/results/latest.md`. This remains an engineering benchmark, not clinical validation: sample counts are small, each task has a tissue-specific candidate list, and the hosted API exposes only its winning label and score.
+
+### Large batched benchmark
+
+The repository also stores a deterministic, balanced 1,000-image LC25000 collection. The completed comparison uses its 600-image lung subset: 200 benign lung images, 200 lung adenocarcinoma images, and 200 lung squamous-cell carcinoma images. Run the same comparison with:
+
+```bash
+uv run python scripts/run_benchmark.py \
+  --manifest benchmarks/lc25000-600/manifest.json \
+  --output-dir benchmarks/lc25000-600/results \
+  --batch-size 32 \
+  --strategies generic evidence_generated
+```
+
+Batching reduced measured MUSK time to 0.391 seconds per image and prompt strategy. In the saved run, Original MUSK scored 538/600 (89.7%) and Enhanced MUSK scored 478/600 (79.7%). See `benchmarks/lc25000-600/results/latest.md` for the label-level breakdown and limitations.

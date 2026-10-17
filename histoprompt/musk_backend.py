@@ -69,17 +69,27 @@ class RemoteMusk:
     def classify(
         self, image_data_url: str, prompts: dict[str, str]
     ) -> list[Prediction]:
+        return self.classify_batch([image_data_url], prompts)
+
+    def classify_batch(
+        self, image_data_urls: list[str], prompts: dict[str, str]
+    ) -> list[Prediction]:
+        if not image_data_urls:
+            return []
         headers = {}
         if self.api_key:
             headers["Authorization"] = f"Bearer {self.api_key}"
         endpoint = self.endpoint
         if not endpoint.endswith("/classify"):
             endpoint += "/classify"
-        image_b64 = base64.b64encode(decode_image(image_data_url)).decode("ascii")
+        images_b64 = [
+            base64.b64encode(decode_image(image_data_url)).decode("ascii")
+            for image_data_url in image_data_urls
+        ]
         response = _post_json(
             endpoint,
             {
-                "images": [image_b64],
+                "images": images_b64,
                 "prompts": prompts,
             },
             headers,
@@ -87,6 +97,11 @@ class RemoteMusk:
         values = response.get("results") if isinstance(response, dict) else None
         if not isinstance(values, list) or not values:
             raise MuskError("MUSK endpoint did not return a results array.")
+        if len(values) != len(image_data_urls):
+            raise MuskError(
+                f"MUSK endpoint returned {len(values)} results for "
+                f"{len(image_data_urls)} images."
+            )
         try:
             predictions = [
                 Prediction(str(item["predicted_label"]), float(item["score"]))
@@ -96,7 +111,7 @@ class RemoteMusk:
             raise MuskError(
                 "Each MUSK result must contain predicted_label and score fields."
             ) from exc
-        return sorted(predictions, key=lambda item: item.probability, reverse=True)
+        return predictions
 
 
 class LocalMusk:

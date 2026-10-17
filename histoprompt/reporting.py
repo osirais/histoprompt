@@ -30,15 +30,26 @@ def markdown_report(result: dict[str, Any]) -> str:
             improvements += 1
 
     if delta > 0:
-        outcome = f"The enhanced prompts improved accuracy by {delta:.1%}."
+        outcome = f"The enhanced prompts improved accuracy by {delta * 100:.1f} percentage points."
     elif delta < 0:
-        outcome = f"The enhanced prompts reduced accuracy by {abs(delta):.1%}."
+        outcome = f"The enhanced prompts reduced accuracy by {abs(delta) * 100:.1f} percentage points."
     else:
         outcome = "The enhanced prompts did not change total accuracy."
     outcome += f" They fixed {improvements} original errors and introduced {regressions} new errors."
 
+    benchmark_name = result.get("benchmark_name", "HistoPrompt multi-disease benchmark")
+    report_context = result.get("report_context", {})
+    sample_note = report_context.get(
+        "sample_note",
+        "This run vendors the exact image bytes in the repository and verifies a SHA-256 checksum before inference.",
+    )
+    source_note = report_context.get(
+        "source_note",
+        "LC25000 images use fixed evenly spaced rows from the public dataset. Infectious-esophagitis and skin-cancer images are published educational figures.",
+    )
+
     lines = [
-        "# HistoPrompt multi-disease benchmark",
+        f"# {benchmark_name}",
         "",
         "## Short answer",
         "",
@@ -53,12 +64,13 @@ def markdown_report(result: dict[str, Any]) -> str:
         f"**{generic['correct']}/{generic['successful']}** | **{generic['accuracy']:.1%}** | — |",
         f"| **Enhanced MUSK** | Image + descriptions generated from retrieved evidence | "
         f"**{evidence_generated['correct']}/{evidence_generated['successful']}** | "
-        f"**{evidence_generated['accuracy']:.1%}** | **{delta:+.1%}** |",
+        f"**{evidence_generated['accuracy']:.1%}** | **{delta * 100:+.1f} points** |",
         "",
         "## What we tested",
         "",
         f"This run used {len(result['cases'])} fixed public pathology images. It covered "
-        f"{disease_conditions} disease conditions and {len(benign_controls)} benign controls.",
+        f"{disease_conditions} disease conditions and {len(benign_controls)} benign "
+        f"{'control' if len(benign_controls) == 1 else 'controls'}.",
         "",
         "| Clinical group | Images | Correct labels represented | Labels MUSK chose between |",
         "|---|---:|---|---|",
@@ -75,7 +87,12 @@ def markdown_report(result: dict[str, Any]) -> str:
     lines.extend(
         [
             "",
-            "The test was not lung-only. The table shows the number of images in each clinical group. Sample counts still differ by source, so the combined accuracy must be interpreted carefully.",
+            (
+                "The table shows the number of images in each clinical group. Sample counts "
+                "still differ by source, so the combined accuracy must be interpreted carefully."
+                if len(cases_by_family) > 1
+                else "This run deliberately focuses on one clinical group so both prompt versions are compared on the same fixed images."
+            ),
             "",
             "## Results by clinical group",
             "",
@@ -102,6 +119,75 @@ def markdown_report(result: dict[str, Any]) -> str:
     lines.extend(
         [
             "",
+            "## Results by label",
+            "",
+            "| Correct label | Images | Original MUSK | Enhanced MUSK | Enhanced model's most common error |",
+            "|---|---:|---:|---:|---|",
+        ]
+    )
+    label_stats = []
+    for label in labels:
+        baseline_rows = [
+            row for row in result["results"]
+            if row["ground_truth"] == label and row["strategy"] == "generic" and not row.get("error")
+        ]
+        enhanced_rows = [
+            row for row in result["results"]
+            if row["ground_truth"] == label
+            and row["strategy"] == "evidence_generated"
+            and not row.get("error")
+        ]
+        baseline_correct = sum(bool(row.get("correct")) for row in baseline_rows)
+        enhanced_correct = sum(bool(row.get("correct")) for row in enhanced_rows)
+        wrong_predictions: dict[str, int] = {}
+        for row in enhanced_rows:
+            if not row.get("correct"):
+                prediction = str(row.get("prediction") or "Error")
+                wrong_predictions[prediction] = wrong_predictions.get(prediction, 0) + 1
+        common_error = (
+            max(wrong_predictions.items(), key=lambda item: item[1])
+            if wrong_predictions
+            else None
+        )
+        error_text = f"{common_error[0]} ({common_error[1]})" if common_error else "None"
+        label_stats.append(
+            {
+                "label": label,
+                "baseline_correct": baseline_correct,
+                "enhanced_correct": enhanced_correct,
+                "total": len(baseline_rows),
+                "common_error": common_error,
+            }
+        )
+        lines.append(
+            f"| {label} | {len(baseline_rows)} | {baseline_correct}/{len(baseline_rows)} | "
+            f"{enhanced_correct}/{len(enhanced_rows)} | {error_text} |"
+        )
+    largest_decline = min(
+        label_stats,
+        key=lambda item: item["enhanced_correct"] - item["baseline_correct"],
+    )
+    decline = largest_decline["enhanced_correct"] - largest_decline["baseline_correct"]
+    if decline < 0:
+        lines.extend(
+            [
+                "",
+                "## Main failure pattern",
+                "",
+                f"The largest decline was for {largest_decline['label']}: Original MUSK got "
+                f"{largest_decline['baseline_correct']}/{largest_decline['total']} correct, "
+                f"while Enhanced MUSK got {largest_decline['enhanced_correct']}/{largest_decline['total']} correct.",
+            ]
+        )
+        if largest_decline["common_error"]:
+            wrong_label, wrong_count = largest_decline["common_error"]
+            lines.append(
+                f"Enhanced MUSK labeled {wrong_count}/{largest_decline['total']} of these images "
+                f"as {wrong_label}."
+            )
+    lines.extend(
+        [
+            "",
             "## What original and enhanced mean",
             "",
             "- **Original MUSK:** The model received the image and a generic prompt such as `a histopathology image showing lung adenocarcinoma`.",
@@ -114,7 +200,7 @@ def markdown_report(result: dict[str, Any]) -> str:
             "|---|---|---|---|---|",
         ]
     )
-    for case, baseline, enhanced in comparison_rows:
+    for case, baseline, enhanced in comparison_rows[:25]:
         baseline_prediction = baseline.get("prediction") or "Error"
         enhanced_prediction = enhanced.get("prediction") or "Error"
         if baseline.get("correct") and enhanced.get("correct"):
@@ -131,29 +217,65 @@ def markdown_report(result: dict[str, Any]) -> str:
         )
     if not comparison_rows:
         lines.append("| — | — | — | — | No predictions changed |")
+    elif len(comparison_rows) > 25:
+        lines.extend(
+            [
+                "",
+                f"The table shows the first 25 of {len(comparison_rows)} changed predictions. "
+                "The raw JSON contains every case.",
+            ]
+        )
+    secondary_rows = []
+    if result["summary"]["label_only"]["successful"]:
+        item = result["summary"]["label_only"]
+        secondary_rows.append(
+            f"| Label text only | {item['correct']}/{item['successful']} | {item['accuracy']:.1%} |"
+        )
+    if result["summary"]["curated"]["successful"]:
+        item = result["summary"]["curated"]
+        secondary_rows.append(
+            f"| Hand-written microscopic features | {item['correct']}/{item['successful']} | {item['accuracy']:.1%} |"
+        )
+    if secondary_rows:
+        lines.extend(
+            [
+                "",
+                "## Other prompt versions",
+                "",
+                "The runner also tested diagnostic variants. These are secondary results, not the main product comparison.",
+                "",
+                "| Prompt version | Correct | Accuracy |",
+                "|---|---:|---:|",
+                *secondary_rows,
+                "",
+                "These extra variants help separate the effect of retrieval from the effect of adding longer microscopic descriptions.",
+            ]
+        )
+    performance = result.get("performance", {})
+    if performance:
+        lines.extend(
+            [
+                "",
+                "## Runtime",
+                "",
+                f"- Configured batch size: {performance['configured_batch_size']} images",
+                f"- Completed batches: {performance['completed_batches']}",
+                f"- Total MUSK inference time: {performance['inference_seconds']:.1f} seconds",
+                f"- Mean time per image and prompt strategy: {performance['mean_inference_seconds_per_image_strategy']:.3f} seconds",
+            ]
+        )
     lines.extend(
         [
             "",
-            "## Other prompt versions",
+            "## Reproducibility and sample size",
             "",
-            "The runner also tested two diagnostic variants. These are secondary results, not the main product comparison.",
+            sample_note,
             "",
-            "| Prompt version | Correct | Accuracy |",
-            "|---|---:|---:|",
-            f"| Label text only | {result['summary']['label_only']['correct']}/{result['summary']['label_only']['successful']} | {result['summary']['label_only']['accuracy']:.1%} |",
-            f"| Hand-written microscopic features | {result['summary']['curated']['correct']}/{result['summary']['curated']['successful']} | {result['summary']['curated']['accuracy']:.1%} |",
-            "",
-            "These extra variants help separate the effect of retrieval from the effect of adding longer microscopic descriptions.",
-            "",
-            "## Why sample counts are still small",
-            "",
-            "The first run used eight images because its goal was to test the full path quickly. This expanded run vendors the exact image bytes in the repository and verifies a SHA-256 checksum before inference.",
-            "",
-            "The expanded set adds repeated samples for the LC25000 and infectious-esophagitis labels plus a skin-cancer group. Some labels still have only one published example, and selected educational images can be easier than random clinical images.",
+            source_note,
             "",
             "## What a broader benchmark should add",
             "",
-            "- Use at least 10 to 20 independently selected images for each label.",
+            "- Use patient-independent images with documented train/test separation for each label.",
             "- Add more tissue groups, such as breast, prostate, and lymph node pathology.",
             "- Fix all image selections before running any prompt version.",
             "- Report accuracy for each tissue group, not only one combined number.",
@@ -162,7 +284,7 @@ def markdown_report(result: dict[str, Any]) -> str:
             "## Limits",
             "",
             f"- This is a {len(result['cases'])}-image engineering benchmark, not a clinical validation study.",
-            "- LC25000 images use fixed evenly spaced rows from the public dataset. Infectious-esophagitis and skin-cancer images are published educational figures.",
+            f"- {source_note}",
             "- Candidate sets differ by organ family, so the task measures within-family discrimination rather than unrestricted diagnosis.",
             "- The hosted hackathon API returns only the winning label and one score. Scores from two-label and three-label families are not directly comparable; calibration, margins, and rank changes cannot be measured.",
             "- Evidence-generated prompts are created once per family without reports, image contents, or ground-truth labels, preventing answer leakage.",

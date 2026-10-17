@@ -6,6 +6,7 @@ import base64
 import json
 import mimetypes
 import sys
+import time
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
@@ -59,12 +60,45 @@ def case_image(case: Any, cache_dir: Path) -> tuple[bytes, str]:
     return raw, reference
 
 
+def chunks(values: list[Any], size: int) -> list[list[Any]]:
+    return [values[start : start + size] for start in range(0, len(values), size)]
+
+
+def classify_batch(musk: Any, images: list[str], prompts: dict[str, str]) -> list[Any]:
+    batch_method = getattr(musk, "classify_batch", None)
+    if callable(batch_method):
+        return batch_method(images, prompts)
+    return [musk.classify(image, prompts)[0] for image in images]
+
+
+def display_path(path: Path) -> str:
+    resolved = path.resolve()
+    try:
+        return str(resolved.relative_to(ROOT))
+    except ValueError:
+        return str(resolved)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run the HistoPrompt multi-disease benchmark.")
     parser.add_argument("--manifest", type=Path, default=ROOT / "benchmarks" / "manifest.json")
     parser.add_argument("--output-dir", type=Path, default=ROOT / "benchmarks" / "results")
     parser.add_argument("--cache-dir", type=Path, default=ROOT / ".benchmark-cache")
+    parser.add_argument("--batch-size", type=int, default=1)
+    parser.add_argument(
+        "--strategies",
+        nargs="+",
+        choices=STRATEGIES,
+        default=list(STRATEGIES),
+    )
     args = parser.parse_args()
+    if args.batch_size < 1:
+        parser.error("--batch-size must be at least 1")
+    required_strategies = {"generic", "evidence_generated"}
+    if not required_strategies.issubset(args.strategies):
+        parser.error(
+            "--strategies must include generic and evidence_generated for the comparison report"
+        )
 
     manifest_value = json.loads(args.manifest.read_text(encoding="utf-8"))
     cases, families = load_manifest(manifest_value)
@@ -76,60 +110,94 @@ def main() -> None:
     generated_by_family: dict[str, dict[str, str]] = {}
     evidence_by_family: dict[str, list[dict[str, str | float]]] = {}
     prompt_model = ""
-    for family, curated in families.items():
-        generated, prompt_model, evidence = generate_evidence_prompts(
-            family, curated, evidence_index, lumen, prompt_model
-        )
-        generated_by_family[family] = generated
-        evidence_by_family[family] = evidence
-        print(f"Generated evidence prompts for {family}.", flush=True)
+    if "evidence_generated" in args.strategies:
+        for family, curated in families.items():
+            generated, prompt_model, evidence = generate_evidence_prompts(
+                family, curated, evidence_index, lumen, prompt_model
+            )
+            generated_by_family[family] = generated
+            evidence_by_family[family] = evidence
+            print(f"Generated evidence prompts for {family}.", flush=True)
 
     rows: list[dict[str, Any]] = []
+    encoded_by_family: dict[str, list[tuple[Any, str]]] = {}
     for case in cases:
         raw, reference = case_image(case, args.cache_dir)
         encoded = image_data_url(raw, reference)
-        for strategy in STRATEGIES:
+        encoded_by_family.setdefault(case.family, []).append((case, encoded))
+
+    benchmark_started = time.perf_counter()
+    total_inference_seconds = 0.0
+    completed_batches = 0
+    for family, prepared_cases in encoded_by_family.items():
+        for strategy in args.strategies:
             prompts = prompts_for_strategy(
-                strategy, families[case.family], generated_by_family[case.family]
+                strategy, families[family], generated_by_family.get(family)
             )
-            row: dict[str, Any] = {
-                "case_id": case.case_id,
-                "family": case.family,
-                "ground_truth": case.ground_truth,
-                "strategy": strategy,
-                "prompts": prompts,
-                "prediction": None,
-                "score": None,
-                "correct": False,
-                "error": "",
-            }
-            try:
-                prediction = musk.classify(encoded, prompts)[0]
-                row.update(
-                    prediction=prediction.label,
-                    score=prediction.probability,
-                    correct=prediction.label == case.ground_truth,
+            for batch_number, batch in enumerate(chunks(prepared_cases, args.batch_size), 1):
+                started = time.perf_counter()
+                error = ""
+                try:
+                    predictions = classify_batch(
+                        musk, [encoded for _, encoded in batch], prompts
+                    )
+                except Exception as exc:
+                    predictions = [None] * len(batch)
+                    error = f"{type(exc).__name__}: {exc}"
+                elapsed = time.perf_counter() - started
+                total_inference_seconds += elapsed
+                completed_batches += 1
+                seconds_per_image = elapsed / len(batch)
+                for (case, _), prediction in zip(batch, predictions):
+                    rows.append(
+                        {
+                            "case_id": case.case_id,
+                            "family": case.family,
+                            "ground_truth": case.ground_truth,
+                            "strategy": strategy,
+                            "prompts": prompts,
+                            "prediction": prediction.label if prediction else None,
+                            "score": prediction.probability if prediction else None,
+                            "correct": bool(
+                                prediction and prediction.label == case.ground_truth
+                            ),
+                            "error": error,
+                            "batch_size": len(batch),
+                            "batch_seconds": round(elapsed, 6),
+                            "seconds_per_image": round(seconds_per_image, 6),
+                        }
+                    )
+                print(
+                    f"{family} / {strategy} / batch {batch_number}: "
+                    f"{len(batch)} images in {elapsed:.2f}s"
+                    f"{f' / {error}' if error else ''}",
+                    flush=True,
                 )
-            except Exception as exc:
-                row["error"] = f"{type(exc).__name__}: {exc}"
-            rows.append(row)
-            print(
-                f"{case.case_id} / {strategy}: {row['prediction'] or row['error']}"
-                f" ({row['score'] if row['score'] is not None else 'n/a'})",
-                flush=True,
-            )
 
     now = datetime.now(timezone.utc)
+    benchmark_wall_seconds = time.perf_counter() - benchmark_started
     result = {
         "run_id": now.strftime("%Y%m%dT%H%M%SZ"),
         "created_at": now.isoformat(),
-        "manifest": str(args.manifest.relative_to(ROOT)),
+        "benchmark_name": manifest_value.get("name", "HistoPrompt benchmark"),
+        "report_context": manifest_value.get("report_context", {}),
+        "manifest": display_path(args.manifest),
         "lumen_model": prompt_model,
         "musk_backend": settings.musk_backend,
         "musk_endpoint": settings.musk_endpoint,
         "cases": [case.__dict__ for case in cases],
         "evidence_generated_prompts": generated_by_family,
         "retrieved_evidence": evidence_by_family,
+        "strategies": args.strategies,
+        "performance": {
+            "configured_batch_size": args.batch_size,
+            "completed_batches": completed_batches,
+            "inference_seconds": round(total_inference_seconds, 3),
+            "benchmark_wall_seconds": round(benchmark_wall_seconds, 3),
+            "mean_inference_seconds_per_image_strategy": round(
+                total_inference_seconds / len(rows), 6
+            ) if rows else 0.0,
+        },
         "results": rows,
         "summary": summarize_results(rows),
     }

@@ -10,12 +10,22 @@ if ! command -v uv >/dev/null 2>&1; then
 fi
 
 if [[ ! -f .env.local ]]; then
-  cp .env.example .env.local
-  echo "Created .env.local. Add DELTA_USERNAME, then restart HistoPrompt."
+  echo "Local configuration is missing. Run ./scripts/setup.sh first."
+  exit 1
 fi
 
 # shellcheck disable=SC1091
 source .env.local
+
+if [[ -z "${LUMEN_API_KEY:-}" ]]; then
+  echo "LUMEN_API_KEY is missing. Run ./scripts/setup.sh."
+  exit 1
+fi
+
+if [[ "${MUSK_BACKEND:-remote}" == "remote" && -z "${MUSK_API_KEY:-}" ]]; then
+  echo "MUSK_API_KEY is missing. Run ./scripts/setup.sh."
+  exit 1
+fi
 
 if [[ "${MUSK_BACKEND:-remote}" == "local" ]]; then
   uv sync --extra musk --extra dev
