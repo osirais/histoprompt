@@ -226,16 +226,19 @@ def markdown_report(result: dict[str, Any]) -> str:
             ]
         )
     secondary_rows = []
-    if result["summary"]["label_only"]["successful"]:
-        item = result["summary"]["label_only"]
-        secondary_rows.append(
-            f"| Label text only | {item['correct']}/{item['successful']} | {item['accuracy']:.1%} |"
-        )
-    if result["summary"]["curated"]["successful"]:
-        item = result["summary"]["curated"]
-        secondary_rows.append(
-            f"| Hand-written microscopic features | {item['correct']}/{item['successful']} | {item['accuracy']:.1%} |"
-        )
+    secondary_labels = {
+        "label_only": "Label text only",
+        "curated": "Hand-written microscopic features",
+        "generic_with_features": "Generic template + all generated features",
+        "generic_with_primary_feature": "Generic template + first generated feature",
+    }
+    for strategy, display_label in secondary_labels.items():
+        item = result["summary"].get(strategy, {})
+        if item.get("successful"):
+            secondary_rows.append(
+                f"| {display_label} | {item['correct']}/{item['successful']} | "
+                f"{item['accuracy']:.1%} |"
+            )
     if secondary_rows:
         lines.extend(
             [
@@ -249,6 +252,35 @@ def markdown_report(result: dict[str, Any]) -> str:
                 *secondary_rows,
                 "",
                 "These extra variants help separate the effect of retrieval from the effect of adding longer microscopic descriptions.",
+            ]
+        )
+    prompt_selection = result.get("prompt_selection", {})
+    if prompt_selection:
+        selected = prompt_selection["selected_strategies"]
+        development = prompt_selection["development"]
+        held_out = prompt_selection["held_out_test"]
+        held_out_generic = prompt_selection["generic_held_out_test"]
+        test_delta = held_out["accuracy"] - held_out_generic["accuracy"]
+        selected_name = (
+            selected[0]
+            if len(selected) == 1
+            else "majority vote: " + ", ".join(selected)
+        )
+        lines.extend(
+            [
+                "",
+                "## Prompt selection without test-set leakage",
+                "",
+                f"The first {prompt_selection['development_cases']} class-stratified images were used to compare prompt candidates. "
+                f"The remaining {prompt_selection['test_cases']} images were kept hidden from selection.",
+                "",
+                f"The development set selected **{selected_name}** at "
+                f"{development['balanced_accuracy']:.1%} balanced accuracy.",
+                f"On the held-out images, that fixed choice scored **{held_out['correct']}/{held_out['attempted']} "
+                f"({held_out['accuracy']:.1%})**, compared with **{held_out_generic['correct']}/{held_out_generic['attempted']} "
+                f"({held_out_generic['accuracy']:.1%})** for generic MUSK ({test_delta * 100:+.1f} points).",
+                "",
+                "A prompt is considered an improvement only if this held-out result beats generic MUSK. Development accuracy by itself is not evidence of improvement.",
             ]
         )
     performance = result.get("performance", {})

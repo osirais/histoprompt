@@ -27,6 +27,7 @@ from histoprompt.benchmark import (  # noqa: E402
 from histoprompt.config import Settings  # noqa: E402
 from histoprompt.lumen import LumenClient  # noqa: E402
 from histoprompt.musk_backend import make_musk_backend  # noqa: E402
+from histoprompt.prompt_selection import select_prompt_candidate  # noqa: E402
 from histoprompt.reporting import markdown_report  # noqa: E402
 from histoprompt.rag import EvidenceIndex  # noqa: E402
 
@@ -86,6 +87,11 @@ def main() -> None:
     parser.add_argument("--cache-dir", type=Path, default=ROOT / ".benchmark-cache")
     parser.add_argument("--batch-size", type=int, default=1)
     parser.add_argument(
+        "--resume",
+        action="store_true",
+        help="Keep completed strategies from output-dir/latest.json and run only the requested strategies.",
+    )
+    parser.add_argument(
         "--strategies",
         nargs="+",
         choices=STRATEGIES,
@@ -94,12 +100,6 @@ def main() -> None:
     args = parser.parse_args()
     if args.batch_size < 1:
         parser.error("--batch-size must be at least 1")
-    required_strategies = {"generic", "evidence_generated"}
-    if not required_strategies.issubset(args.strategies):
-        parser.error(
-            "--strategies must include generic and evidence_generated for the comparison report"
-        )
-
     manifest_value = json.loads(args.manifest.read_text(encoding="utf-8"))
     cases, families = load_manifest(manifest_value)
     settings = Settings.from_env()
@@ -107,11 +107,34 @@ def main() -> None:
     evidence_index = EvidenceIndex(settings.corpus_path)
     musk = make_musk_backend(settings)
 
-    generated_by_family: dict[str, dict[str, str]] = {}
-    evidence_by_family: dict[str, list[dict[str, str | float]]] = {}
-    prompt_model = ""
-    if "evidence_generated" in args.strategies:
+    previous: dict[str, Any] = {}
+    previous_path = args.output_dir / "latest.json"
+    if args.resume and previous_path.exists():
+        previous = json.loads(previous_path.read_text(encoding="utf-8"))
+        expected_case_ids = [case.case_id for case in cases]
+        previous_case_ids = [str(case.get("case_id")) for case in previous.get("cases", [])]
+        if previous_case_ids != expected_case_ids:
+            parser.error("Cannot resume: saved result cases do not match the manifest.")
+
+    generated_by_family: dict[str, dict[str, str]] = dict(
+        previous.get("evidence_generated_prompts", {})
+    )
+    evidence_by_family: dict[str, list[dict[str, str | float]]] = dict(
+        previous.get("retrieved_evidence", {})
+    )
+    prompt_model = str(previous.get("lumen_model", ""))
+    needs_generated_prompts = any(
+        strategy in {
+            "evidence_generated",
+            "generic_with_features",
+            "generic_with_primary_feature",
+        }
+        for strategy in args.strategies
+    )
+    if needs_generated_prompts:
         for family, curated in families.items():
+            if family in generated_by_family:
+                continue
             generated, prompt_model, evidence = generate_evidence_prompts(
                 family, curated, evidence_index, lumen, prompt_model
             )
@@ -119,7 +142,12 @@ def main() -> None:
             evidence_by_family[family] = evidence
             print(f"Generated evidence prompts for {family}.", flush=True)
 
-    rows: list[dict[str, Any]] = []
+    rerun_strategies = set(args.strategies)
+    rows: list[dict[str, Any]] = [
+        row
+        for row in previous.get("results", [])
+        if row.get("strategy") not in rerun_strategies
+    ]
     encoded_by_family: dict[str, list[tuple[Any, str]]] = {}
     for case in cases:
         raw, reference = case_image(case, args.cache_dir)
@@ -129,6 +157,7 @@ def main() -> None:
     benchmark_started = time.perf_counter()
     total_inference_seconds = 0.0
     completed_batches = 0
+    new_rows = 0
     for family, prepared_cases in encoded_by_family.items():
         for strategy in args.strategies:
             prompts = prompts_for_strategy(
@@ -167,6 +196,7 @@ def main() -> None:
                             "seconds_per_image": round(seconds_per_image, 6),
                         }
                     )
+                    new_rows += 1
                 print(
                     f"{family} / {strategy} / batch {batch_number}: "
                     f"{len(batch)} images in {elapsed:.2f}s"
@@ -176,6 +206,15 @@ def main() -> None:
 
     now = datetime.now(timezone.utc)
     benchmark_wall_seconds = time.perf_counter() - benchmark_started
+    all_strategies = list(
+        dict.fromkeys([*previous.get("strategies", []), *args.strategies])
+    )
+    required_strategies = {"generic", "evidence_generated"}
+    if not required_strategies.issubset(all_strategies):
+        parser.error(
+            "The saved and requested strategies together must include generic and "
+            "evidence_generated for the comparison report."
+        )
     result = {
         "run_id": now.strftime("%Y%m%dT%H%M%SZ"),
         "created_at": now.isoformat(),
@@ -188,19 +227,23 @@ def main() -> None:
         "cases": [case.__dict__ for case in cases],
         "evidence_generated_prompts": generated_by_family,
         "retrieved_evidence": evidence_by_family,
-        "strategies": args.strategies,
+        "strategies": all_strategies,
         "performance": {
+            "scope": "latest invocation",
             "configured_batch_size": args.batch_size,
             "completed_batches": completed_batches,
             "inference_seconds": round(total_inference_seconds, 3),
             "benchmark_wall_seconds": round(benchmark_wall_seconds, 3),
             "mean_inference_seconds_per_image_strategy": round(
-                total_inference_seconds / len(rows), 6
-            ) if rows else 0.0,
+                total_inference_seconds / new_rows, 6
+            ) if new_rows else 0.0,
         },
         "results": rows,
         "summary": summarize_results(rows),
     }
+    result["prompt_selection"] = select_prompt_candidate(
+        rows, result["cases"], all_strategies
+    )
     args.output_dir.mkdir(parents=True, exist_ok=True)
     json_path = args.output_dir / "latest.json"
     markdown_path = args.output_dir / "latest.md"

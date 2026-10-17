@@ -174,6 +174,12 @@ Confidence must be a number from 0 to 1 and must reflect both model uncertainty 
                 item.as_dict() for item in baseline_predictions
             ],
             "musk_predictions": [item.as_dict() for item in predictions],
+            # Keep the measured MUSK result as the primary classification until a
+            # prompt variant has beaten it on a held-out benchmark.
+            "primary_predictions": [
+                item.as_dict() for item in baseline_predictions
+            ],
+            "primary_classification_source": "generic MUSK baseline",
             "evidence": [item.as_dict() for item in evidence],
             "synthesis": structured,
             "raw_synthesis": raw if structured is None else "",

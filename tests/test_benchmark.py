@@ -25,8 +25,19 @@ def test_prompt_strategies_are_deterministic_and_keep_labels() -> None:
     }
     assert prompts_for_strategy("generic", CURATED)["disease"] == "a histopathology image showing disease"
     assert prompts_for_strategy("curated", CURATED) == CURATED
-    generated = {"normal": "generated normal", "disease": "generated disease"}
+    generated = {
+        "normal": "normal with bland cells, preserved structure",
+        "disease": "disease with marked atypia, mitoses",
+    }
     assert prompts_for_strategy("evidence_generated", CURATED, generated) == generated
+    assert prompts_for_strategy("generic_with_features", CURATED, generated) == {
+        "normal": "a histopathology image showing normal with bland cells, preserved structure",
+        "disease": "a histopathology image showing disease with marked atypia, mitoses",
+    }
+    assert prompts_for_strategy("generic_with_primary_feature", CURATED, generated) == {
+        "normal": "a histopathology image showing normal with bland cells",
+        "disease": "a histopathology image showing disease with marked atypia",
+    }
 
 
 def test_manifest_rejects_ground_truth_outside_candidate_family() -> None:
@@ -159,3 +170,44 @@ def test_local_benchmark_image_checksum_is_enforced(tmp_path) -> None:
 
     with pytest.raises(ValueError, match="checksum mismatch"):
         verify_image_checksum(image.read_bytes(), "0" * 64, "fixed-case")
+
+
+def test_markdown_report_explains_held_out_prompt_selection() -> None:
+    case = {
+        "case_id": "case-1",
+        "family": "organ",
+        "ground_truth": "normal",
+    }
+    row = {
+        **case,
+        "prompts": {"normal": "normal", "disease": "disease"},
+        "prediction": "normal",
+        "correct": True,
+        "error": "",
+    }
+    result = {
+        "run_id": "test-run",
+        "cases": [case],
+        "results": [
+            {**row, "strategy": "generic"},
+            {**row, "strategy": "evidence_generated"},
+        ],
+        "summary": {
+            "generic": {"correct": 1, "successful": 1, "accuracy": 1.0},
+            "evidence_generated": {"correct": 1, "successful": 1, "accuracy": 1.0},
+        },
+        "prompt_selection": {
+            "development_cases": 300,
+            "test_cases": 300,
+            "selected_strategies": ["generic", "short_one", "short_two"],
+            "development": {"balanced_accuracy": 0.9},
+            "held_out_test": {"correct": 275, "attempted": 300, "accuracy": 275 / 300},
+            "generic_held_out_test": {"correct": 270, "attempted": 300, "accuracy": 0.9},
+        },
+    }
+
+    report = markdown_report(result)
+
+    assert "## Prompt selection without test-set leakage" in report
+    assert "remaining 300 images were kept hidden from selection" in report
+    assert "compared with **270/300 (90.0%)** for generic MUSK" in report

@@ -88,11 +88,13 @@ function render(data) {
     assessment: data.raw_synthesis,
     rationale: [], discrepancies: [], recommended_review: []
   };
+  const primary = data.primary_predictions?.[0] || data.baseline_predictions?.[0];
   const confidence = Math.max(0, Math.min(1, Number(result.confidence) || 0));
-  $("#classification").textContent = result.classification || "Indeterminate";
+  $("#classification").textContent = primary?.label || result.classification || "Indeterminate";
   $("#assessment").textContent = result.assessment || "No assessment returned.";
-  $("#confidence").textContent = `${Math.round(confidence * 100)}%`;
-  $("#confidence-ring").style.setProperty("--confidence", `${confidence * 100}%`);
+  const modelScore = primary ? Number(primary.probability) : confidence;
+  $("#confidence").textContent = `${Math.round(modelScore * 100)}%`;
+  $("#confidence-ring").style.setProperty("--confidence", `${modelScore * 100}%`);
   fillList("#rationale", result.rationale);
   fillList("#discrepancies", result.discrepancies);
   fillList("#review", result.recommended_review, "Human pathology review remains required.");

@@ -30,3 +30,14 @@ Observed pilot result: label-only and generic prompts were 8/8; curated and evid
 - [x] Verify image checksums, tests, results, repository size, and credentials; then commit, push, and verify CI.
 
 Risks: the hosted endpoint may limit request size or GPU batch size; LC25000 contains augmented derivatives and is not a patient-independent clinical dataset; batching must preserve image/result order; a failed batch must remain auditable rather than silently dropping cases.
+
+## Benchmark-informed enhancement redesign
+
+- [x] Add and test safer prompt variants that preserve MUSK's generic pretraining template.
+- [ ] Benchmark the variants on the same fixed 600 images and select behavior from measured accuracy. The NCSA endpoint timed out during the exploratory appended pass; the completed generic/evidence comparison remains the trusted result.
+- [x] Keep harmful morphology enrichment out of the primary classifier unless a variant beats the generic baseline.
+- [ ] Use retrieval and Lumen for evidence review and structured report drafting after MUSK inference.
+- [x] Update the interface and documentation so the primary result and experimental evidence layer are unambiguous.
+- [ ] Run full verification, self-review, commit, push, and verify CI.
+
+Risks: repeated runs can drift if the remote MUSK service changes; LC25000 augmentation prevents patient-independent conclusions; report drafting must stay explicitly research-only and must not invent findings absent from the supplied report or model output.

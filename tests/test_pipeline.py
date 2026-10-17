@@ -103,4 +103,6 @@ def test_pipeline_enriches_prompts_before_musk(tmp_path):
     ]
     assert captured["tumor"] == "tumor with malignant gland formation"
     assert result["musk_prompts"] == captured
+    assert result["primary_predictions"] == result["baseline_predictions"]
+    assert result["primary_classification_source"] == "generic MUSK baseline"
 

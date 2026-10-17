@@ -10,7 +10,14 @@ from .pipeline import PROMPT_BUILDER_SYSTEM, _extract_prompts, _generic_prompt, 
 from .rag import EvidenceIndex
 
 
-STRATEGIES = ("label_only", "generic", "curated", "evidence_generated")
+STRATEGIES = (
+    "label_only",
+    "generic",
+    "curated",
+    "evidence_generated",
+    "generic_with_features",
+    "generic_with_primary_feature",
+)
 
 
 def verify_image_checksum(raw: bytes, expected: str, case_id: str) -> None:
@@ -121,6 +128,22 @@ def prompts_for_strategy(
         if generated_prompts is None:
             raise ValueError("Evidence-generated prompts have not been created.")
         return {label: generated_prompts.get(label, _generic_prompt(label)) for label in labels}
+    if strategy in {"generic_with_features", "generic_with_primary_feature"}:
+        if generated_prompts is None:
+            raise ValueError("Evidence-generated prompts have not been created.")
+        prompts = {}
+        for label in labels:
+            generated = generated_prompts.get(label, "")
+            prefix = f"{label} with "
+            features = generated[len(prefix) :] if generated.startswith(prefix) else ""
+            if strategy == "generic_with_primary_feature":
+                features = features.split(",", 1)[0]
+            prompts[label] = (
+                f"{_generic_prompt(label)} with {features}"
+                if features
+                else _generic_prompt(label)
+            )
+        return prompts
     raise ValueError(f"Unknown benchmark strategy: {strategy}")
 
 

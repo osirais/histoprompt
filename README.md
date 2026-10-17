@@ -1,6 +1,6 @@
 # HistoPrompt
 
-HistoPrompt is a research prototype that improves the text prompts sent to the official [MUSK pathology vision-language model](https://github.com/lilab-stanford/MUSK). It uses a de-identified report and a frozen local evidence corpus to create visually specific descriptions for every candidate label before MUSK sees the image.
+HistoPrompt is a research prototype that tests whether better text prompts can improve the official [MUSK pathology vision-language model](https://github.com/lilab-stanford/MUSK). It uses a de-identified report and a frozen local evidence corpus to create visually specific descriptions for every candidate label before MUSK sees the image.
 
 The live path is:
 
@@ -39,7 +39,7 @@ The hosted path requires three things that cannot be created by cloning: an NCSA
 
 ## What it adds to MUSK
 
-Plain MUSK receives label-only prompts such as `herpes simplex esophagitis`. HistoPrompt can instead send a description such as `ulcerated squamous mucosa with multinucleation, nuclear molding, chromatin margination, and intranuclear inclusions`. The result page exposes every generated prompt, the MUSK result, retrieved sources, discrepancies, and recommended human review.
+Plain MUSK receives label-only prompts such as `herpes simplex esophagitis`. HistoPrompt can test either a replacement description or an appended description that preserves MUSK's generic template. The result page exposes every generated prompt, the measured primary MUSK result, retrieved sources, discrepancies, and recommended human review. Until a prompt variant beats the baseline on held-out data, the generic MUSK result remains primary.
 
 The hosted hackathon service returns only its highest-ranked candidate per image. HistoPrompt therefore treats the score as model output to review, not calibrated diagnostic confidence.
 
