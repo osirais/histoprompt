@@ -11,6 +11,12 @@ the benign-lung label to `histology showing benign lung tissue with intact
 alveolar sacs`; the other labels remained unchanged because the validated
 prompt branch only selected that additional phrase for the lung task.
 
+This run did **not** rerun the branch's Lumen candidate-generation and
+tuning process. It applied the branch's frozen winning prompt set at inference
+time, exactly as recorded in
+`benchmarks/lc25000-tuning/fresh-test/frozen_prompts.json` on
+`origin/validated-prompt-tuning`.
+
 | Model | Standard | Tuned | Change |
 | --- | ---: | ---: | ---: |
 | CONCH | 674/1,000 (67.4%) | 648/1,000 (64.8%) | -2.6 pp |
