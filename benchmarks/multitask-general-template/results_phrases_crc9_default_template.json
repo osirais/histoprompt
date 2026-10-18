@@ -1,0 +1,454 @@
+{
+ "model": "musk",
+ "lumen_model": "gemma-4-31b-it",
+ "baseline": "a histopathology image showing {label}",
+ "general_template": "a histopathology image showing {label}",
+ "settings": {
+  "batch": 64,
+  "workers": 3,
+  "candidates": 8
+ },
+ "reused_candidates_from": "benchmarks/multitask-general-template/results_phrases.json",
+ "tasks": {
+  "crc9": {
+   "chosen_phrases": {
+    "adipose tissue": "",
+    "background": "no tissue present",
+    "debris": "",
+    "lymphocytes": "small lymphoid cells",
+    "mucus": "",
+    "smooth muscle": "",
+    "normal colon mucosa": "",
+    "cancer-associated stroma": "fibrotic connective tissue",
+    "colorectal adenocarcinoma epithelium": ""
+   },
+   "test": {
+    "baseline": {
+     "correct": 319,
+     "n": 450,
+     "prompts": {
+      "adipose tissue": "a histopathology image showing adipose tissue",
+      "background": "a histopathology image showing background",
+      "debris": "a histopathology image showing debris",
+      "lymphocytes": "a histopathology image showing lymphocytes",
+      "mucus": "a histopathology image showing mucus",
+      "smooth muscle": "a histopathology image showing smooth muscle",
+      "normal colon mucosa": "a histopathology image showing normal colon mucosa",
+      "cancer-associated stroma": "a histopathology image showing cancer-associated stroma",
+      "colorectal adenocarcinoma epithelium": "a histopathology image showing colorectal adenocarcinoma epithelium"
+     },
+     "vs_baseline": {
+      "fixed": 0,
+      "broken": 0,
+      "p": 1.0
+     },
+     "vs_general_template": {
+      "fixed": 0,
+      "broken": 0,
+      "p": 1.0
+     }
+    },
+    "general template": {
+     "correct": 319,
+     "n": 450,
+     "prompts": {
+      "adipose tissue": "a histopathology image showing adipose tissue",
+      "background": "a histopathology image showing background",
+      "debris": "a histopathology image showing debris",
+      "lymphocytes": "a histopathology image showing lymphocytes",
+      "mucus": "a histopathology image showing mucus",
+      "smooth muscle": "a histopathology image showing smooth muscle",
+      "normal colon mucosa": "a histopathology image showing normal colon mucosa",
+      "cancer-associated stroma": "a histopathology image showing cancer-associated stroma",
+      "colorectal adenocarcinoma epithelium": "a histopathology image showing colorectal adenocarcinoma epithelium"
+     },
+     "vs_baseline": {
+      "fixed": 0,
+      "broken": 0,
+      "p": 1.0
+     },
+     "vs_general_template": {
+      "fixed": 0,
+      "broken": 0,
+      "p": 1.0
+     }
+    },
+    "general template + phrases": {
+     "correct": 362,
+     "n": 450,
+     "prompts": {
+      "adipose tissue": "a histopathology image showing adipose tissue",
+      "background": "a histopathology image showing background with no tissue present",
+      "debris": "a histopathology image showing debris",
+      "lymphocytes": "a histopathology image showing lymphocytes with small lymphoid cells",
+      "mucus": "a histopathology image showing mucus",
+      "smooth muscle": "a histopathology image showing smooth muscle",
+      "normal colon mucosa": "a histopathology image showing normal colon mucosa",
+      "cancer-associated stroma": "a histopathology image showing cancer-associated stroma with fibrotic connective tissue",
+      "colorectal adenocarcinoma epithelium": "a histopathology image showing colorectal adenocarcinoma epithelium"
+     },
+     "vs_baseline": {
+      "fixed": 46,
+      "broken": 3,
+      "p": 3.490541189421492e-11
+     },
+     "vs_general_template": {
+      "fixed": 46,
+      "broken": 3,
+      "p": 3.490541189421492e-11
+     }
+    }
+   },
+   "log": [
+    {
+     "step": "baseline",
+     "tuning_accuracy": 0.7333333333333333
+    },
+    {
+     "step": "candidates",
+     "candidates": {
+      "adipose tissue": [
+       "thin cytoplasmic rims",
+       "chicken wire pattern",
+       "large lipid droplets"
+      ],
+      "background": [
+       "blank slide area",
+       "no tissue present",
+       "void of cells"
+      ],
+      "debris": [
+       "fragmented cellular remnants",
+       "disintegrated tissue fragments"
+      ],
+      "lymphocytes": [
+       "small lymphoid cells"
+      ],
+      "mucus": [
+       "basophilic gelatinous lakes"
+      ],
+      "smooth muscle": [],
+      "normal colon mucosa": [
+       "goblet cell lining"
+      ],
+      "cancer-associated stroma": [
+       "fibrotic connective tissue",
+       "fibrotic interstitial tissue",
+       "collagen rich stroma"
+      ],
+      "colorectal adenocarcinoma epithelium": [
+       "cribriform growth pattern",
+       "fused glandular structures",
+       "jagged glandular borders"
+      ]
+     },
+     "dropped": []
+    },
+    {
+     "step": "round 1",
+     "label": "adipose tissue",
+     "phrase": "thin cytoplasmic rims",
+     "gain": 0.0044444444444444444,
+     "fixed": 2,
+     "broken": 0,
+     "p": 0.25
+    },
+    {
+     "step": "round 1",
+     "label": "adipose tissue",
+     "phrase": "chicken wire pattern",
+     "gain": 0.0,
+     "fixed": 2,
+     "broken": 2,
+     "p": 0.6875
+    },
+    {
+     "step": "round 1",
+     "label": "adipose tissue",
+     "phrase": "large lipid droplets",
+     "gain": -0.006666666666666667,
+     "fixed": 3,
+     "broken": 6,
+     "p": 0.91015625
+    },
+    {
+     "step": "round 1",
+     "label": "adipose tissue",
+     "accepted": null
+    },
+    {
+     "step": "round 1",
+     "label": "background",
+     "phrase": "blank slide area",
+     "gain": 0.024444444444444446,
+     "fixed": 12,
+     "broken": 1,
+     "p": 0.001708984375
+    },
+    {
+     "step": "round 1",
+     "label": "background",
+     "phrase": "no tissue present",
+     "gain": 0.08222222222222222,
+     "fixed": 38,
+     "broken": 1,
+     "p": 7.275957614183426e-11
+    },
+    {
+     "step": "round 1",
+     "label": "background",
+     "phrase": "void of cells",
+     "gain": 0.057777777777777775,
+     "fixed": 28,
+     "broken": 2,
+     "p": 4.33996319770813e-07
+    },
+    {
+     "step": "round 1 confirmation",
+     "label": "background",
+     "phrase": "no tissue present",
+     "tuning_gain": 0.08222222222222222,
+     "tuning_p": 7.275957614183426e-11,
+     "confirmation_gain": 0.09777777777777778,
+     "accepted": true
+    },
+    {
+     "step": "round 1",
+     "label": "debris",
+     "phrase": "fragmented cellular remnants",
+     "gain": 0.0022222222222222222,
+     "fixed": 8,
+     "broken": 7,
+     "p": 0.5
+    },
+    {
+     "step": "round 1",
+     "label": "debris",
+     "phrase": "disintegrated tissue fragments",
+     "gain": 0.0022222222222222222,
+     "fixed": 6,
+     "broken": 5,
+     "p": 0.5
+    },
+    {
+     "step": "round 1",
+     "label": "debris",
+     "accepted": null
+    },
+    {
+     "step": "round 1",
+     "label": "lymphocytes",
+     "phrase": "small lymphoid cells",
+     "gain": 0.017777777777777778,
+     "fixed": 9,
+     "broken": 1,
+     "p": 0.0107421875
+    },
+    {
+     "step": "round 1 confirmation",
+     "label": "lymphocytes",
+     "phrase": "small lymphoid cells",
+     "tuning_gain": 0.017777777777777778,
+     "tuning_p": 0.0107421875,
+     "confirmation_gain": 0.022222222222222223,
+     "accepted": true
+    },
+    {
+     "step": "round 1",
+     "label": "mucus",
+     "phrase": "basophilic gelatinous lakes",
+     "gain": -0.017777777777777778,
+     "fixed": 7,
+     "broken": 15,
+     "p": 0.9737606048583984
+    },
+    {
+     "step": "round 1",
+     "label": "mucus",
+     "accepted": null
+    },
+    {
+     "step": "round 1",
+     "label": "smooth muscle",
+     "accepted": null
+    },
+    {
+     "step": "round 1",
+     "label": "normal colon mucosa",
+     "phrase": "goblet cell lining",
+     "gain": -0.017777777777777778,
+     "fixed": 1,
+     "broken": 9,
+     "p": 0.9990234375
+    },
+    {
+     "step": "round 1",
+     "label": "normal colon mucosa",
+     "accepted": null
+    },
+    {
+     "step": "round 1",
+     "label": "cancer-associated stroma",
+     "phrase": "fibrotic connective tissue",
+     "gain": 0.022222222222222223,
+     "fixed": 11,
+     "broken": 1,
+     "p": 0.003173828125
+    },
+    {
+     "step": "round 1",
+     "label": "cancer-associated stroma",
+     "phrase": "fibrotic interstitial tissue",
+     "gain": 0.008888888888888889,
+     "fixed": 7,
+     "broken": 3,
+     "p": 0.171875
+    },
+    {
+     "step": "round 1",
+     "label": "cancer-associated stroma",
+     "phrase": "collagen rich stroma",
+     "gain": 0.015555555555555555,
+     "fixed": 9,
+     "broken": 2,
+     "p": 0.03271484375
+    },
+    {
+     "step": "round 1 confirmation",
+     "label": "cancer-associated stroma",
+     "phrase": "fibrotic connective tissue",
+     "tuning_gain": 0.022222222222222223,
+     "tuning_p": 0.003173828125,
+     "confirmation_gain": 0.011111111111111112,
+     "accepted": true
+    },
+    {
+     "step": "round 1",
+     "label": "colorectal adenocarcinoma epithelium",
+     "phrase": "cribriform growth pattern",
+     "gain": -0.017777777777777778,
+     "fixed": 0,
+     "broken": 8,
+     "p": 1.0
+    },
+    {
+     "step": "round 1",
+     "label": "colorectal adenocarcinoma epithelium",
+     "phrase": "fused glandular structures",
+     "gain": -0.013333333333333334,
+     "fixed": 0,
+     "broken": 6,
+     "p": 1.0
+    },
+    {
+     "step": "round 1",
+     "label": "colorectal adenocarcinoma epithelium",
+     "phrase": "jagged glandular borders",
+     "gain": -0.0044444444444444444,
+     "fixed": 1,
+     "broken": 3,
+     "p": 0.9375
+    },
+    {
+     "step": "round 1",
+     "label": "colorectal adenocarcinoma epithelium",
+     "accepted": null
+    },
+    {
+     "step": "feedback candidates",
+     "label": "normal colon mucosa",
+     "confusion": "normal colon mucosa called mucus (15x); cancer-associated stroma called smooth muscle (9x); normal colon mucosa called colorectal adenocarcinoma epithelium (5x)",
+     "candidates": [
+      "organized crypt architecture",
+      "regular tubular glands",
+      "basal nuclear alignment",
+      "goblet cells in crypts",
+      "parallel glandular structures",
+      "uniform crypt spacing",
+      "intact mucosal layer",
+      "regularly shaped crypts"
+     ]
+    },
+    {
+     "step": "feedback",
+     "label": "normal colon mucosa",
+     "phrase": "organized crypt architecture",
+     "gain": -0.03333333333333333,
+     "fixed": 0,
+     "broken": 15,
+     "p": 1.0
+    },
+    {
+     "step": "feedback",
+     "label": "normal colon mucosa",
+     "phrase": "regular tubular glands",
+     "gain": -0.011111111111111112,
+     "fixed": 0,
+     "broken": 5,
+     "p": 1.0
+    },
+    {
+     "step": "feedback",
+     "label": "normal colon mucosa",
+     "phrase": "basal nuclear alignment",
+     "gain": -0.028888888888888888,
+     "fixed": 0,
+     "broken": 13,
+     "p": 1.0
+    },
+    {
+     "step": "feedback",
+     "label": "normal colon mucosa",
+     "phrase": "goblet cells in crypts",
+     "gain": -0.03777777777777778,
+     "fixed": 0,
+     "broken": 17,
+     "p": 1.0
+    },
+    {
+     "step": "feedback",
+     "label": "normal colon mucosa",
+     "phrase": "parallel glandular structures",
+     "gain": -0.06222222222222222,
+     "fixed": 0,
+     "broken": 28,
+     "p": 1.0
+    },
+    {
+     "step": "feedback",
+     "label": "normal colon mucosa",
+     "phrase": "uniform crypt spacing",
+     "gain": -0.042222222222222223,
+     "fixed": 0,
+     "broken": 19,
+     "p": 1.0
+    },
+    {
+     "step": "feedback",
+     "label": "normal colon mucosa",
+     "phrase": "intact mucosal layer",
+     "gain": -0.013333333333333334,
+     "fixed": 0,
+     "broken": 6,
+     "p": 1.0
+    },
+    {
+     "step": "feedback",
+     "label": "normal colon mucosa",
+     "phrase": "regularly shaped crypts",
+     "gain": -0.042222222222222223,
+     "fixed": 0,
+     "broken": 19,
+     "p": 1.0
+    },
+    {
+     "step": "feedback",
+     "label": "normal colon mucosa",
+     "accepted": null
+    }
+   ],
+   "minutes": 4.2
+  }
+ },
+ "minutes": 4.2
+}

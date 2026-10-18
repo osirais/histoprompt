@@ -37,11 +37,17 @@ BATCH, WORKERS, CANDIDATES = 64, 3, 8
 settings = Settings.from_env()
 parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
 parser.add_argument("--model", choices=list(MODELS), default="musk", help="classifier to tune for (default musk)")
+parser.add_argument("--template", help="start from this template instead of the general one, e.g. the baseline")
+parser.add_argument("--tasks", nargs="+", help="only these tasks (default: all)")
+parser.add_argument("--reuse-candidates", type=Path,
+                    help="results_phrases file whose first-round LLM candidates are reused, so only the template differs")
+parser.add_argument("--output", help="output file name (default results_phrases[_<model>].json)")
 args = parser.parse_args()
 clf, lumen = make_backend(args.model), LumenClient(settings)
 man = json.loads((HERE / "manifest.json").read_text())
-general = json.loads((HERE / output_name("results", args.model)).read_text())["general_all_tasks"]["template"]
-tasks = list(man["tasks"])
+general = args.template or json.loads((HERE / output_name("results", args.model)).read_text())["general_all_tasks"]["template"]
+tasks = args.tasks or list(man["tasks"])
+reused = json.loads(args.reuse_candidates.read_text())["tasks"] if args.reuse_candidates else {}
 data = {t: {s: [("data:image/" + ("png" if r["image"].endswith(".png") else "jpeg") + ";base64,"
                  + base64.b64encode((IMG_ROOT / r["image"]).read_bytes()).decode(), r["label"])
                 for r in man["tasks"][t]["sets"][s]] for s in ("tuning", "confirmation", "test")} for t in tasks}
@@ -69,6 +75,8 @@ def run_task(task: str) -> dict:
     labs = labels[task]
 
     def propose(focus, confusion):
+        if focus is None and task in reused:
+            return next(e["candidates"] for e in reused[task]["log"] if e.get("step") == "candidates")
         raw, _ = lumen.complete(CANDIDATE_SYSTEM.replace("MUSK", MODELS[args.model]),
                                 candidate_request(labs, CANDIDATES, focus, confusion).replace("MUSK", MODELS[args.model]))
         return parse_candidates(raw, [focus] if focus else labs, CANDIDATES)
@@ -102,6 +110,6 @@ with ThreadPoolExecutor(len(tasks)) as ex:
     per_task = dict(zip(tasks, ex.map(run_task, tasks)))
 out = {"model": args.model, "lumen_model": settings.lumen_model or os.getenv("LUMEN_MODEL", ""), "baseline": BASE,
        "general_template": general, "settings": {"batch": BATCH, "workers": WORKERS, "candidates": CANDIDATES},
-       "tasks": per_task, "minutes": round((time.time() - t0) / 60, 1)}
-(HERE / output_name("results_phrases", args.model)).write_text(json.dumps(out, indent=1, default=str))
-print("saved", output_name("results_phrases", args.model), flush=True)
+       "reused_candidates_from": str(args.reuse_candidates or ""), "tasks": per_task, "minutes": round((time.time() - t0) / 60, 1)}
+(HERE / (args.output or output_name("results_phrases", args.model))).write_text(json.dumps(out, indent=1, default=str))
+print("saved", args.output or output_name("results_phrases", args.model), flush=True)

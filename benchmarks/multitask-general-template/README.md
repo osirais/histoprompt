@@ -87,3 +87,18 @@ and centre), so this gain held on a different cohort, unlike the template-only g
 - Phrases matter most where the baseline is weak and the labels are many and similar (crc9, 70.9% baseline). Where
   no phrase cleared the bars, the template was kept unchanged.
 - The phrases are tuned on labelled images of each task: the shared part is the template, not the phrases.
+
+### Check: crc9 phrases on the baseline prompt (`results_phrases_crc9_default_template.json`)
+
+Same crc9 sets, same first-round Gemma candidates (`--reuse-candidates results_phrases.json`), but phrases tuned on
+MUSK's default prompt `a histopathology image showing {label}` instead of the general template:
+
+| crc9 test (450) | Correct | vs baseline |
+|---|---|---|
+| baseline | 319 | |
+| baseline prompt + phrases | 362 | 46 fixed / 3 broken, p < 1e-10 |
+| general template + phrases (above) | 364 | 51 fixed / 6 broken |
+
+Accepted: background "no tissue present", lymphocytes "small lymphoid cells", cancer-associated stroma "fibrotic
+connective tissue". The crc9 gain comes from the phrases; the template makes no real difference there (2 images). The
+general template's contribution is lung; the phrases' is crc9.

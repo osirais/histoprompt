@@ -77,3 +77,15 @@ faster.
 The hosted-model adapter is `backends.py`. It was checked by pointing it at the hosted MUSK endpoint, which uses the
 same `/classify` format: on 18 crc9 images it gave identical predictions to the MUSK backend. It has not been run
 against CONCH, QuiltNet or PLIP themselves.
+
+## Extra options of `run_phrases.py`
+
+| Option | Effect |
+|---|---|
+| `--template "..."` | start from this template instead of the general one (e.g. the baseline) |
+| `--tasks crc9 ...` | only these tasks |
+| `--reuse-candidates FILE` | reuse the first-round LLM candidates from an earlier `results_phrases` file, so only the template differs |
+| `--output NAME` | output file name |
+
+Example (the crc9 check in the README):
+`uv run python benchmarks/multitask-general-template/run_phrases.py --tasks crc9 --template "a histopathology image showing {label}" --reuse-candidates benchmarks/multitask-general-template/results_phrases.json --output results_phrases_crc9_default_template.json`
