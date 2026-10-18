@@ -58,5 +58,8 @@ substitute for selecting on labelled images from the target task.
   (same label each time). Five test images also appear in the same task's confirmation set (colon 4, lung 1). The
   confirmation set only gates acceptance, and five of 1,700 test images cannot change the conclusions above.
 - An earlier build truncated NCT-CRC-HE file names, so 4 crc9 tuning/confirmation images were overwritten by others.
-  `build_sets.py` now uses full names, and the results above come from the corrected sets; the test scores were
-  identical before and after the fix.
+  `build_sets.py` now uses full names, and the results above come from the corrected sets. The fix changed the
+  template transferred to lung and pcam (selected on sets that include crc9): before it, `a photomicrograph showing
+  {label}.` narrowly won (+1.64 vs +1.59 points on tuning) and scored lung 422 / 450, pcam 330 / 400 (total +16).
+  Colon, crc9 and the template selected on all four tasks were unchanged. The two near-tied templates show how
+  little separates the top candidates.
