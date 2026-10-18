@@ -193,7 +193,7 @@ def main() -> int:
                     f"{args.model} returned {len(results)} results for {len(batch)} images."
                 )
             predictions.extend(result.label for result in results)
-            scores.extend(result.score for result in results)
+            scores.extend(result.probability for result in results)
             progress["timing_seconds"][strategy] += elapsed
             _write_json_atomic(progress_path, progress)
             print(

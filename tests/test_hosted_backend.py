@@ -56,6 +56,22 @@ def test_remote_hosted_model_rejects_partial_response() -> None:
             )
 
 
+def test_remote_hosted_model_exposes_probability() -> None:
+    with patch(
+        "histoprompt.hosted_backend._post_json",
+        return_value={"results": [{"predicted_label": "first", "score": 0.6}]},
+    ):
+        result = RemoteHostedModel(
+            "PLIP", "http://127.0.0.1:8804", "secret"
+        ).classify_batch(
+            ["data:image/jpeg;base64,YQ=="],
+            {"first": "first prompt"},
+        )[0]
+
+    assert result.label == "first"
+    assert result.probability == 0.6
+
+
 def test_benchmark_backend_reads_quiltnet_environment(monkeypatch) -> None:
     monkeypatch.setenv("QUILTNET_ENDPOINT", "http://127.0.0.1:8803")
     monkeypatch.setenv("QUILTNET_API_KEY", "secret")
