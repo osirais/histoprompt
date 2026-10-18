@@ -17,6 +17,7 @@ import json
 import os
 import sys
 import time
+import urllib.request
 from collections import Counter
 from pathlib import Path
 
@@ -26,13 +27,19 @@ sys.path.insert(0, str(ROOT))
 from histoprompt.benchmark import load_manifest, verify_image_checksum  # noqa: E402
 from histoprompt.config import Settings  # noqa: E402
 from histoprompt.lumen import LumenClient  # noqa: E402
-from histoprompt.musk_backend import make_musk_backend  # noqa: E402
+from histoprompt.musk_backend import decode_image, make_musk_backend  # noqa: E402
 from histoprompt.pipeline import _generic_prompt  # noqa: E402
 from histoprompt.prompt_tuning import (  # noqa: E402
     CANDIDATE_SYSTEM, candidate_request, compare, parse_candidates, template_prompts, tune,
 )
 
 FAMILY = "lung histopathology"
+REMOTE_MODELS = {
+    "conch": ("CONCH_ENDPOINT", "CONCH_API_KEY"),
+    "musk": ("MUSK_ENDPOINT", "MUSK_API_KEY"),
+    "quiltnet": ("QUILTNET_ENDPOINT", "QUILTNET_API_KEY"),
+    "plip": ("PLIP_ENDPOINT", "PLIP_API_KEY"),
+}
 
 
 def data_url(raw: bytes) -> str:
@@ -45,13 +52,24 @@ def main() -> int:
     parser.add_argument("--image-dir", type=Path, default=ROOT / ".benchmark-cache" / "lc25000-tuning")
     parser.add_argument("--benchmark-manifest", type=Path, default=ROOT / "benchmarks" / "lc25000-600" / "manifest.json")
     parser.add_argument("--test-per-label", type=int, default=150)
+    parser.add_argument("--tuning-per-label", type=int, default=300)
+    parser.add_argument("--confirmation-per-label", type=int, default=300)
     parser.add_argument("--candidates", type=int, default=8)
     parser.add_argument("--batch-size", type=int, default=8)
+    parser.add_argument("--model", choices=sorted(REMOTE_MODELS), default="musk")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
     settings = Settings.from_env()
-    lumen, musk = LumenClient(settings), make_musk_backend(settings)
+    lumen = LumenClient(settings)
+    musk = make_musk_backend(settings) if args.model == "musk" else None
+    endpoint = api_key = ""
+    if args.model != "musk":
+        endpoint_key, api_key_key = REMOTE_MODELS[args.model]
+        if not os.getenv(endpoint_key) or not os.getenv(api_key_key):
+            raise SystemExit(f"{endpoint_key} and {api_key_key} are required for --model {args.model}.")
+        endpoint = os.environ[endpoint_key].rstrip("/") + "/classify"
+        api_key = os.environ[api_key_key]
     tuning_manifest = json.loads(args.tuning_manifest.read_text(encoding="utf-8"))
     cases, families = load_manifest(json.loads(args.benchmark_manifest.read_text(encoding="utf-8")))
     labels = list(families[FAMILY])
@@ -65,7 +83,10 @@ def main() -> int:
             items.append((data_url(raw), row["label"]))
         return items
 
-    tuning_set, confirmation_set = load_set("tuning"), load_set("confirmation")
+    tuning_set = load_set("tuning")
+    confirmation_set = load_set("confirmation")
+    tuning_set = [item for label in labels for item in tuning_set if item[1] == label][: args.tuning_per_label]
+    confirmation_set = [item for label in labels for item in confirmation_set if item[1] == label][: args.confirmation_per_label]
     test_set = []
     for label in labels:
         for case in [c for c in cases if c.ground_truth == label][: args.test_per_label]:
@@ -77,7 +98,21 @@ def main() -> int:
         predictions: list[str] = []
         for start in range(0, len(items), args.batch_size):
             batch = [image for image, _ in items[start : start + args.batch_size]]
-            predictions += [p.label for p in musk.classify_batch(batch, prompts)]
+            if musk is not None:
+                predictions += [p.label for p in musk.classify_batch(batch, prompts)]
+                continue
+            images = [base64.b64encode(decode_image(image)).decode("ascii") for image in batch]
+            request = urllib.request.Request(
+                endpoint,
+                data=json.dumps({"images": images, "prompts": prompts}).encode("utf-8"),
+                headers={"Content-Type": "application/json", "Authorization": f"Bearer {api_key}"},
+                method="POST",
+            )
+            with urllib.request.urlopen(request, timeout=120) as response:
+                values = json.loads(response.read().decode("utf-8")).get("results", [])
+            if len(values) != len(batch):
+                raise RuntimeError(f"{args.model} returned {len(values)} results for {len(batch)} images")
+            predictions += [str(value["predicted_label"]) for value in values]
         return predictions
 
     def correctness(items: list[tuple[str, str]]):
@@ -95,15 +130,16 @@ def main() -> int:
     chosen = tune(labels, correctness(tuning_set), correctness(confirmation_set), propose, tuning_confusions, log)
 
     evaluate_test = correctness(test_set)
+    original_name = f"original {args.model.upper()} (generic)"
     prompt_sets = {
-        "original MUSK (generic)": {label: _generic_prompt(label) for label in labels},
+        original_name: {label: _generic_prompt(label) for label in labels},
         "histology showing {label}": template_prompts(labels),
         "tuned": template_prompts(labels, chosen),
     }
     results = {name: evaluate_test(prompts) for name, prompts in prompt_sets.items()}
     test = {}
     for name, result in results.items():
-        vs_original = compare(result, results["original MUSK (generic)"])
+        vs_original = compare(result, results[original_name])
         vs_template = compare(result, results["histology showing {label}"])
         test[name] = {"correct": sum(result), "n": len(result), "prompts": prompt_sets[name],
                       "vs_original": vs_original.__dict__, "vs_template": vs_template.__dict__}
@@ -112,6 +148,7 @@ def main() -> int:
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps({
+        "model": args.model,
         "lumen_model": settings.lumen_model or os.getenv("LUMEN_MODEL", ""), "chosen_phrases": chosen,
         "sets": {"tuning": len(tuning_set), "confirmation": len(confirmation_set), "test": len(test_set)},
         "test": test, "minutes": round((time.time() - started) / 60, 1), "log": log,

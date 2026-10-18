@@ -1,0 +1,313 @@
+{
+ "model": "plip",
+ "lumen_model": "gemma-4-31b-it",
+ "chosen_phrases": {
+  "benign lung tissue": "preserved lung parenchyma",
+  "lung adenocarcinoma": "",
+  "lung squamous cell carcinoma": ""
+ },
+ "sets": {
+  "tuning": 300,
+  "confirmation": 300,
+  "test": 450
+ },
+ "test": {
+  "original PLIP (generic)": {
+   "correct": 373,
+   "n": 450,
+   "prompts": {
+    "benign lung tissue": "a histopathology image showing benign lung tissue",
+    "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma",
+    "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma"
+   },
+   "vs_original": {
+    "gain": 0.0,
+    "fixed": 0,
+    "broken": 0,
+    "p": 1.0
+   },
+   "vs_template": {
+    "gain": -0.0022222222222222222,
+    "fixed": 9,
+    "broken": 10,
+    "p": 0.6761970520019531
+   }
+  },
+  "histology showing {label}": {
+   "correct": 374,
+   "n": 450,
+   "prompts": {
+    "benign lung tissue": "histology showing benign lung tissue",
+    "lung adenocarcinoma": "histology showing lung adenocarcinoma",
+    "lung squamous cell carcinoma": "histology showing lung squamous cell carcinoma"
+   },
+   "vs_original": {
+    "gain": 0.0022222222222222222,
+    "fixed": 10,
+    "broken": 9,
+    "p": 0.5
+   },
+   "vs_template": {
+    "gain": 0.0,
+    "fixed": 0,
+    "broken": 0,
+    "p": 1.0
+   }
+  },
+  "tuned": {
+   "correct": 369,
+   "n": 450,
+   "prompts": {
+    "benign lung tissue": "histology showing benign lung tissue with preserved lung parenchyma",
+    "lung adenocarcinoma": "histology showing lung adenocarcinoma",
+    "lung squamous cell carcinoma": "histology showing lung squamous cell carcinoma"
+   },
+   "vs_original": {
+    "gain": -0.008888888888888889,
+    "fixed": 9,
+    "broken": 13,
+    "p": 0.8568606376647949
+   },
+   "vs_template": {
+    "gain": -0.011111111111111112,
+    "fixed": 4,
+    "broken": 9,
+    "p": 0.953857421875
+   }
+  }
+ },
+ "minutes": 4.3,
+ "log": [
+  {
+   "step": "baseline",
+   "tuning_accuracy": 0.94
+  },
+  {
+   "step": "candidates",
+   "candidates": {
+    "benign lung tissue": [
+     "thin alveolar walls",
+     "preserved lung parenchyma",
+     "thin septal walls",
+     "regular alveolar sacs",
+     "intact alveolar structure"
+    ],
+    "lung adenocarcinoma": [
+     "glandular lumen formation",
+     "acinar growth pattern",
+     "lepidic growth pattern",
+     "mucus producing cells",
+     "intracellular mucin vacuoles",
+     "papillary projections",
+     "tubule formation"
+    ],
+    "lung squamous cell carcinoma": [
+     "keratin pearls",
+     "intercellular bridges",
+     "keratinization",
+     "eosinophilic cytoplasm",
+     "squamous eddies",
+     "dense keratin plugs",
+     "glassy eosinophilic cytoplasm"
+    ]
+   },
+   "dropped": [
+    "benign lung tissue: 'open alveolar spaces' shares ['spaces']",
+    "benign lung tissue: 'clear air spaces' shares ['spaces']",
+    "benign lung tissue: 'normal alveolar architecture' shares ['architecture']",
+    "lung adenocarcinoma: 'glandular architecture' shares ['architecture']",
+    "lung squamous cell carcinoma: 'wide intercellular spaces' shares ['spaces']"
+   ]
+  },
+  {
+   "step": "round 1",
+   "label": "benign lung tissue",
+   "phrase": "thin alveolar walls",
+   "gain": -0.36666666666666664,
+   "fixed": 1,
+   "broken": 111,
+   "p": 1.0
+  },
+  {
+   "step": "round 1",
+   "label": "benign lung tissue",
+   "phrase": "preserved lung parenchyma",
+   "gain": 0.06,
+   "fixed": 18,
+   "broken": 0,
+   "p": 3.814697265625e-06
+  },
+  {
+   "step": "round 1",
+   "label": "benign lung tissue",
+   "phrase": "thin septal walls",
+   "gain": -0.91,
+   "fixed": 0,
+   "broken": 273,
+   "p": 1.0
+  },
+  {
+   "step": "round 1",
+   "label": "benign lung tissue",
+   "phrase": "regular alveolar sacs",
+   "gain": -0.03666666666666667,
+   "fixed": 4,
+   "broken": 15,
+   "p": 0.9977874755859375
+  },
+  {
+   "step": "round 1",
+   "label": "benign lung tissue",
+   "phrase": "intact alveolar structure",
+   "gain": 0.06,
+   "fixed": 18,
+   "broken": 0,
+   "p": 3.814697265625e-06
+  },
+  {
+   "step": "round 1 confirmation",
+   "label": "benign lung tissue",
+   "phrase": "preserved lung parenchyma",
+   "tuning_gain": 0.06,
+   "tuning_p": 3.814697265625e-06,
+   "confirmation_gain": 0.08,
+   "accepted": true
+  },
+  {
+   "step": "round 1",
+   "label": "lung adenocarcinoma",
+   "phrase": "glandular lumen formation",
+   "gain": 0.0,
+   "fixed": 0,
+   "broken": 0,
+   "p": 1.0
+  },
+  {
+   "step": "round 1",
+   "label": "lung adenocarcinoma",
+   "phrase": "acinar growth pattern",
+   "gain": 0.0,
+   "fixed": 0,
+   "broken": 0,
+   "p": 1.0
+  },
+  {
+   "step": "round 1",
+   "label": "lung adenocarcinoma",
+   "phrase": "lepidic growth pattern",
+   "gain": 0.0,
+   "fixed": 0,
+   "broken": 0,
+   "p": 1.0
+  },
+  {
+   "step": "round 1",
+   "label": "lung adenocarcinoma",
+   "phrase": "mucus producing cells",
+   "gain": 0.0,
+   "fixed": 0,
+   "broken": 0,
+   "p": 1.0
+  },
+  {
+   "step": "round 1",
+   "label": "lung adenocarcinoma",
+   "phrase": "intracellular mucin vacuoles",
+   "gain": -0.02,
+   "fixed": 0,
+   "broken": 6,
+   "p": 1.0
+  },
+  {
+   "step": "round 1",
+   "label": "lung adenocarcinoma",
+   "phrase": "papillary projections",
+   "gain": 0.0,
+   "fixed": 0,
+   "broken": 0,
+   "p": 1.0
+  },
+  {
+   "step": "round 1",
+   "label": "lung adenocarcinoma",
+   "phrase": "tubule formation",
+   "gain": 0.0,
+   "fixed": 0,
+   "broken": 0,
+   "p": 1.0
+  },
+  {
+   "step": "round 1",
+   "label": "lung adenocarcinoma",
+   "accepted": null
+  },
+  {
+   "step": "round 1",
+   "label": "lung squamous cell carcinoma",
+   "phrase": "keratin pearls",
+   "gain": -0.07333333333333333,
+   "fixed": 0,
+   "broken": 22,
+   "p": 1.0
+  },
+  {
+   "step": "round 1",
+   "label": "lung squamous cell carcinoma",
+   "phrase": "intercellular bridges",
+   "gain": -0.006666666666666667,
+   "fixed": 0,
+   "broken": 2,
+   "p": 1.0
+  },
+  {
+   "step": "round 1",
+   "label": "lung squamous cell carcinoma",
+   "phrase": "keratinization",
+   "gain": 0.0,
+   "fixed": 0,
+   "broken": 0,
+   "p": 1.0
+  },
+  {
+   "step": "round 1",
+   "label": "lung squamous cell carcinoma",
+   "phrase": "eosinophilic cytoplasm",
+   "gain": 0.0,
+   "fixed": 0,
+   "broken": 0,
+   "p": 1.0
+  },
+  {
+   "step": "round 1",
+   "label": "lung squamous cell carcinoma",
+   "phrase": "squamous eddies",
+   "gain": 0.0,
+   "fixed": 0,
+   "broken": 0,
+   "p": 1.0
+  },
+  {
+   "step": "round 1",
+   "label": "lung squamous cell carcinoma",
+   "phrase": "dense keratin plugs",
+   "gain": 0.0,
+   "fixed": 0,
+   "broken": 0,
+   "p": 1.0
+  },
+  {
+   "step": "round 1",
+   "label": "lung squamous cell carcinoma",
+   "phrase": "glassy eosinophilic cytoplasm",
+   "gain": -0.02666666666666667,
+   "fixed": 0,
+   "broken": 8,
+   "p": 1.0
+  },
+  {
+   "step": "round 1",
+   "label": "lung squamous cell carcinoma",
+   "accepted": null
+  }
+ ]
+}

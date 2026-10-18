@@ -29,7 +29,7 @@ STOP_WORDS = set(
     "showing histology tissue cells cell features feature pattern patterns".split()
 )
 CANDIDATE_SYSTEM = (
-    "You write short captions for a CLIP-style pathology vision-language model (MUSK) that must tell apart a "
+    "You write short captions for the selected CLIP-style pathology vision-language model that must tell apart a "
     "fixed set of diagnoses on H&E images. It responds best to short, plain caption phrases. "
     "Return only valid JSON."
 )

@@ -123,3 +123,21 @@ gain, fixed/broken counts and p-value.
 - **Adenocarcinoma vs squamous cell carcinoma** isn't improved by wording. Prompt ensembles or learned prompts need
   MUSK's per-label scores (local MUSK); the hosted service returns only the top label.
 - Research benchmark only, not clinical validation.
+
+## Per-model validation run (2026-10-18)
+
+The same selection procedure was run independently for each hosted model. Each
+run used its own endpoint, candidate scoring, tuning set, confirmation set,
+and held-out 450-image lung test. The models were not given a phrase selected
+for another model.
+
+| Model | Generic | Template | Independently tuned | Selected phrases |
+| --- | ---: | ---: | ---: | --- |
+| MUSK | 403/450 (89.6%) | 416/450 (92.4%) | **423/450 (94.0%)** | benign: `regular alveolar sacs` |
+| CONCH | 423/450 (94.0%) | 293/450 (65.1%) | 317/450 (70.4%) | benign: `preserved lung parenchyma`; squamous: `keratin pearls` (rejected) |
+| QuiltNet-B-32 | 387/450 (86.0%) | 359/450 (79.8%) | 359/450 (79.8%) | none |
+| PLIP | 373/450 (82.9%) | 374/450 (83.1%) | 369/450 (82.0%) | benign: `preserved lung parenchyma` (rejected) |
+
+The tuned phrase is promoted only when it clears the accuracy, paired sign-test,
+and confirmation bars. Therefore only the MUSK phrase was accepted in this
+run. Raw outputs are in `results/full-*.json`.
