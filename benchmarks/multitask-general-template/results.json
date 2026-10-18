@@ -1,0 +1,565 @@
+{
+ "baseline": "a histopathology image showing {label}",
+ "tasks": {
+  "lung": {
+   "tuning": 450,
+   "confirmation": 450,
+   "test": 450
+  },
+  "colon": {
+   "tuning": 400,
+   "confirmation": 400,
+   "test": 400
+  },
+  "crc9": {
+   "tuning": 450,
+   "confirmation": 450,
+   "test": 450
+  },
+  "pcam": {
+   "tuning": 400,
+   "confirmation": 400,
+   "test": 400
+  }
+ },
+ "loto": {
+  "lung": {
+   "selected_on": [
+    "colon",
+    "crc9",
+    "pcam"
+   ],
+   "transferred_template": "a histopathological photograph showing {label}.",
+   "selection": {
+    "template": "a histopathological photograph showing {label}.",
+    "tuning_gain_per_task": {
+     "colon": 0.0,
+     "crc9": 0.017777777777777778,
+     "pcam": 0.03
+    },
+    "tuning_mean_gain": 0.015925925925925927,
+    "fixed": 29,
+    "broken": 9,
+    "p": 0.0008290262630907819,
+    "passes_tuning": true,
+    "confirmation_gain_per_task": {
+     "colon": 0.0,
+     "crc9": 0.017777777777777778,
+     "pcam": 0.005
+    },
+    "passes_confirmation": true
+   },
+   "log": [
+    {
+     "template": "a histopathological photograph showing {label}.",
+     "tuning_gain_per_task": {
+      "colon": 0.0,
+      "crc9": 0.017777777777777778,
+      "pcam": 0.03
+     },
+     "tuning_mean_gain": 0.015925925925925927,
+     "fixed": 29,
+     "broken": 9,
+     "p": 0.0008290262630907819,
+     "passes_tuning": true,
+     "confirmation_gain_per_task": {
+      "colon": 0.0,
+      "crc9": 0.017777777777777778,
+      "pcam": 0.005
+     },
+     "passes_confirmation": true
+    }
+   ],
+   "own_template": "An H&E image patch of {label} tissue.",
+   "own_log": [
+    {
+     "task": "lung",
+     "template": "An H&E image patch of {label} tissue.",
+     "tuning_gain": 0.035555555555555556,
+     "p": 0.000771939754486084,
+     "confirmation_gain": 0.035555555555555556,
+     "accepted": true
+    }
+   ],
+   "test": {
+    "baseline": {
+     "template": "a histopathology image showing {label}",
+     "correct": 403,
+     "n": 450,
+     "accuracy": 0.8955555555555555,
+     "vs_baseline": {
+      "gain": 0.0,
+      "fixed": 0,
+      "broken": 0,
+      "p": 1.0
+     }
+    },
+    "transferred": {
+     "template": "a histopathological photograph showing {label}.",
+     "correct": 419,
+     "n": 450,
+     "accuracy": 0.9311111111111111,
+     "vs_baseline": {
+      "gain": 0.035555555555555556,
+      "fixed": 26,
+      "broken": 10,
+      "p": 0.005665492091793567
+     }
+    },
+    "own (tailored)": {
+     "template": "An H&E image patch of {label} tissue.",
+     "correct": 423,
+     "n": 450,
+     "accuracy": 0.94,
+     "vs_baseline": {
+      "gain": 0.044444444444444446,
+      "fixed": 22,
+      "broken": 2,
+      "p": 1.7940998077392578e-05
+     }
+    }
+   }
+  },
+  "colon": {
+   "selected_on": [
+    "lung",
+    "crc9",
+    "pcam"
+   ],
+   "transferred_template": "a histopathological photograph showing {label}.",
+   "selection": {
+    "template": "a histopathological photograph showing {label}.",
+    "tuning_gain_per_task": {
+     "lung": 0.02,
+     "crc9": 0.017777777777777778,
+     "pcam": 0.03
+    },
+    "tuning_mean_gain": 0.02259259259259259,
+    "fixed": 46,
+    "broken": 17,
+    "p": 0.0001683546747331191,
+    "passes_tuning": true,
+    "confirmation_gain_per_task": {
+     "lung": 0.02,
+     "crc9": 0.017777777777777778,
+     "pcam": 0.005
+    },
+    "passes_confirmation": true
+   },
+   "log": [
+    {
+     "template": "a histopathological photograph showing {label}.",
+     "tuning_gain_per_task": {
+      "lung": 0.02,
+      "crc9": 0.017777777777777778,
+      "pcam": 0.03
+     },
+     "tuning_mean_gain": 0.02259259259259259,
+     "fixed": 46,
+     "broken": 17,
+     "p": 0.0001683546747331191,
+     "passes_tuning": true,
+     "confirmation_gain_per_task": {
+      "lung": 0.02,
+      "crc9": 0.017777777777777778,
+      "pcam": 0.005
+     },
+     "passes_confirmation": true
+    }
+   ],
+   "own_template": "a histopathology image showing {label}",
+   "own_log": [],
+   "test": {
+    "baseline": {
+     "template": "a histopathology image showing {label}",
+     "correct": 395,
+     "n": 400,
+     "accuracy": 0.9875,
+     "vs_baseline": {
+      "gain": 0.0,
+      "fixed": 0,
+      "broken": 0,
+      "p": 1.0
+     }
+    },
+    "transferred": {
+     "template": "a histopathological photograph showing {label}.",
+     "correct": 397,
+     "n": 400,
+     "accuracy": 0.9925,
+     "vs_baseline": {
+      "gain": 0.005,
+      "fixed": 2,
+      "broken": 0,
+      "p": 0.25
+     }
+    },
+    "own (tailored)": {
+     "template": "a histopathology image showing {label}",
+     "correct": 395,
+     "n": 400,
+     "accuracy": 0.9875,
+     "vs_baseline": {
+      "gain": 0.0,
+      "fixed": 0,
+      "broken": 0,
+      "p": 1.0
+     }
+    }
+   }
+  },
+  "crc9": {
+   "selected_on": [
+    "lung",
+    "colon",
+    "pcam"
+   ],
+   "transferred_template": "a histopathological photograph showing {label}.",
+   "selection": {
+    "template": "a histopathological photograph showing {label}.",
+    "tuning_gain_per_task": {
+     "lung": 0.02,
+     "colon": 0.0,
+     "pcam": 0.03
+    },
+    "tuning_mean_gain": 0.016666666666666666,
+    "fixed": 32,
+    "broken": 11,
+    "p": 0.0009569805006321985,
+    "passes_tuning": true,
+    "confirmation_gain_per_task": {
+     "lung": 0.02,
+     "colon": 0.0,
+     "pcam": 0.005
+    },
+    "passes_confirmation": true
+   },
+   "log": [
+    {
+     "template": "a histopathological photograph showing {label}.",
+     "tuning_gain_per_task": {
+      "lung": 0.02,
+      "colon": 0.0,
+      "pcam": 0.03
+     },
+     "tuning_mean_gain": 0.016666666666666666,
+     "fixed": 32,
+     "broken": 11,
+     "p": 0.0009569805006321985,
+     "passes_tuning": true,
+     "confirmation_gain_per_task": {
+      "lung": 0.02,
+      "colon": 0.0,
+      "pcam": 0.005
+     },
+     "passes_confirmation": true
+    }
+   ],
+   "own_template": "a histopathology image showing {label}",
+   "own_log": [],
+   "test": {
+    "baseline": {
+     "template": "a histopathology image showing {label}",
+     "correct": 319,
+     "n": 450,
+     "accuracy": 0.7088888888888889,
+     "vs_baseline": {
+      "gain": 0.0,
+      "fixed": 0,
+      "broken": 0,
+      "p": 1.0
+     }
+    },
+    "transferred": {
+     "template": "a histopathological photograph showing {label}.",
+     "correct": 311,
+     "n": 450,
+     "accuracy": 0.6911111111111111,
+     "vs_baseline": {
+      "gain": -0.017777777777777778,
+      "fixed": 8,
+      "broken": 16,
+      "p": 0.07579481601715088
+     }
+    },
+    "own (tailored)": {
+     "template": "a histopathology image showing {label}",
+     "correct": 319,
+     "n": 450,
+     "accuracy": 0.7088888888888889,
+     "vs_baseline": {
+      "gain": 0.0,
+      "fixed": 0,
+      "broken": 0,
+      "p": 1.0
+     }
+    }
+   }
+  },
+  "pcam": {
+   "selected_on": [
+    "lung",
+    "colon",
+    "crc9"
+   ],
+   "transferred_template": "a histopathological photograph showing {label}.",
+   "selection": {
+    "template": "a histopathological photograph showing {label}.",
+    "tuning_gain_per_task": {
+     "lung": 0.02,
+     "colon": 0.0,
+     "crc9": 0.017777777777777778
+    },
+    "tuning_mean_gain": 0.012592592592592593,
+    "fixed": 31,
+    "broken": 14,
+    "p": 0.008047180015637423,
+    "passes_tuning": true,
+    "confirmation_gain_per_task": {
+     "lung": 0.02,
+     "colon": 0.0,
+     "crc9": 0.017777777777777778
+    },
+    "passes_confirmation": true
+   },
+   "log": [
+    {
+     "template": "a histopathological photograph showing {label}.",
+     "tuning_gain_per_task": {
+      "lung": 0.02,
+      "colon": 0.0,
+      "crc9": 0.017777777777777778
+     },
+     "tuning_mean_gain": 0.012592592592592593,
+     "fixed": 31,
+     "broken": 14,
+     "p": 0.008047180015637423,
+     "passes_tuning": true,
+     "confirmation_gain_per_task": {
+      "lung": 0.02,
+      "colon": 0.0,
+      "crc9": 0.017777777777777778
+     },
+     "passes_confirmation": true
+    }
+   ],
+   "own_template": "{label}, H&E stain.",
+   "own_log": [
+    {
+     "task": "pcam",
+     "template": "a histopathology slide showing {label}",
+     "tuning_gain": 0.0325,
+     "p": 0.020479795755818486,
+     "confirmation_gain": 0.0025,
+     "accepted": false
+    },
+    {
+     "task": "pcam",
+     "template": "{label}, H&E stain.",
+     "tuning_gain": 0.0325,
+     "p": 0.026625957048963755,
+     "confirmation_gain": 0.01,
+     "accepted": true
+    }
+   ],
+   "test": {
+    "baseline": {
+     "template": "a histopathology image showing {label}",
+     "correct": 327,
+     "n": 400,
+     "accuracy": 0.8175,
+     "vs_baseline": {
+      "gain": 0.0,
+      "fixed": 0,
+      "broken": 0,
+      "p": 1.0
+     }
+    },
+    "transferred": {
+     "template": "a histopathological photograph showing {label}.",
+     "correct": 330,
+     "n": 400,
+     "accuracy": 0.825,
+     "vs_baseline": {
+      "gain": 0.0075,
+      "fixed": 12,
+      "broken": 9,
+      "p": 0.33181190490722656
+     }
+    },
+    "own (tailored)": {
+     "template": "{label}, H&E stain.",
+     "correct": 337,
+     "n": 400,
+     "accuracy": 0.8425,
+     "vs_baseline": {
+      "gain": 0.025,
+      "fixed": 30,
+      "broken": 20,
+      "p": 0.10131937553227033
+     }
+    }
+   }
+  }
+ },
+ "settings": {
+  "batch": 64,
+  "workers": 3,
+  "screen_fraction": 0.25,
+  "finalists": 8
+ },
+ "general_all_tasks": {
+  "template": "a histopathological photograph showing {label}.",
+  "selection": {
+   "template": "a histopathological photograph showing {label}.",
+   "tuning_gain_per_task": {
+    "lung": 0.02,
+    "colon": 0.0,
+    "crc9": 0.017777777777777778,
+    "pcam": 0.03
+   },
+   "tuning_mean_gain": 0.016944444444444443,
+   "fixed": 46,
+   "broken": 17,
+   "p": 0.0001683546747331191,
+   "passes_tuning": true,
+   "confirmation_gain_per_task": {
+    "lung": 0.02,
+    "colon": 0.0,
+    "crc9": 0.017777777777777778,
+    "pcam": 0.005
+   },
+   "passes_confirmation": true
+  },
+  "log": [
+   {
+    "template": "a histopathological photograph showing {label}.",
+    "tuning_gain_per_task": {
+     "lung": 0.02,
+     "colon": 0.0,
+     "crc9": 0.017777777777777778,
+     "pcam": 0.03
+    },
+    "tuning_mean_gain": 0.016944444444444443,
+    "fixed": 46,
+    "broken": 17,
+    "p": 0.0001683546747331191,
+    "passes_tuning": true,
+    "confirmation_gain_per_task": {
+     "lung": 0.02,
+     "colon": 0.0,
+     "crc9": 0.017777777777777778,
+     "pcam": 0.005
+    },
+    "passes_confirmation": true
+   }
+  ],
+  "test": {
+   "lung": {
+    "baseline": {
+     "template": "a histopathology image showing {label}",
+     "correct": 403,
+     "n": 450,
+     "accuracy": 0.8955555555555555,
+     "vs_baseline": {
+      "gain": 0.0,
+      "fixed": 0,
+      "broken": 0,
+      "p": 1.0
+     }
+    },
+    "general": {
+     "template": "a histopathological photograph showing {label}.",
+     "correct": 419,
+     "n": 450,
+     "accuracy": 0.9311111111111111,
+     "vs_baseline": {
+      "gain": 0.035555555555555556,
+      "fixed": 26,
+      "broken": 10,
+      "p": 0.005665492091793567
+     }
+    }
+   },
+   "colon": {
+    "baseline": {
+     "template": "a histopathology image showing {label}",
+     "correct": 395,
+     "n": 400,
+     "accuracy": 0.9875,
+     "vs_baseline": {
+      "gain": 0.0,
+      "fixed": 0,
+      "broken": 0,
+      "p": 1.0
+     }
+    },
+    "general": {
+     "template": "a histopathological photograph showing {label}.",
+     "correct": 397,
+     "n": 400,
+     "accuracy": 0.9925,
+     "vs_baseline": {
+      "gain": 0.005,
+      "fixed": 2,
+      "broken": 0,
+      "p": 0.25
+     }
+    }
+   },
+   "crc9": {
+    "baseline": {
+     "template": "a histopathology image showing {label}",
+     "correct": 319,
+     "n": 450,
+     "accuracy": 0.7088888888888889,
+     "vs_baseline": {
+      "gain": 0.0,
+      "fixed": 0,
+      "broken": 0,
+      "p": 1.0
+     }
+    },
+    "general": {
+     "template": "a histopathological photograph showing {label}.",
+     "correct": 311,
+     "n": 450,
+     "accuracy": 0.6911111111111111,
+     "vs_baseline": {
+      "gain": -0.017777777777777778,
+      "fixed": 8,
+      "broken": 16,
+      "p": 0.07579481601715088
+     }
+    }
+   },
+   "pcam": {
+    "baseline": {
+     "template": "a histopathology image showing {label}",
+     "correct": 327,
+     "n": 400,
+     "accuracy": 0.8175,
+     "vs_baseline": {
+      "gain": 0.0,
+      "fixed": 0,
+      "broken": 0,
+      "p": 1.0
+     }
+    },
+    "general": {
+     "template": "a histopathological photograph showing {label}.",
+     "correct": 330,
+     "n": 400,
+     "accuracy": 0.825,
+     "vs_baseline": {
+      "gain": 0.0075,
+      "fixed": 12,
+      "broken": 9,
+      "p": 0.33181190490722656
+     }
+    }
+   }
+  }
+ },
+ "minutes": 17.0
+}
