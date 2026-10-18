@@ -13,7 +13,7 @@ remote_host="${DELTA_MUSK_HOST:-}"
 remote_port="${DELTA_MUSK_PORT:-8001}"
 local_port="${MUSK_TUNNEL_PORT:-8801}"
 conch_remote_host="${DELTA_CONCH_HOST:-}"
-conch_remote_port="${DELTA_CONCH_PORT:-8002}"
+conch_remote_port="${DELTA_CONCH_PORT:-8000}"
 conch_local_port="${CONCH_TUNNEL_PORT:-8802}"
 
 if [[ -z "$delta_username" ]]; then
