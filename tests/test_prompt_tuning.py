@@ -1,12 +1,14 @@
 from collections import Counter
 
 from histoprompt.prompt_tuning import (
+    DEFAULT_TEMPLATE,
     compare,
     overlap_filter,
     parse_candidates,
     passes_confirmation,
     passes_tuning_bars,
     sign_test_p,
+    select_base,
     template_prompts,
     tune,
 )
@@ -65,3 +67,45 @@ def test_tune_accepts_only_confirmed_significant_gains():
 
     chosen = tune(LABELS, evaluate, evaluate, propose, lambda prompts: Counter({("lung adenocarcinoma", "x"): 1}))
     assert chosen == {"benign lung tissue": "intact alveolar sacs", "lung adenocarcinoma": "", "lung squamous cell carcinoma": ""}
+
+
+def test_template_prompts_supports_a_model_specific_base():
+    prompts = template_prompts(
+        LABELS[:1],
+        {"benign lung tissue": "clear air spaces"},
+        "an H&E image of {label}.",
+    )
+    assert prompts == {
+        "benign lung tissue": "an H&E image of benign lung tissue with clear air spaces."
+    }
+
+
+def _scorer(scores):
+    def evaluate(prompts):
+        base = next(iter(prompts.values())).replace("benign lung tissue", "{label}")
+        right = scores.get(base, 800)
+        return [True] * right + [False] * (900 - right)
+
+    return evaluate
+
+
+def test_select_base_switches_only_on_a_clear_confirmed_win():
+    templates = [DEFAULT_TEMPLATE, "a histopathology image showing {label}", "{label}"]
+    clear = _scorer(
+        {DEFAULT_TEMPLATE: 600, "a histopathology image showing {label}": 840}
+    )
+    assert (
+        select_base(LABELS[:1], clear, clear, templates)
+        == "a histopathology image showing {label}"
+    )
+
+    marginal = _scorer(
+        {DEFAULT_TEMPLATE: 800, "a histopathology image showing {label}": 804}
+    )
+    assert select_base(LABELS[:1], marginal, marginal, templates) == DEFAULT_TEMPLATE
+
+    unconfirmed = _scorer(
+        {DEFAULT_TEMPLATE: 800, "a histopathology image showing {label}": 830}
+    )
+    flat = _scorer({})
+    assert select_base(LABELS[:1], unconfirmed, flat, templates) == DEFAULT_TEMPLATE

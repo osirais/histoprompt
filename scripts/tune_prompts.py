@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Tune MUSK lung label prompts with validation (see histoprompt/prompt_tuning.py for the bars).
+"""Select a base template and tune lung label prompts for one hosted model.
 
 Sets: tuning (900 extra LC25000 images) and confirmation (900 more), built by scripts/build_lc25000_tuning_sets.py;
 test = the first 150 images per label of the fixed 600-image benchmark, scored once at the end against the plain
@@ -30,7 +30,15 @@ from histoprompt.lumen import LumenClient  # noqa: E402
 from histoprompt.musk_backend import decode_image, make_musk_backend  # noqa: E402
 from histoprompt.pipeline import _generic_prompt  # noqa: E402
 from histoprompt.prompt_tuning import (  # noqa: E402
-    CANDIDATE_SYSTEM, candidate_request, compare, parse_candidates, template_prompts, tune,
+    CANDIDATE_SYSTEM,
+    DEFAULT_TEMPLATE,
+    TEMPLATES,
+    candidate_request,
+    compare,
+    parse_candidates,
+    select_base,
+    template_prompts,
+    tune,
 )
 
 FAMILY = "lung histopathology"
@@ -57,6 +65,17 @@ def main() -> int:
     parser.add_argument("--candidates", type=int, default=8)
     parser.add_argument("--batch-size", type=int, default=8)
     parser.add_argument("--model", choices=sorted(REMOTE_MODELS), default="musk")
+    parser.add_argument("--default-template", default=DEFAULT_TEMPLATE)
+    parser.add_argument(
+        "--no-template-search",
+        action="store_true",
+        help="Keep --default-template instead of selecting a base template.",
+    )
+    parser.add_argument(
+        "--template-only",
+        action="store_true",
+        help="Select the base template but skip Lumen phrase generation.",
+    )
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
@@ -134,20 +153,45 @@ def main() -> int:
 
     started = time.time()
     log: list[dict] = []
-    chosen = tune(labels, correctness(tuning_set), correctness(confirmation_set), propose, tuning_confusions, log)
+    base = args.default_template
+    if not args.no_template_search:
+        base = select_base(
+            labels,
+            correctness(tuning_set),
+            correctness(confirmation_set),
+            TEMPLATES,
+            args.default_template,
+            log,
+        )
+    print(f"base template: {base}", flush=True)
+    chosen = {label: "" for label in labels}
+    if not args.template_only:
+        chosen = tune(
+            labels,
+            correctness(tuning_set),
+            correctness(confirmation_set),
+            propose,
+            tuning_confusions,
+            log,
+            base,
+        )
 
     evaluate_test = correctness(test_set)
     original_name = f"original {args.model.upper()} (generic)"
+    default_name = args.default_template
+    chosen_name = "chosen base template"
     prompt_sets = {
         original_name: {label: _generic_prompt(label) for label in labels},
-        "histology showing {label}": template_prompts(labels),
-        "tuned": template_prompts(labels, chosen),
+        default_name: template_prompts(labels, base=args.default_template),
+        chosen_name: template_prompts(labels, base=base),
     }
+    if not args.template_only:
+        prompt_sets["tuned"] = template_prompts(labels, chosen, base)
     results = {name: evaluate_test(prompts) for name, prompts in prompt_sets.items()}
     test = {}
     for name, result in results.items():
         vs_original = compare(result, results[original_name])
-        vs_template = compare(result, results["histology showing {label}"])
+        vs_template = compare(result, results[default_name])
         test[name] = {"correct": sum(result), "n": len(result), "prompts": prompt_sets[name],
                       "vs_original": vs_original.__dict__, "vs_template": vs_template.__dict__}
         print(f"test {name}: {sum(result)}/{len(result)} (vs template: +{vs_template.fixed} fixed, "
@@ -155,8 +199,10 @@ def main() -> int:
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps({
-        "model": args.model,
-        "lumen_model": settings.lumen_model or os.getenv("LUMEN_MODEL", ""), "chosen_phrases": chosen,
+        "model": args.model, "base_template": base,
+        "template_only": args.template_only,
+        "lumen_model": settings.lumen_model or os.getenv("LUMEN_MODEL", ""),
+        "chosen_phrases": chosen,
         "sets": {"tuning": len(tuning_set), "confirmation": len(confirmation_set), "test": len(test_set)},
         "test": test, "minutes": round((time.time() - started) / 60, 1), "log": log,
     }, indent=1) + "\n", encoding="utf-8")

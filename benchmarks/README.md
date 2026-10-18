@@ -10,6 +10,7 @@ Start with [`RESULTS.md`](RESULTS.md) for the readable comparison. The benchmark
 | [`lc25000-tuning/`](lc25000-tuning/) | Does model-specific prompt search improve held-out lung accuracy? | Separate tuning, confirmation, and 450-image test sets per model | Prompt-selection experiment |
 | [`lc25000-1000/`](lc25000-1000/) | Can a larger balanced run be reproduced? | 1,000 stored lung and colon tiles | Stress-test dataset |
 | [`lc25000-600/`](lc25000-600/) | What happened in the original MUSK RAG comparison? | 600 stored lung tiles | Preserved baseline |
+| [`pathgen-ncsa/`](pathgen-ncsa/) | Does each model's independently selected template transfer across organs? | Every one of 2,141 materialized NCSA PathGen tiles; 8 TCGA projects | Full available-pixel benchmark |
 
 The `archive/` directory contains exploratory runs that should not be treated as current evidence:
 

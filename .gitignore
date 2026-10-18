@@ -8,4 +8,5 @@ __pycache__/
 .DS_Store
 data/corpus.local.jsonl
 .benchmark-cache/
+benchmarks/pathgen-ncsa/results/*/progress.json
 
