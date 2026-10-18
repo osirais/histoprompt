@@ -69,15 +69,24 @@ phrases that won by 2–3 images. On the same 450 test images they tied with or 
 
 ## Reproduce
 
-```bash
-# 1. LC25000 Parquet shards at the benchmark's pinned commit, then the tuning and confirmation sets
-#    (images go to the ignored .benchmark-cache/; this manifest pins them by SHA-256)
-uv run --with pyarrow python scripts/build_lc25000_tuning_sets.py --source-dir <dir with the 4 LC25000 shards>
+You need: this repository (`uv sync`), a Lumen API key (`LUMEN_API_KEY` in `.env.local`), and MUSK access. The hosted
+MUSK needs `MUSK_API_KEY` and the Delta tunnel (`scripts/start_delta_tunnel.sh`); local MUSK needs `MUSK_BACKEND=local`
+and an `HF_TOKEN` with the MUSK terms accepted. About 1.9 GB of disk for LC25000.
 
-# 2. Tune (MUSK reachable, e.g. through scripts/start_delta_tunnel.sh); reasoning LLMs need a larger output budget
+```bash
+# 1. Download the four LC25000 Parquet shards at the benchmark's pinned commit (public, about 1.9 GB)
+uv run --with huggingface-hub python -c "from huggingface_hub import snapshot_download; snapshot_download('1aurent/LC25000', repo_type='dataset', revision='2387ffed63932faa8fd05c679ffec85fc3153f61', local_dir='.benchmark-cache/lc25000-parquet', allow_patterns=['data/*.parquet'])"
+
+# 2. Build the tuning and confirmation sets (images go to the ignored .benchmark-cache/; the build checks them
+#    against benchmarks/lc25000-tuning/manifest.json by SHA-256)
+uv run --with pyarrow python scripts/build_lc25000_tuning_sets.py
+
+# 3. Tune and score; reasoning LLMs need a larger output budget. About 15-20 minutes with the hosted MUSK.
 LUMEN_MODEL=gemma-4-31b-it LUMEN_MAX_TOKENS=16000 uv run python scripts/tune_prompts.py \
-    --output benchmarks/lc25000-tuning/results/gemma-4-31b-it.json
+    --output benchmarks/lc25000-tuning/results/my-run.json
 ```
+
+The 450 test images are already in the repository (`benchmarks/lc25000-1000/images`).
 
 The LLM's suggestions vary between runs, so a rerun can choose different wording. Running the committed script
 once more with gemma-4-31b-it (`results/gemma-4-31b-it.json`) chose `clear air spaces` for benign and gave the same result:

@@ -66,6 +66,15 @@ def main() -> int:
                     "image": str(path.relative_to(args.image_dir)), "label": label, "class_rank": rank,
                     "source_name": name, "sha256": hashlib.sha256(raw).hexdigest(),
                 })
+    if args.manifest.exists():                       # committed manifest: verify instead of overwriting
+        expected = json.loads(args.manifest.read_text(encoding="utf-8"))
+        for split in ("tuning", "confirmation"):
+            got = [(r["image"], r["sha256"]) for r in manifest["sets"][split]]
+            want = [(r["image"], r["sha256"]) for r in expected["sets"][split]]
+            if got != want:
+                raise SystemExit(f"The rebuilt {split} set does not match {args.manifest}; check the source shards.")
+        print(f"Verified all images against {args.manifest}.")
+        return 0
     args.manifest.parent.mkdir(parents=True, exist_ok=True)
     args.manifest.write_text(json.dumps(manifest, indent=1) + "\n", encoding="utf-8")
     print(f"Wrote {sum(len(v) for v in manifest['sets'].values())} images to {args.image_dir} and {args.manifest}.")
