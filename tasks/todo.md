@@ -41,3 +41,11 @@ Risks: the hosted endpoint may limit request size or GPU batch size; LC25000 con
 - [ ] Run full verification, self-review, commit, push, and verify CI.
 
 Risks: repeated runs can drift if the remote MUSK service changes; LC25000 augmentation prevents patient-independent conclusions; report drafting must stay explicitly research-only and must not invent findings absent from the supplied report or model output.
+
+## NCSA CONCH integration
+
+- [x] Add an opt-in remote CONCH adapter using the NCSA `/classify` contract.
+- [x] Add a second SSH tunnel/configuration path without changing the MUSK default.
+- [ ] Show CONCH's result alongside MUSK and cover the adapter with offline tests.
+
+Risk: the CONCH host, port, and bearer key are supplied by the hackathon organizers and must remain local-only.

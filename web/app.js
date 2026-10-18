@@ -11,7 +11,7 @@ async function checkStatus() {
     const ready = status.musk.configured && status.lumen.configured && status.corpus.configured;
     const count = [status.musk, status.lumen, status.corpus].filter(item => item.configured).length;
     holder.innerHTML = `<span class="status-dot ${ready ? "ready" : count ? "partial" : "waiting"}"></span>${ready ? "Pipeline ready" : `${count}/3 services configured`}`;
-    holder.title = `MUSK: ${status.musk.detail}\nLumen: ${status.lumen.detail}\nCorpus: ${status.corpus.documents} documents`;
+    holder.title = `MUSK: ${status.musk.detail}\nCONCH: ${status.conch.detail}\nLumen: ${status.lumen.detail}\nCorpus: ${status.corpus.documents} documents`;
     if (status.lumen.configured) loadModels();
   } catch (error) {
     holder.innerHTML = `<span class="status-dot waiting"></span>Server unavailable`;
@@ -114,6 +114,10 @@ function render(data) {
 
   renderPredictions("#baseline-prediction-bars", data.baseline_predictions);
   renderPredictions("#prediction-bars", data.musk_predictions);
+  const conchSection = $("#conch-section");
+  const hasConch = Array.isArray(data.conch_predictions) && data.conch_predictions.length;
+  conchSection.classList.toggle("hidden", !hasConch);
+  if (hasConch) renderPredictions("#conch-prediction-bars", data.conch_predictions);
   const baseline = data.baseline_predictions?.[0];
   const enhanced = data.musk_predictions?.[0];
   if (baseline && enhanced && baseline.label === enhanced.label) {

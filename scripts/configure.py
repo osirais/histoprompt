@@ -49,6 +49,21 @@ def main() -> None:
         )
         required = ("LUMEN_API_KEY", "HF_TOKEN")
 
+    conch_mode = ask(
+        "CONCH mode (remote or disabled)", values.get("CONCH_BACKEND", "disabled")
+    ).lower()
+    if conch_mode not in {"remote", "disabled"}:
+        raise SystemExit("CONCH mode must be either remote or disabled.")
+    values["CONCH_BACKEND"] = conch_mode
+    if conch_mode == "remote":
+        values["DELTA_CONCH_HOST"] = ask(
+            "NCSA CONCH host", values.get("DELTA_CONCH_HOST", "")
+        )
+        values["CONCH_API_KEY"] = ask(
+            "Shared CONCH bearer key", values.get("CONCH_API_KEY", ""), secret=True
+        )
+        required = (*required, "DELTA_CONCH_HOST", "CONCH_API_KEY")
+
     missing = [key for key in required if not values.get(key)]
     if missing:
         raise SystemExit(f"Missing required values: {', '.join(missing)}")

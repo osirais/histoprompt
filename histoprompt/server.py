@@ -9,6 +9,7 @@ from typing import Any
 from urllib.parse import urlparse
 
 from .config import ROOT, Settings
+from .conch_backend import ConchError, conch_status
 from .lumen import LumenError
 from .musk_backend import MuskError, musk_status
 from .pipeline import AnalysisPipeline
@@ -47,6 +48,7 @@ class HistoPromptHandler(BaseHTTPRequestHandler):
             self._json(
                 {
                     "musk": musk_status(self.server.settings),
+                    "conch": conch_status(self.server.settings),
                     "lumen": {
                         "configured": lumen.configured,
                         "detail": (
@@ -90,7 +92,7 @@ class HistoPromptHandler(BaseHTTPRequestHandler):
             self._json(self.server.pipeline.analyze(payload))
         except (ValueError, json.JSONDecodeError) as exc:
             self._json({"error": str(exc)}, HTTPStatus.BAD_REQUEST)
-        except (MuskError, LumenError) as exc:
+        except (ConchError, MuskError, LumenError) as exc:
             self._json({"error": str(exc)}, HTTPStatus.BAD_GATEWAY)
         except Exception as exc:
             self._json({"error": f"Unexpected server error: {exc}"}, HTTPStatus.INTERNAL_SERVER_ERROR)

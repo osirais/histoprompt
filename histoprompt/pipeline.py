@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from typing import Any
 
 from .config import Settings
+from .conch_backend import make_conch_backend
 from .lumen import LumenClient
 from .musk_backend import make_musk_backend
 from .rag import EvidenceIndex
@@ -132,6 +133,11 @@ Keep each feature phrase under 25 words, do not repeat the diagnosis label insid
         baseline_predictions = musk.classify(image, generic_prompts)
         histology_predictions = musk.classify(image, histology_prompts)
         predictions = musk.classify(image, musk_prompts)
+        conch_predictions = []
+        if getattr(self.settings, "conch_backend", "disabled") == "remote":
+            conch_predictions = make_conch_backend(self.settings).classify(
+                image, histology_prompts
+            )
         baseline_text = "\n".join(
             f"- {item.label}: {item.probability:.4f}"
             for item in baseline_predictions
@@ -159,6 +165,9 @@ PROMPT-ENHANCED MUSK SCORES
 
 SHORT HISTOLOGY-TEMPLATE MUSK SCORES
 {histology_text}
+
+NCSA CONCH SCORES
+{chr(10).join(f"- {item.label}: {item.probability:.4f}" for item in conch_predictions) or "CONCH is not configured."}
 
 RETRIEVED LOCAL EVIDENCE
 {evidence_text or 'No matching evidence was retrieved.'}
@@ -189,6 +198,7 @@ Confidence must be a number from 0 to 1 and must reflect both model uncertainty 
             ],
             "musk_predictions": [item.as_dict() for item in histology_predictions],
             "evidence_predictions": [item.as_dict() for item in predictions],
+            "conch_predictions": [item.as_dict() for item in conch_predictions],
             # The short histology template is primary because it beat generic MUSK
             # on the held-out portion of the 600-image benchmark.
             "primary_predictions": [

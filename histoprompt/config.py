@@ -35,6 +35,9 @@ class Settings:
     musk_device: str
     musk_endpoint: str
     musk_api_key: str
+    conch_backend: str
+    conch_endpoint: str
+    conch_api_key: str
 
     @classmethod
     def from_env(cls) -> "Settings":
@@ -56,5 +59,8 @@ class Settings:
             musk_device=os.getenv("MUSK_DEVICE", "auto"),
             musk_endpoint=os.getenv("MUSK_ENDPOINT", ""),
             musk_api_key=os.getenv("MUSK_API_KEY", ""),
+            conch_backend=os.getenv("CONCH_BACKEND", "disabled").lower(),
+            conch_endpoint=os.getenv("CONCH_ENDPOINT", ""),
+            conch_api_key=os.getenv("CONCH_API_KEY", ""),
         )
 

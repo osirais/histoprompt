@@ -43,6 +43,23 @@ Plain MUSK receives label-only prompts such as `herpes simplex esophagitis`. The
 
 The hosted hackathon service returns only its highest-ranked candidate per image. HistoPrompt therefore treats the score as model output to review, not calibrated diagnostic confidence.
 
+## Optional NCSA CONCH comparison
+
+The hackathon also provides CONCH as a separate hosted service on Delta. It uses the same `/classify` request shape as MUSK, but has a separate host, port, and bearer key. The app keeps MUSK as the primary result and displays CONCH as an optional comparison when enabled.
+
+Accept the gated [CONCH model terms](https://huggingface.co/MahmoodLab/CONCH) yourself, then put the host and key supplied in the hackathon Slack channel into `.env.local`:
+
+```dotenv
+CONCH_BACKEND=remote
+CONCH_ENDPOINT=http://127.0.0.1:8802
+CONCH_API_KEY=your_private_conch_key
+DELTA_CONCH_HOST=the_conch_host_from_slack
+DELTA_CONCH_PORT=8002
+CONCH_TUNNEL_PORT=8802
+```
+
+Restart `scripts/start_delta_tunnel.sh`; it forwards both services through the same SSH session. `CONCH_BACKEND=disabled` leaves the MUSK-only path unchanged.
+
 ## Hosted MUSK on Delta
 
 The opening-session setup exposes MUSK only inside Delta. `scripts/start_delta_tunnel.sh` maps the service to `http://127.0.0.1:8801` on your laptop; HistoPrompt calls the server's `/health` and `/classify` routes using the official hackathon schema.
