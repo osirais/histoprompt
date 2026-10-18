@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import urllib.error
 import urllib.request
 from typing import Any
@@ -71,7 +72,7 @@ class LumenClient:
                     {"role": "user", "content": prompt},
                 ],
                 "temperature": 0.1,
-                "max_tokens": 1400,
+                "max_tokens": int(os.getenv("LUMEN_MAX_TOKENS", "1400")),
             },
         )
         try:

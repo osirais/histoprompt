@@ -1,0 +1,66 @@
+{
+ "gemma-4-31b-it (team's 600-image run)": {
+  "correct": 356,
+  "vs_original": [
+   21,
+   68
+  ],
+  "vs_template": [
+   11,
+   71
+  ],
+  "prompts": {
+   "benign lung tissue": "benign lung tissue with preserved alveolar architecture, thin alveolar walls, clear air spaces",
+   "lung adenocarcinoma": "lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+   "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, eosinophilic cytoplasm"
+  }
+ },
+ "gemma-4-31b-it (our 99-image run)": {
+  "correct": 375,
+  "vs_original": [
+   23,
+   51
+  ],
+  "vs_template": [
+   13,
+   54
+  ],
+  "prompts": {
+   "benign lung tissue": "benign lung tissue with thin alveolar walls, open air spaces, preserved alveolar architecture",
+   "lung adenocarcinoma": "lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+   "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, pleomorphic keratinocytes"
+  }
+ },
+ "nemotron-3-super-120b-a12b (our 99-image run)": {
+  "correct": 395,
+  "vs_original": [
+   22,
+   30
+  ],
+  "vs_template": [
+   11,
+   32
+  ],
+  "prompts": {
+   "benign lung tissue": "benign lung tissue with thin alveolar septa, uniform type I pneumocytes, scattered alveolar macrophages",
+   "lung adenocarcinoma": "lung adenocarcinoma with glandular structures with mucin, TTF-1 nuclear positivity, Napsin A cytoplasmic positivity",
+   "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, p40 nuclear positivity, CK5 cytoplasmic positivity"
+  }
+ },
+ "ornith-1.0-35b (our 99-image run)": {
+  "correct": 387,
+  "vs_original": [
+   26,
+   42
+  ],
+  "vs_template": [
+   14,
+   43
+  ],
+  "prompts": {
+   "benign lung tissue": "benign lung tissue with Alveolar spaces lined by flattened pneumocytes; thin alveolar septa without cellular atypia; preserved bronchiolar and vascular architecture; scattered lymphocytes within normal interstitium",
+   "lung adenocarcinoma": "lung adenocarcinoma with Malignant glandular structures with papillary or acinar patterns; columnar cells with enlarged hyperchromatic nuclei and prominent nucleoli; desmoplastic stromal reaction surrounding invasive glands; intraluminal necrotic debris within neoplastic",
+   "lung squamous cell carcinoma": "lung squamous cell carcinoma with Intersecting sheets of polygonal cells with abundant eosinophilic cytoplasm; intercellular bridges and dyskeratotic individual cell keratinization; central keratin pearl formation within tumor nests; pleomorphic nuclei with coarse chromatin"
+  }
+ }
+}

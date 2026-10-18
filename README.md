@@ -62,6 +62,13 @@ Restart `scripts/start_delta_tunnel.sh`; it forwards both services through the s
 
 The same tunnel can also forward QuiltNet and PLIP when their host values are present in `.env.local` (local ports `8803` and `8804`). Run `source .env.local && ./scripts/check_model_services.sh` for a quick health check of all four services.
 
+## Validated prompt tuning (lung)
+
+`scripts/tune_prompts.py` chooses label prompts against MUSK on labelled images, keeping a phrase only if it is at least
+1 point more accurate, statistically significant, and confirmed on a separate image set. On 450 held-out lung images it
+scored 423/450 (94.0%), versus 403 for original MUSK and 416 for `histology showing {label}`, fixing 20 and 7 images
+respectively and breaking none; on 1,500 never-used images it scored 92.3% vs 87.9% for original MUSK. Method, prompts and reproduction: [`benchmarks/lc25000-tuning/`](benchmarks/lc25000-tuning/README.md).
+
 ## Hosted MUSK on Delta
 
 The opening-session setup exposes MUSK only inside Delta. `scripts/start_delta_tunnel.sh` maps the service to `http://127.0.0.1:8801` on your laptop; HistoPrompt calls the server's `/health` and `/classify` routes using the official hackathon schema.

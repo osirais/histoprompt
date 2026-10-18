@@ -1,0 +1,259 @@
+{
+ "lumen_model": "ornith-1.0-35b",
+ "chosen": {
+  "benign lung tissue": "organized pulmonary parenchyma structure",
+  "lung adenocarcinoma": "",
+  "lung squamous cell carcinoma": ""
+ },
+ "test": {
+  "histology showing {label}": {
+   "correct": 416,
+   "n": 450,
+   "errors": {
+    "lung adenocarcinoma -> lung squamous cell carcinoma": 20,
+    "lung adenocarcinoma -> benign lung tissue": 7,
+    "lung squamous cell carcinoma -> lung adenocarcinoma": 6,
+    "lung squamous cell carcinoma -> benign lung tissue": 1
+   },
+   "prompts": {
+    "benign lung tissue": "histology showing benign lung tissue",
+    "lung adenocarcinoma": "histology showing lung adenocarcinoma",
+    "lung squamous cell carcinoma": "histology showing lung squamous cell carcinoma"
+   }
+  },
+  "tuned v2": {
+   "correct": 423,
+   "n": 450,
+   "errors": {
+    "lung adenocarcinoma -> lung squamous cell carcinoma": 21,
+    "lung squamous cell carcinoma -> lung adenocarcinoma": 6
+   },
+   "prompts": {
+    "benign lung tissue": "histology showing benign lung tissue with organized pulmonary parenchyma structure",
+    "lung adenocarcinoma": "histology showing lung adenocarcinoma",
+    "lung squamous cell carcinoma": "histology showing lung squamous cell carcinoma"
+   }
+  }
+ },
+ "test_fixes_vs_template": 7,
+ "test_breaks_vs_template": 0,
+ "test_sign_p": 0.0078125,
+ "bars": {
+  "accuracy_A": 0.01,
+  "p_A": 0.05,
+  "confirm_B": 0.005
+ },
+ "musk_calls": 2261,
+ "minutes": 11.2,
+ "log": [
+  {
+   "step": "baseline A",
+   "acc": 0.9077777777777778
+  },
+  {
+   "step": "candidates",
+   "candidates": {
+    "benign lung tissue": [
+     "organized pulmonary parenchyma structure",
+     "intact bronchiolar epithelium layer"
+    ],
+    "lung adenocarcinoma": [
+     "cribriform glandular pattern",
+     "columnar epithelial cell arrangement"
+    ],
+    "lung squamous cell carcinoma": [
+     "intercellular bridge networks",
+     "dense eosinophilic cytoplasm",
+     "polygonal cell morphology",
+     "individual cell keratinization"
+    ]
+   },
+   "dropped": [
+    "benign lung tissue: 'thin alveolar septal walls' (shares ['alveolar'])",
+    "benign lung tissue: 'preserved alveolar air spaces' (shares ['alveolar', 'spaces'])",
+    "benign lung tissue: 'intact respiratory epithelium lining' (shares ['lining'])",
+    "benign lung tissue: 'normal alveolar architecture pattern' (shares ['alveolar', 'architecture'])",
+    "benign lung tissue: 'thin septal lining cells' (shares ['lining'])",
+    "benign lung tissue: 'uniform alveolar space distribution' (shares ['alveolar'])",
+    "lung adenocarcinoma: 'glandular lumen formation' (shares ['formation'])",
+    "lung adenocarcinoma: 'lepidic alveolar lining growth' (shares ['alveolar', 'growth', 'lining'])",
+    "lung adenocarcinoma: 'mucin filled glandular spaces' (shares ['spaces'])",
+    "lung adenocarcinoma: 'papillary tufting architecture' (shares ['architecture'])",
+    "lung adenocarcinoma: 'acinar gland clusters' (shares ['clusters'])",
+    "lung adenocarcinoma: 'micropapillary cellular clusters' (shares ['cellular', 'clusters'])",
+    "lung squamous cell carcinoma: 'keratin pearl formation' (shares ['formation'])",
+    "lung squamous cell carcinoma: 'solid cellular nest growth' (shares ['cellular', 'growth'])",
+    "lung squamous cell carcinoma: 'keratinizing cellular nests' (shares ['cellular'])",
+    "lung squamous cell carcinoma: 'dyskeratotic cell clusters' (shares ['clusters'])"
+   ]
+  },
+  {
+   "step": "round 1",
+   "label": "benign lung tissue",
+   "phrase": "organized pulmonary parenchyma structure",
+   "gain_A": 0.014444444444444444,
+   "fixes": 16,
+   "breaks": 3,
+   "p": 0.0022125244140625
+  },
+  {
+   "step": "round 1",
+   "label": "benign lung tissue",
+   "phrase": "intact bronchiolar epithelium layer",
+   "gain_A": 0.005555555555555556,
+   "fixes": 10,
+   "breaks": 5,
+   "p": 0.15087890625
+  },
+  {
+   "step": "round 1 confirm on B",
+   "label": "benign lung tissue",
+   "phrase": "organized pulmonary parenchyma structure",
+   "gain_A": 0.014444444444444444,
+   "p_A": 0.0022125244140625,
+   "gain_B": 0.011111111111111112,
+   "accepted": true
+  },
+  {
+   "step": "round 1",
+   "label": "lung adenocarcinoma",
+   "phrase": "cribriform glandular pattern",
+   "gain_A": -0.10333333333333333,
+   "fixes": 19,
+   "breaks": 112,
+   "p": 1.0
+  },
+  {
+   "step": "round 1",
+   "label": "lung adenocarcinoma",
+   "phrase": "columnar epithelial cell arrangement",
+   "gain_A": -0.04777777777777778,
+   "fixes": 18,
+   "breaks": 61,
+   "p": 0.9999998205820559
+  },
+  {
+   "step": "round 1",
+   "label": "lung squamous cell carcinoma",
+   "phrase": "intercellular bridge networks",
+   "gain_A": -0.03,
+   "fixes": 9,
+   "breaks": 36,
+   "p": 0.9999923129549018
+  },
+  {
+   "step": "round 1",
+   "label": "lung squamous cell carcinoma",
+   "phrase": "dense eosinophilic cytoplasm",
+   "gain_A": -0.04888888888888889,
+   "fixes": 11,
+   "breaks": 55,
+   "p": 0.999999996549288
+  },
+  {
+   "step": "round 1",
+   "label": "lung squamous cell carcinoma",
+   "phrase": "polygonal cell morphology",
+   "gain_A": -0.012222222222222223,
+   "fixes": 9,
+   "breaks": 20,
+   "p": 0.987940227612853
+  },
+  {
+   "step": "round 1",
+   "label": "lung squamous cell carcinoma",
+   "phrase": "individual cell keratinization",
+   "gain_A": -0.06888888888888889,
+   "fixes": 20,
+   "breaks": 82,
+   "p": 0.9999999999492087
+  },
+  {
+   "step": "feedback candidates",
+   "focus": "lung adenocarcinoma",
+   "confusion": "lung adenocarcinoma called lung squamous cell carcinoma (49x); lung squamous cell carcinoma called lung adenocarcinoma (18x); benign lung tissue called lung adenocarcinoma (3x)",
+   "candidates": [
+    "glandular acinar structures in stroma",
+    "lepidic growth along alveolar walls",
+    "extracellular mucin pools between glands",
+    "papillary tufts with fibrovascular cores",
+    "columnar cells forming gland lumens",
+    "intracellular mucin vacuoles displacing nuclei",
+    "glandular nests with central lumens",
+    "mucinous secretions within glandular spaces"
+   ]
+  },
+  {
+   "step": "feedback",
+   "label": "lung adenocarcinoma",
+   "phrase": "glandular acinar structures in stroma",
+   "gain_A": -0.07555555555555556,
+   "fixes": 20,
+   "breaks": 88,
+   "p": 0.9999999999974344
+  },
+  {
+   "step": "feedback",
+   "label": "lung adenocarcinoma",
+   "phrase": "lepidic growth along alveolar walls",
+   "gain_A": -0.15888888888888889,
+   "fixes": 19,
+   "breaks": 162,
+   "p": 1.0
+  },
+  {
+   "step": "feedback",
+   "label": "lung adenocarcinoma",
+   "phrase": "extracellular mucin pools between glands",
+   "gain_A": -0.1688888888888889,
+   "fixes": 21,
+   "breaks": 173,
+   "p": 1.0
+  },
+  {
+   "step": "feedback",
+   "label": "lung adenocarcinoma",
+   "phrase": "papillary tufts with fibrovascular cores",
+   "gain_A": -0.052222222222222225,
+   "fixes": 22,
+   "breaks": 69,
+   "p": 0.9999998745456512
+  },
+  {
+   "step": "feedback",
+   "label": "lung adenocarcinoma",
+   "phrase": "columnar cells forming gland lumens",
+   "gain_A": -0.06,
+   "fixes": 17,
+   "breaks": 71,
+   "p": 0.9999999994042383
+  },
+  {
+   "step": "feedback",
+   "label": "lung adenocarcinoma",
+   "phrase": "intracellular mucin vacuoles displacing nuclei",
+   "gain_A": -0.09666666666666666,
+   "fixes": 19,
+   "breaks": 106,
+   "p": 0.9999999999999999
+  },
+  {
+   "step": "feedback",
+   "label": "lung adenocarcinoma",
+   "phrase": "glandular nests with central lumens",
+   "gain_A": -0.07333333333333333,
+   "fixes": 17,
+   "breaks": 83,
+   "p": 0.999999999998697
+  },
+  {
+   "step": "feedback",
+   "label": "lung adenocarcinoma",
+   "phrase": "mucinous secretions within glandular spaces",
+   "gain_A": -0.14888888888888888,
+   "fixes": 21,
+   "breaks": 155,
+   "p": 1.0
+  }
+ ]
+}
