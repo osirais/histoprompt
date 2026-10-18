@@ -1,0 +1,260 @@
+{
+ "model": "plip",
+ "base_template": "pathology tissue showing {label}",
+ "template_only": true,
+ "lumen_model": "gemma-4-31b-it",
+ "chosen_phrases": {
+  "benign lung tissue": "",
+  "lung adenocarcinoma": "",
+  "lung squamous cell carcinoma": ""
+ },
+ "sets": {
+  "tuning": 900,
+  "confirmation": 900,
+  "test": 450
+ },
+ "test": {
+  "original PLIP (generic)": {
+   "correct": 373,
+   "n": 450,
+   "prompts": {
+    "benign lung tissue": "a histopathology image showing benign lung tissue",
+    "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma",
+    "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma"
+   },
+   "vs_original": {
+    "gain": 0.0,
+    "fixed": 0,
+    "broken": 0,
+    "p": 1.0
+   },
+   "vs_template": {
+    "gain": -0.0022222222222222222,
+    "fixed": 9,
+    "broken": 10,
+    "p": 0.6761970520019531
+   }
+  },
+  "histology showing {label}": {
+   "correct": 374,
+   "n": 450,
+   "prompts": {
+    "benign lung tissue": "histology showing benign lung tissue",
+    "lung adenocarcinoma": "histology showing lung adenocarcinoma",
+    "lung squamous cell carcinoma": "histology showing lung squamous cell carcinoma"
+   },
+   "vs_original": {
+    "gain": 0.0022222222222222222,
+    "fixed": 10,
+    "broken": 9,
+    "p": 0.5
+   },
+   "vs_template": {
+    "gain": 0.0,
+    "fixed": 0,
+    "broken": 0,
+    "p": 1.0
+   }
+  },
+  "chosen base template": {
+   "correct": 408,
+   "n": 450,
+   "prompts": {
+    "benign lung tissue": "pathology tissue showing benign lung tissue",
+    "lung adenocarcinoma": "pathology tissue showing lung adenocarcinoma",
+    "lung squamous cell carcinoma": "pathology tissue showing lung squamous cell carcinoma"
+   },
+   "vs_original": {
+    "gain": 0.07777777777777778,
+    "fixed": 42,
+    "broken": 7,
+    "p": 1.8122891631833227e-07
+   },
+   "vs_template": {
+    "gain": 0.07555555555555556,
+    "fixed": 41,
+    "broken": 7,
+    "p": 3.1202042194422575e-07
+   }
+  }
+ },
+ "minutes": 8.1,
+ "log": [
+  {
+   "step": "base template",
+   "template": "histology showing {label}",
+   "tuning_accuracy": 0.8255555555555556
+  },
+  {
+   "step": "base template",
+   "template": "a histopathology image showing {label}",
+   "tuning_accuracy": 0.8311111111111111
+  },
+  {
+   "step": "base template",
+   "template": "a pathology slide showing {label}",
+   "tuning_accuracy": 0.72
+  },
+  {
+   "step": "base template",
+   "template": "{label}",
+   "tuning_accuracy": 0.8122222222222222
+  },
+  {
+   "step": "base template",
+   "template": "a histopathology slide showing {label}",
+   "tuning_accuracy": 0.7233333333333334
+  },
+  {
+   "step": "base template",
+   "template": "histopathology image of {label}",
+   "tuning_accuracy": 0.87
+  },
+  {
+   "step": "base template",
+   "template": "pathology tissue showing {label}",
+   "tuning_accuracy": 0.9
+  },
+  {
+   "step": "base template",
+   "template": "presence of {label} tissue on image",
+   "tuning_accuracy": 0.8877777777777778
+  },
+  {
+   "step": "base template",
+   "template": "{label}.",
+   "tuning_accuracy": 0.8666666666666667
+  },
+  {
+   "step": "base template",
+   "template": "a photomicrograph showing {label}.",
+   "tuning_accuracy": 0.6322222222222222
+  },
+  {
+   "step": "base template",
+   "template": "a photomicrograph of {label}.",
+   "tuning_accuracy": 0.6866666666666666
+  },
+  {
+   "step": "base template",
+   "template": "an image of {label}.",
+   "tuning_accuracy": 0.8
+  },
+  {
+   "step": "base template",
+   "template": "an image showing {label}.",
+   "tuning_accuracy": 0.8277777777777777
+  },
+  {
+   "step": "base template",
+   "template": "an example of {label}.",
+   "tuning_accuracy": 0.7944444444444444
+  },
+  {
+   "step": "base template",
+   "template": "{label} is shown.",
+   "tuning_accuracy": 0.35333333333333333
+  },
+  {
+   "step": "base template",
+   "template": "this is {label}.",
+   "tuning_accuracy": 0.7511111111111111
+  },
+  {
+   "step": "base template",
+   "template": "there is {label}.",
+   "tuning_accuracy": 0.6155555555555555
+  },
+  {
+   "step": "base template",
+   "template": "a histopathological image showing {label}.",
+   "tuning_accuracy": 0.8288888888888889
+  },
+  {
+   "step": "base template",
+   "template": "a histopathological image of {label}.",
+   "tuning_accuracy": 0.7944444444444444
+  },
+  {
+   "step": "base template",
+   "template": "a histopathological photograph of {label}.",
+   "tuning_accuracy": 0.8322222222222222
+  },
+  {
+   "step": "base template",
+   "template": "a histopathological photograph showing {label}.",
+   "tuning_accuracy": 0.8555555555555555
+  },
+  {
+   "step": "base template",
+   "template": "shows {label}.",
+   "tuning_accuracy": 0.82
+  },
+  {
+   "step": "base template",
+   "template": "presence of {label}.",
+   "tuning_accuracy": 0.8766666666666667
+  },
+  {
+   "step": "base template",
+   "template": "{label} is present.",
+   "tuning_accuracy": 0.62
+  },
+  {
+   "step": "base template",
+   "template": "an H&E stained image of {label}.",
+   "tuning_accuracy": 0.7466666666666667
+  },
+  {
+   "step": "base template",
+   "template": "an H&E stained image showing {label}.",
+   "tuning_accuracy": 0.76
+  },
+  {
+   "step": "base template",
+   "template": "an H&E image showing {label}.",
+   "tuning_accuracy": 0.8766666666666667
+  },
+  {
+   "step": "base template",
+   "template": "an H&E image of {label}.",
+   "tuning_accuracy": 0.81
+  },
+  {
+   "step": "base template",
+   "template": "{label}, H&E stain.",
+   "tuning_accuracy": 0.8833333333333333
+  },
+  {
+   "step": "base template",
+   "template": "{label}, H&E.",
+   "tuning_accuracy": 0.7611111111111111
+  },
+  {
+   "step": "base template",
+   "template": "An H&E image patch of {label}.",
+   "tuning_accuracy": 0.5811111111111111
+  },
+  {
+   "step": "base template",
+   "template": "An H&E image patch of {label} tissue.",
+   "tuning_accuracy": 0.8066666666666666
+  },
+  {
+   "step": "base template",
+   "template": "An H&E image of {label}.",
+   "tuning_accuracy": 0.81
+  },
+  {
+   "step": "base template chosen",
+   "template": "pathology tissue showing {label}",
+   "candidate": "pathology tissue showing {label}",
+   "gain": 0.07444444444444444,
+   "fixed": 83,
+   "broken": 16,
+   "p": 2.1947932499982504e-12,
+   "confirmation_gain": 0.09777777777777778,
+   "accepted": true
+  }
+ ]
+}

@@ -4,9 +4,26 @@
 
 - **Named-diagnosis smoke test:** 34 images covering 11 labels in four clinical differentials.
 - **Prompt tuning:** independent candidate search, confirmation, and a 450-image held-out lung test for each model.
+- **Full available PathGen pixels:** all 2,141 materialized tiles from 10 slides and 8 TCGA cancer projects.
 - **Broad-organ diagnosis/reasoning:** pending PathMMU dataset access.
 
 The previous PanNuke tissue-origin experiment was removed because it did not match HistoPrompt's diagnosis and reasoning task. The current numbers are useful but do not yet establish performance across pathology.
+
+## Complete materialized NCSA PathGen benchmark
+
+Each model's base template was selected independently on the separate LC25000 tuning and confirmation sets, then
+frozen before evaluating every PathGen PNG physically available in the shared NCSA collection.
+
+| Model | Original | Selected template | Change | Fixed / broken |
+|---|---:|---:|---:|---:|
+| MUSK | 868/2,141 (40.5%) | 838/2,141 (39.1%) | -1.4 points | 64 / 94 |
+| CONCH | 1,091/2,141 (51.0%) | 1,164/2,141 (54.4%) | +3.4 points | 277 / 204 |
+| QuiltNet-B-32 | 695/2,141 (32.5%) | 761/2,141 (35.5%) | +3.1 points | 169 / 103 |
+| PLIP | 904/2,141 (42.2%) | 827/2,141 (38.6%) | -3.6 points | 43 / 120 |
+
+The complete project-by-project comparison, exact prompts, timings, limitations, manifest, and prediction records are
+in [`pathgen-ncsa/RESULTS.md`](pathgen-ncsa/RESULTS.md). This is an eight-way TCGA project-classification stress test,
+not unrestricted diagnosis or patient-level clinical validation.
 
 ## 11-label diagnosis smoke test
 
@@ -55,5 +72,6 @@ PathMMU is separately gated. MUSK model approval does not grant dataset access. 
 
 1. Prompt wording is model-specific. A phrase that helps MUSK can hurt CONCH or QuiltNet.
 2. Longer evidence-derived descriptions are not automatically better. They reduced accuracy in every model on the small diagnosis screen.
-3. The lung results show that prompt tuning can help, but they cannot be generalized across organs or diseases.
+3. The PathGen results show that lung-selected templates do not generalize uniformly: they helped CONCH and QuiltNet
+   but hurt MUSK and PLIP on the multi-organ benchmark.
 4. A broad conclusion must wait for a benchmark designed for diagnosis and visual reasoning, rather than tissue-origin or segmentation data.

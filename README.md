@@ -39,7 +39,11 @@ The hosted path requires three things that cannot be created by cloning: an NCSA
 
 ## What it adds to MUSK
 
-Plain MUSK receives label-only prompts such as `herpes simplex esophagitis`. The validated primary template is the short `histology showing {label}` form: on the fixed 600-image lung benchmark it scored 556/600 (92.7%), versus 538/600 (89.7%) for the generic template. HistoPrompt still exposes longer appended and evidence-generated prompts for experimentation, but those are not promoted unless they beat the short template on held-out data.
+Plain MUSK receives label-only prompts such as `herpes simplex esophagitis`. Prompt wording can improve a fixed task,
+but it is model- and dataset-specific: a short template improved MUSK on the 600-image lung benchmark, while the
+independently selected MUSK template was 1.4 points worse on the broader PathGen stress test. HistoPrompt therefore
+keeps enriched prompts experimental and reports them beside the original prompt rather than treating them as a
+universal upgrade.
 
 The hosted hackathon service returns only its highest-ranked candidate per image. HistoPrompt therefore treats the score as model output to review, not calibrated diagnostic confidence.
 
@@ -64,10 +68,11 @@ The same tunnel can also forward QuiltNet and PLIP when their host values are pr
 
 ## Validated prompt tuning (lung)
 
-`scripts/tune_prompts.py` chooses label prompts against MUSK on labelled images, keeping a phrase only if it is at least
-1 point more accurate, statistically significant, and confirmed on a separate image set. On 450 held-out lung images it
-scored 423/450 (94.0%), versus 403 for original MUSK and 416 for `histology showing {label}`, fixing 20 and 7 images
-respectively and breaking none; on 1,500 never-used images it scored 92.3% vs 87.9% for original MUSK. Method, prompts and reproduction: [`benchmarks/lc25000-tuning/`](benchmarks/lc25000-tuning/README.md).
+`scripts/tune_prompts.py` searches 33 sourced base templates independently for MUSK, CONCH, QuiltNet, or PLIP. A
+candidate replaces the starting template only if it gains at least 1 point on tuning, passes a paired one-sided sign
+test, and gains at least 0.5 point on a separate confirmation set. The model-specific prompt is then frozen before
+held-out testing. Method, prompts, raw selection logs, and reproduction details are in
+[`benchmarks/lc25000-tuning/`](benchmarks/lc25000-tuning/README.md).
 
 ## Hosted MUSK on Delta
 
@@ -119,6 +124,16 @@ uv run python scripts/run_benchmark_suite.py
 ```
 
 The repository also keeps separate suites for 11 diagnosis labels, individually tuned lung prompts, a 1,000-image lung-and-colon stress set, and the original 600-image RAG comparison. Exploratory prompt screens and the invalid shared-prompt cross-model experiment are clearly archived.
+
+On NCSA, the complete materialized PathGen suite evaluates all 2,141 available PNGs with original and independently
+selected prompts across all four hosted models:
+
+```bash
+uv run python scripts/run_pathgen_ncsa_suite.py --batch-size 8 --workers 4 --resume
+```
+
+See the [full PathGen comparison](benchmarks/pathgen-ncsa/RESULTS.md) and
+[reproduction notes](benchmarks/pathgen-ncsa/README.md).
 
 Every active suite stores or identifies fixed source images, records SHA-256 checksums, and keeps raw JSON beside readable Markdown. `scripts/run_benchmark_suite.py` reruns the current suite and regenerates the aggregate report. These are engineering benchmarks, not clinical validation.
 

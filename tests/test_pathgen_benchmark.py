@@ -9,6 +9,7 @@ from histoprompt.pathgen_benchmark import (
     build_manifest,
     paired_changes,
     participant_id,
+    strip_png_metadata,
 )
 
 
@@ -100,3 +101,24 @@ def test_participant_id_rejects_non_tcga_names():
     assert participant_id("TCGA-AA-0001-01Z-00-DX1.slide") == "TCGA-AA-0001"
     with pytest.raises(ValueError):
         participant_id("not-tcga")
+
+
+def _png_chunk(kind: bytes, payload: bytes) -> bytes:
+    return len(payload).to_bytes(4, "big") + kind + payload + b"crc!"
+
+
+def test_strip_png_metadata_preserves_pixel_chunks():
+    signature = b"\x89PNG\r\n\x1a\n"
+    header = _png_chunk(b"IHDR", b"header")
+    profile = _png_chunk(b"iCCP", b"large compressed profile")
+    pixels = _png_chunk(b"IDAT", b"pixels")
+    end = _png_chunk(b"IEND", b"")
+
+    assert strip_png_metadata(signature + header + profile + pixels + end) == (
+        signature + header + pixels + end
+    )
+
+
+def test_strip_png_metadata_rejects_truncated_png():
+    with pytest.raises(ValueError, match="truncated"):
+        strip_png_metadata(b"\x89PNG\r\n\x1a\n" + b"\x00\x00\x00")

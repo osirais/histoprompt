@@ -1,4 +1,21 @@
-# Validated prompt tuning for MUSK (lung)
+# Validated prompt tuning (lung)
+
+## Current per-model base-template selection
+
+The latest method first searches 33 sourced base templates independently for each hosted model. A replacement must
+clear the tuning gain, paired sign-test, and separate confirmation gates before the 450-image held-out test is opened.
+
+| Model | Original generic | Starting template | Selected base template | Selected template score |
+|---|---:|---:|---|---:|
+| MUSK | 403/450 (89.6%) | 416/450 (92.4%) | `an H&E stained image of {label}.` | **427/450 (94.9%)** |
+| CONCH | 423/450 (94.0%) | 293/450 (65.1%) | `a histopathological photograph showing {label}.` | **431/450 (95.8%)** |
+| QuiltNet-B-32 | 387/450 (86.0%) | 359/450 (79.8%) | `a histopathology slide showing {label}` | 383/450 (85.1%) |
+| PLIP | 373/450 (82.9%) | 374/450 (83.1%) | `pathology tissue showing {label}` | **408/450 (90.7%)** |
+
+The held-out score can still be worse even after a candidate passes the internal gates, as QuiltNet demonstrates.
+The exact search logs are in [`results/template-selection/`](results/template-selection/). These frozen base templates
+are the ones used in the [complete materialized PathGen benchmark](../pathgen-ncsa/RESULTS.md); they help CONCH and
+QuiltNet there but hurt MUSK and PLIP, so the repository does not claim a universal prompt improvement.
 
 ## Short answer
 

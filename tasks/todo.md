@@ -69,11 +69,11 @@ Risks: 34 images across 11 labels are useful for broad smoke coverage but not cl
 
 - [x] Pull `main`, fetch every remote branch, and audit the new validated prompt-tuning version before testing it.
 - [x] Inventory the PathGen assets that are actually materialized on NCSA.
-- [ ] Port per-model base-template selection from `validated-prompt-tuning` into the current four-model runner.
-- [ ] Add a frozen, auditable manifest for all 2,141 available PathGen PNGs and their 8 TCGA project labels.
-- [ ] Select and freeze one base template independently for MUSK, CONCH, QuiltNet, and PLIP using only the separate LC25000 tuning and confirmation sets.
-- [ ] Evaluate the original and selected-template prompts on every available PathGen PNG exactly once per model.
-- [ ] Produce overall, per-project, per-slide, confusion, timing, completeness, and provenance reports.
-- [ ] Run final tests, self-review, commit, push, and verify CI.
+- [x] Port per-model base-template selection from `validated-prompt-tuning` into the current four-model runner.
+- [x] Add a frozen, auditable manifest for all 2,141 available PathGen PNGs and their 8 TCGA project labels.
+- [x] Select and freeze one base template independently for MUSK, CONCH, QuiltNet, and PLIP using only the separate LC25000 tuning and confirmation sets.
+- [x] Evaluate the original and selected-template prompts on every available PathGen PNG exactly once per model.
+- [x] Produce overall, per-project, per-slide, confusion, timing, completeness, and provenance reports.
+- [x] Run final tests, self-review, commit, push, and verify CI.
 
 Risks: the materialized NCSA pixel set is 2,141 tiles from only 10 slides, so tile counts must not be mistaken for patient-level sample size; PathGen captions are generated and are not used as ground-truth labels; the larger 1,620,876-region inventory currently has precomputed CONCH features but not raw pixels for a fair four-model image benchmark.

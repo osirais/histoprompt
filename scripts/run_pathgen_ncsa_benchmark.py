@@ -23,6 +23,7 @@ from histoprompt.pathgen_benchmark import (  # noqa: E402
     iter_chunks,
     paired_changes,
     sha256_file,
+    strip_png_metadata,
 )
 from histoprompt.pipeline import _generic_prompt  # noqa: E402
 from histoprompt.prompt_tuning import template_prompts  # noqa: E402
@@ -45,16 +46,17 @@ def _data_url(path: Path, expected_sha256: str) -> str:
     actual = hashlib.sha256(raw).hexdigest()
     if actual != expected_sha256:
         raise ValueError(f"Checksum mismatch for {path.name}: {actual}")
-    return "data:image/png;base64," + base64.b64encode(raw).decode("ascii")
+    inference_bytes = strip_png_metadata(raw)
+    return "data:image/png;base64," + base64.b64encode(inference_bytes).decode("ascii")
 
 
 def _render_report(result: dict[str, Any]) -> str:
     lines = [
         "# Complete materialized NCSA PathGen benchmark",
         "",
-        f"Model: **{result['model_name']}**  ",
+        f"Model: **{result['model_name']}**",
         f"Cases: **{result['coverage']['included_cases']:,} tiles from "
-        f"{result['coverage']['slides']} slides and {result['coverage']['projects']} TCGA projects**  ",
+        f"{result['coverage']['slides']} slides and {result['coverage']['projects']} TCGA projects**",
         f"Selected template: `{result['selected_template']}`",
         "",
         "## Overall comparison",
@@ -213,6 +215,10 @@ def main() -> int:
         "manifest_sha256": progress["manifest_sha256"],
         "template_result_sha256": progress["template_result_sha256"],
         "selected_template": selected_template,
+        "image_preprocessing": (
+            "Verify the original PNG SHA-256, then remove EXIF, ICC, and text metadata "
+            "chunks without changing compressed pixel data."
+        ),
         "coverage": manifest["coverage"],
         "prompts": prompts,
         "timing_seconds": progress["timing_seconds"],

@@ -21,6 +21,9 @@ PROJECT_LABELS = {
     "TCGA-READ": "rectal adenocarcinoma",
 }
 
+PNG_SIGNATURE = b"\x89PNG\r\n\x1a\n"
+PNG_METADATA_CHUNKS = {b"eXIf", b"iCCP", b"iTXt", b"tEXt", b"zTXt"}
+
 
 def sha256_file(path: Path) -> str:
     digest = hashlib.sha256()
@@ -28,6 +31,32 @@ def sha256_file(path: Path) -> str:
         for block in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(block)
     return digest.hexdigest()
+
+
+def strip_png_metadata(raw: bytes) -> bytes:
+    """Remove metadata chunks that can make otherwise valid tiles unsafe to decode."""
+    if not raw.startswith(PNG_SIGNATURE):
+        raise ValueError("PathGen image is not a PNG.")
+    output = bytearray(PNG_SIGNATURE)
+    offset = len(PNG_SIGNATURE)
+    saw_iend = False
+    while offset < len(raw):
+        if offset + 12 > len(raw):
+            raise ValueError("PathGen PNG has a truncated chunk header.")
+        length = int.from_bytes(raw[offset : offset + 4], "big")
+        chunk_end = offset + 12 + length
+        if chunk_end > len(raw):
+            raise ValueError("PathGen PNG has a truncated chunk payload.")
+        chunk_type = raw[offset + 4 : offset + 8]
+        if chunk_type not in PNG_METADATA_CHUNKS:
+            output.extend(raw[offset:chunk_end])
+        offset = chunk_end
+        if chunk_type == b"IEND":
+            saw_iend = True
+            break
+    if not saw_iend or offset != len(raw):
+        raise ValueError("PathGen PNG does not end cleanly at IEND.")
+    return bytes(output)
 
 
 def participant_id(wsi_id: str) -> str:

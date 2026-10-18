@@ -43,6 +43,37 @@ def _render_summary(results: dict[str, dict]) -> str:
         )
     lines += [
         "",
+        "## Frozen prompt selected for each model",
+        "",
+        "| Model | Selected template |",
+        "|---|---|",
+    ]
+    for model in MODELS:
+        result = results[model]
+        lines.append(f"| {result['model_name']} | `{result['selected_template']}` |")
+    lines += [
+        "",
+        "## Results by TCGA project",
+        "",
+        "Each cell is original accuracy → selected-template accuracy (percentage-point change).",
+        "",
+        "| Project | Tiles | MUSK | CONCH | QuiltNet-B-32 | PLIP |",
+        "|---|---:|---:|---:|---:|---:|",
+    ]
+    projects = sorted(results[MODELS[0]]["summaries"]["original"]["per_project"])
+    for project in projects:
+        original = results[MODELS[0]]["summaries"]["original"]["per_project"][project]
+        cells = [project, f"{original['total']:,}"]
+        for model in MODELS:
+            before = results[model]["summaries"]["original"]["per_project"][project]
+            after = results[model]["summaries"]["selected_template"]["per_project"][project]
+            change = (after["accuracy"] - before["accuracy"]) * 100
+            cells.append(
+                f"{before['accuracy']:.1%} → {after['accuracy']:.1%} ({change:+.1f})"
+            )
+        lines.append("| " + " | ".join(cells) + " |")
+    lines += [
+        "",
         "## What this measures",
         "",
         "This is an eight-way TCGA cancer-project classification stress test over every PathGen tile that was "
@@ -71,27 +102,35 @@ def main() -> int:
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--skip-manifest", action="store_true")
+    parser.add_argument(
+        "--report-only",
+        action="store_true",
+        help="Rebuild RESULTS.md from four completed per-model result files.",
+    )
     args = parser.parse_args()
     if args.workers < 1:
         parser.error("--workers must be positive")
+    if args.report_only and set(args.models) != set(MODELS):
+        parser.error("--report-only requires all four models")
 
-    if not args.skip_manifest:
-        _run([sys.executable, "scripts/build_pathgen_ncsa_manifest.py"])
-    commands = []
-    for model in args.models:
-        command = [
-            sys.executable,
-            "scripts/run_pathgen_ncsa_benchmark.py",
-            "--model",
-            model,
-            "--batch-size",
-            str(args.batch_size),
-        ]
-        if args.resume:
-            command.append("--resume")
-        commands.append(command)
-    with ThreadPoolExecutor(max_workers=min(args.workers, len(commands))) as pool:
-        list(pool.map(_run, commands))
+    if not args.report_only:
+        if not args.skip_manifest:
+            _run([sys.executable, "scripts/build_pathgen_ncsa_manifest.py"])
+        commands = []
+        for model in args.models:
+            command = [
+                sys.executable,
+                "scripts/run_pathgen_ncsa_benchmark.py",
+                "--model",
+                model,
+                "--batch-size",
+                str(args.batch_size),
+            ]
+            if args.resume:
+                command.append("--resume")
+            commands.append(command)
+        with ThreadPoolExecutor(max_workers=min(args.workers, len(commands))) as pool:
+            list(pool.map(_run, commands))
 
     if set(args.models) == set(MODELS):
         results = {

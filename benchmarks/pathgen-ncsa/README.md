@@ -23,12 +23,19 @@ not equivalent pixels that can be sent through MUSK, CONCH, QuiltNet, and PLIP. 
 
 ## Evaluation protocol
 
+The per-model selection method was audited at branch tip `81f8c99` from the implementation in commit `00f498b`.
+That branch predated the repository's four-model benchmark runner, so its selection algorithm was ported into
+current `main` instead of replacing newer multi-model work with the older MUSK-only runner. The port preserves the branch's
+33-template search and acceptance gates while running them separately for each hosted model.
+
 1. Select a base template independently for each model using the separate LC25000 tuning set.
 2. Require at least a 1-point tuning gain, paired one-sided sign-test `p < 0.05`, and at least a 0.5-point gain on
    the separate confirmation set before replacing the default template.
 3. Freeze the selected template before opening PathGen results.
-4. On all 2,141 PathGen tiles, compare the model's original generic prompt with its selected template.
-5. Report tile accuracy, macro project accuracy, each project, each slide, confusion counts, paired fixes/breaks,
+4. Verify each original PNG against its frozen SHA-256, then remove EXIF, ICC-profile, and text metadata chunks
+   before upload. The compressed pixel chunks are unchanged; this avoids decoder failures from oversized metadata.
+5. On all 2,141 PathGen tiles, compare the model's original generic prompt with its selected template.
+6. Report tile accuracy, macro project accuracy, each project, each slide, confusion counts, paired fixes/breaks,
    runtime, checksums, and completeness.
 
 The PathGen set is evaluation-only. No PathGen result is used to choose a template or phrase.
@@ -44,6 +51,12 @@ uv run python scripts/run_pathgen_ncsa_suite.py --batch-size 8 --workers 4 --res
 
 The command verifies and rebuilds `manifest.json`, resumes interrupted per-model work, and writes the four raw result
 files plus `RESULTS.md`.
+
+To rebuild only the readable aggregate after the four per-model files already exist:
+
+```bash
+uv run python scripts/run_pathgen_ncsa_suite.py --report-only
+```
 
 ## Interpretation boundary
 
