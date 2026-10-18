@@ -63,3 +63,26 @@ substitute for selecting on labelled images from the target task.
   {label}.` narrowly won (+1.64 vs +1.59 points on tuning) and scored lung 422 / 450, pcam 330 / 400 (total +16).
   Colon, crc9 and the template selected on all four tasks were unchanged. The two near-tied templates show how
   little separates the top candidates.
+
+## Results: general template + per-task phrases (`results_phrases.json`)
+
+Step 1 of the validated tuning (Gemma `gemma-4-31b-it` phrases; accuracy, significance and confirmation bars) on top of
+the general template `a histopathological photograph showing {label}.`, run separately for each task. Test sets:
+
+| Task | Baseline | General template | **General template + phrases** | Task's own template (above) |
+|---|---|---|---|---|
+| lung | 403 / 450 | 419 | 419 (no phrase passed) | 423 |
+| colon | 395 / 400 | 397 | 397 (no phrase passed) | 395 |
+| crc9 | 319 / 450 | 311 | **364** (51 fixed / 6 broken vs baseline, p < 1e-9) | 319 |
+| pcam | 327 / 400 | 330 | 330 (no phrase passed) | 337 |
+| total | 1444 / 1700 | 1457 (+13) | **1510 (+66)** | 1474 (+30) |
+
+Accepted crc9 phrases: background "no tissue present" (confirmation +9.8 points), lymphocytes "small lymphoid cells"
+(+1.8), cancer-associated stroma "collagen rich stroma" (+2.4). The crc9 test set is CRC-VAL-HE-7K (other patients
+and centre), so this gain held on a different cohort, unlike the template-only gain.
+
+- The two-tier design (shared template, phrases tuned per task) gives the largest total gain and no task ends below
+  the baseline.
+- Phrases matter most where the baseline is weak and the labels are many and similar (crc9, 70.9% baseline). Where
+  no phrase cleared the bars, the template was kept unchanged.
+- The phrases are tuned on labelled images of each task: the shared part is the template, not the phrases.
