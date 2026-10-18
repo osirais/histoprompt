@@ -15,6 +15,12 @@ local_port="${MUSK_TUNNEL_PORT:-8801}"
 conch_remote_host="${DELTA_CONCH_HOST:-}"
 conch_remote_port="${DELTA_CONCH_PORT:-8000}"
 conch_local_port="${CONCH_TUNNEL_PORT:-8802}"
+quiltnet_remote_host="${DELTA_QUILTNET_HOST:-}"
+quiltnet_remote_port="${DELTA_QUILTNET_PORT:-8002}"
+quiltnet_local_port="${QUILTNET_TUNNEL_PORT:-8803}"
+plip_remote_host="${DELTA_PLIP_HOST:-}"
+plip_remote_port="${DELTA_PLIP_PORT:-8003}"
+plip_local_port="${PLIP_TUNNEL_PORT:-8804}"
 
 if [[ -z "$delta_username" ]]; then
   echo "Set DELTA_USERNAME in .env.local or pass your NCSA username:"
@@ -33,6 +39,14 @@ if [[ -n "$conch_remote_host" ]]; then
   echo "Opening local port $conch_local_port to the NCSA-hosted CONCH service."
 else
   echo "CONCH tunnel disabled (set DELTA_CONCH_HOST to enable it)."
+fi
+if [[ -n "$quiltnet_remote_host" ]]; then
+  forward_args+=("-L" "127.0.0.1:${quiltnet_local_port}:${quiltnet_remote_host}:${quiltnet_remote_port}")
+  echo "Opening local port $quiltnet_local_port to the NCSA-hosted QuiltNet service."
+fi
+if [[ -n "$plip_remote_host" ]]; then
+  forward_args+=("-L" "127.0.0.1:${plip_local_port}:${plip_remote_host}:${plip_remote_port}")
+  echo "Opening local port $plip_local_port to the NCSA-hosted PLIP service."
 fi
 echo "Opening local port $local_port to the NCSA-hosted MUSK service."
 echo "Complete the NCSA password and Duo prompts; leave this terminal open."

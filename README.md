@@ -60,6 +60,8 @@ CONCH_TUNNEL_PORT=8802
 
 Restart `scripts/start_delta_tunnel.sh`; it forwards both services through the same SSH session. `CONCH_BACKEND=disabled` leaves the MUSK-only path unchanged.
 
+The same tunnel can also forward QuiltNet and PLIP when their host values are present in `.env.local` (local ports `8803` and `8804`). Run `source .env.local && ./scripts/check_model_services.sh` for a quick health check of all four services.
+
 ## Hosted MUSK on Delta
 
 The opening-session setup exposes MUSK only inside Delta. `scripts/start_delta_tunnel.sh` maps the service to `http://127.0.0.1:8801` on your laptop; HistoPrompt calls the server's `/health` and `/classify` routes using the official hackathon schema.
