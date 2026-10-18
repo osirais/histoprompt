@@ -36,7 +36,7 @@ class LumenClient:
             method="POST" if payload is not None else "GET",
         )
         try:
-            with urllib.request.urlopen(request, timeout=120) as response:
+            with urllib.request.urlopen(request, timeout=int(os.getenv("LUMEN_TIMEOUT", "120"))) as response:
                 return json.loads(response.read().decode("utf-8"))
         except urllib.error.HTTPError as exc:
             detail = exc.read().decode("utf-8", errors="replace")[:1000]
