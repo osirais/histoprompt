@@ -23,6 +23,26 @@ is below original MUSK whichever LLM writes the descriptions: each version fixes
 Validated tuning breaks none. (On a 99-image subset, ornith's and nemotron's Enhanced versions had looked better than
 original MUSK; that didn't hold on 450 images.)
 
+## Fresh test: 1,500 never-used images
+
+To rule out reuse of the 450 test images (they were looked at while the method was developed), every prompt set was
+frozen to a file first (`fresh-test/frozen_prompts.json`). Then 1,500 LC25000 lung images (500 per label) were drawn
+with a new seed, excluding the 600-image benchmark and the tuning and confirmation sets, and each set was scored once.
+The images used to choose prompts and the images used to score them never overlap.
+
+| Prompts | Correct (1,500) | Fixed / broken vs original | Fixed / broken vs template |
+|---|---:|---:|---:|
+| Original MUSK | 1318 (87.9%) | — | |
+| Template: `histology showing {label}` | 1361 (90.7%) | 44 / 1 | — |
+| Tuned (ornith-1.0-35b) | 1383 (92.2%) | 67 / 2 | 23 / 1 (p = 1.5e-6) |
+| **Tuned (deepseek-v4-flash)** | **1384 (92.3%)** | **67 / 1** | **23 / 0** (p = 1.2e-7) |
+| **Tuned (gemma-4-31b-it)** | **1384 (92.3%)** | **67 / 1** | **23 / 0** (p = 1.2e-7) |
+| **Tuned (gemma-4-31b-it, committed-script rerun)** | **1384 (92.3%)** | **67 / 1** | **23 / 0** (p = 1.2e-7) |
+
+The gain over original MUSK matches the 450-image test (+4.4 points in both), so the earlier result wasn't inflated
+by reusing those images. These are still LC25000 images (augmented from shared originals); a different lung dataset
+would be the next test of generalisation.
+
 ## Tuned prompts
 
 Only the benign prompt changed; no phrase for the two carcinomas cleared the bars.

@@ -1,0 +1,115 @@
+{
+ "original MUSK (generic)": {
+  "correct": 1318,
+  "n": 1500,
+  "vs_original": [
+   0,
+   0,
+   1.0
+  ],
+  "vs_template": [
+   1,
+   44,
+   0.9999999999999716
+  ],
+  "errors": {
+   "adenocarcinoma->carcinoma": 96,
+   "adenocarcinoma->tissue": 51,
+   "carcinoma->tissue": 5,
+   "carcinoma->adenocarcinoma": 30
+  }
+ },
+ "histology showing {label}": {
+  "correct": 1361,
+  "n": 1500,
+  "vs_original": [
+   44,
+   1,
+   1.3073986337985843e-12
+  ],
+  "vs_template": [
+   0,
+   0,
+   1.0
+  ],
+  "errors": {
+   "adenocarcinoma->carcinoma": 90,
+   "adenocarcinoma->tissue": 22,
+   "carcinoma->adenocarcinoma": 26,
+   "carcinoma->tissue": 1
+  }
+ },
+ "tuned (ornith)": {
+  "correct": 1383,
+  "n": 1500,
+  "vs_original": [
+   67,
+   2,
+   4.092863201132779e-18
+  ],
+  "vs_template": [
+   23,
+   1,
+   1.4901161193847656e-06
+  ],
+  "errors": {
+   "tissue->adenocarcinoma": 1,
+   "adenocarcinoma->carcinoma": 90,
+   "carcinoma->adenocarcinoma": 26
+  }
+ },
+ "tuned (deepseek)": {
+  "correct": 1384,
+  "n": 1500,
+  "vs_original": [
+   67,
+   1,
+   2.337810934421869e-19
+  ],
+  "vs_template": [
+   23,
+   0,
+   1.1920928955078125e-07
+  ],
+  "errors": {
+   "adenocarcinoma->carcinoma": 90,
+   "carcinoma->adenocarcinoma": 26
+  }
+ },
+ "tuned (gemma)": {
+  "correct": 1384,
+  "n": 1500,
+  "vs_original": [
+   67,
+   1,
+   2.337810934421869e-19
+  ],
+  "vs_template": [
+   23,
+   0,
+   1.1920928955078125e-07
+  ],
+  "errors": {
+   "adenocarcinoma->carcinoma": 90,
+   "carcinoma->adenocarcinoma": 26
+  }
+ },
+ "tuned (gemma, committed-script rerun)": {
+  "correct": 1384,
+  "n": 1500,
+  "vs_original": [
+   67,
+   1,
+   2.337810934421869e-19
+  ],
+  "vs_template": [
+   23,
+   0,
+   1.1920928955078125e-07
+  ],
+  "errors": {
+   "adenocarcinoma->carcinoma": 90,
+   "carcinoma->adenocarcinoma": 26
+  }
+ }
+}

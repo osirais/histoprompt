@@ -1,0 +1,36 @@
+{
+ "frozen_at_utc": "2026-10-18T01:24:11.432359Z",
+ "note": "Prompt sets frozen BEFORE the fresh test images were sampled or scored. Fresh set: 500 per label from LC25000 lung, excluding the 600-image benchmark and the 1,800 tuning/confirmation images; scored once.",
+ "sets": {
+  "original MUSK (generic)": {
+   "benign lung tissue": "a histopathology image showing benign lung tissue",
+   "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma",
+   "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma"
+  },
+  "histology showing {label}": {
+   "benign lung tissue": "histology showing benign lung tissue",
+   "lung adenocarcinoma": "histology showing lung adenocarcinoma",
+   "lung squamous cell carcinoma": "histology showing lung squamous cell carcinoma"
+  },
+  "tuned (ornith)": {
+   "benign lung tissue": "histology showing benign lung tissue with organized pulmonary parenchyma structure",
+   "lung adenocarcinoma": "histology showing lung adenocarcinoma",
+   "lung squamous cell carcinoma": "histology showing lung squamous cell carcinoma"
+  },
+  "tuned (deepseek)": {
+   "benign lung tissue": "histology showing benign lung tissue with alveolar spaces intact",
+   "lung adenocarcinoma": "histology showing lung adenocarcinoma",
+   "lung squamous cell carcinoma": "histology showing lung squamous cell carcinoma"
+  },
+  "tuned (gemma)": {
+   "benign lung tissue": "histology showing benign lung tissue with intact alveolar sacs",
+   "lung adenocarcinoma": "histology showing lung adenocarcinoma",
+   "lung squamous cell carcinoma": "histology showing lung squamous cell carcinoma"
+  },
+  "tuned (gemma, committed-script rerun)": {
+   "benign lung tissue": "histology showing benign lung tissue with clear air spaces",
+   "lung adenocarcinoma": "histology showing lung adenocarcinoma",
+   "lung squamous cell carcinoma": "histology showing lung squamous cell carcinoma"
+  }
+ }
+}

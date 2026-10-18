@@ -48,7 +48,7 @@ The hosted hackathon service returns only its highest-ranked candidate per image
 `scripts/tune_prompts.py` chooses label prompts against MUSK on labelled images, keeping a phrase only if it is at least
 1 point more accurate, statistically significant, and confirmed on a separate image set. On 450 held-out lung images it
 scored 423/450 (94.0%), versus 403 for original MUSK and 416 for `histology showing {label}`, fixing 20 and 7 images
-respectively and breaking none. Method, prompts and reproduction: [`benchmarks/lc25000-tuning/`](benchmarks/lc25000-tuning/README.md).
+respectively and breaking none; on 1,500 never-used images it scored 92.3% vs 87.9% for original MUSK. Method, prompts and reproduction: [`benchmarks/lc25000-tuning/`](benchmarks/lc25000-tuning/README.md).
 
 ## Hosted MUSK on Delta
 
