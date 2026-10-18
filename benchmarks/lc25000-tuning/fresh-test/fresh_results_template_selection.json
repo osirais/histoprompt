@@ -1,0 +1,79 @@
+{
+ "prompts": {
+  "histology showing {label}": {
+   "benign lung tissue": "histology showing benign lung tissue",
+   "lung adenocarcinoma": "histology showing lung adenocarcinoma",
+   "lung squamous cell carcinoma": "histology showing lung squamous cell carcinoma"
+  },
+  "v1 tuned (fixed template + benign phrase)": {
+   "benign lung tissue": "histology showing benign lung tissue with intact alveolar sacs",
+   "lung adenocarcinoma": "histology showing lung adenocarcinoma",
+   "lung squamous cell carcinoma": "histology showing lung squamous cell carcinoma"
+  },
+  "v2 tuned (template selection)": {
+   "benign lung tissue": "an H&E stained image of benign lung tissue.",
+   "lung adenocarcinoma": "an H&E stained image of lung adenocarcinoma.",
+   "lung squamous cell carcinoma": "an H&E stained image of lung squamous cell carcinoma."
+  },
+  "original MUSK": {
+   "benign lung tissue": "a histopathology image showing benign lung tissue",
+   "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma",
+   "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma"
+  }
+ },
+ "results": {
+  "histology showing {label}": {
+   "correct": 1361,
+   "vs_v1": [
+    0,
+    23,
+    1.1920928955078125e-07
+   ],
+   "errors": {
+    "adenocarcinoma->carcinoma": 90,
+    "adenocarcinoma->tissue": 22,
+    "carcinoma->adenocarcinoma": 26,
+    "carcinoma->tissue": 1
+   }
+  },
+  "v1 tuned (fixed template + benign phrase)": {
+   "correct": 1384,
+   "vs_v1": [
+    0,
+    0,
+    1.0
+   ],
+   "errors": {
+    "adenocarcinoma->carcinoma": 90,
+    "carcinoma->adenocarcinoma": 26
+   }
+  },
+  "v2 tuned (template selection)": {
+   "correct": 1390,
+   "vs_v1": [
+    32,
+    26,
+    0.25592115421908446
+   ],
+   "errors": {
+    "adenocarcinoma->carcinoma": 60,
+    "adenocarcinoma->tissue": 7,
+    "carcinoma->adenocarcinoma": 43
+   }
+  },
+  "original MUSK": {
+   "correct": 1318,
+   "vs_v1": [
+    1,
+    67,
+    2.337810934421869e-19
+   ],
+   "errors": {
+    "adenocarcinoma->carcinoma": 96,
+    "adenocarcinoma->tissue": 51,
+    "carcinoma->tissue": 5,
+    "carcinoma->adenocarcinoma": 30
+   }
+  }
+ }
+}

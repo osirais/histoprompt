@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Tune MUSK lung label prompts with validation (see histoprompt/prompt_tuning.py for the bars).
+"""Tune MUSK lung label prompts with validation (see histoprompt/prompt_tuning.py for the bars): step 0 chooses
+the base template from TEMPLATES, step 1 the phrases.
 
 Sets: tuning (900 extra LC25000 images) and confirmation (900 more), built by scripts/build_lc25000_tuning_sets.py;
 test = the first 150 images per label of the fixed 600-image benchmark, scored once at the end against the plain
@@ -29,7 +30,8 @@ from histoprompt.lumen import LumenClient  # noqa: E402
 from histoprompt.musk_backend import make_musk_backend  # noqa: E402
 from histoprompt.pipeline import _generic_prompt  # noqa: E402
 from histoprompt.prompt_tuning import (  # noqa: E402
-    CANDIDATE_SYSTEM, candidate_request, compare, parse_candidates, template_prompts, tune,
+    CANDIDATE_SYSTEM, DEFAULT_TEMPLATE, TEMPLATES, candidate_request, compare, parse_candidates, select_base,
+    template_prompts, tune,
 )
 
 FAMILY = "lung histopathology"
@@ -47,6 +49,8 @@ def main() -> int:
     parser.add_argument("--test-per-label", type=int, default=150)
     parser.add_argument("--candidates", type=int, default=8)
     parser.add_argument("--batch-size", type=int, default=8)
+    parser.add_argument("--default-template", default=DEFAULT_TEMPLATE)
+    parser.add_argument("--no-template-search", action="store_true", help="skip step 0 and keep --default-template")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
@@ -92,13 +96,21 @@ def main() -> int:
 
     started = time.time()
     log: list[dict] = []
-    chosen = tune(labels, correctness(tuning_set), correctness(confirmation_set), propose, tuning_confusions, log)
+    base = args.default_template if args.no_template_search else select_base(
+        labels, correctness(tuning_set), correctness(confirmation_set), TEMPLATES, args.default_template, log)
+    print(f"base template: {base}", flush=True)
+
+    def base_confusions(prompts: dict[str, str]) -> Counter:
+        return tuning_confusions(prompts)
+
+    chosen = tune(labels, correctness(tuning_set), correctness(confirmation_set), propose, base_confusions, log, base)
 
     evaluate_test = correctness(test_set)
     prompt_sets = {
         "original MUSK (generic)": {label: _generic_prompt(label) for label in labels},
         "histology showing {label}": template_prompts(labels),
-        "tuned": template_prompts(labels, chosen),
+        "chosen base template": template_prompts(labels, base=base),
+        "tuned": template_prompts(labels, chosen, base),
     }
     results = {name: evaluate_test(prompts) for name, prompts in prompt_sets.items()}
     test = {}
@@ -112,7 +124,8 @@ def main() -> int:
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps({
-        "lumen_model": settings.lumen_model or os.getenv("LUMEN_MODEL", ""), "chosen_phrases": chosen,
+        "lumen_model": settings.lumen_model or os.getenv("LUMEN_MODEL", ""), "base_template": base,
+        "chosen_phrases": chosen,
         "sets": {"tuning": len(tuning_set), "confirmation": len(confirmation_set), "test": len(test_set)},
         "test": test, "minutes": round((time.time() - started) / 60, 1), "log": log,
     }, indent=1) + "\n", encoding="utf-8")

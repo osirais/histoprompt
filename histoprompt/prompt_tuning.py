@@ -1,7 +1,9 @@
-"""Validated label-prompt tuning for MUSK.
+"""Validated label-prompt tuning for CLIP-style pathology models (MUSK, CONCH, QuiltNet, PLIP, ...).
 
-Searches short phrases to add to MUSK's template, `histology showing {label} with {phrase}`, using labelled images.
-A phrase is accepted for a label only if it clears all three bars:
+Step 0 chooses the model's base template from TEMPLATES (models differ: CONCH prefers
+`a histopathology image showing {label}`, MUSK `histology showing {label}`). Step 1 searches short phrases to add,
+`{base} with {phrase}`, using labelled images. A template change (step 0) or a phrase (step 1) is accepted only if it
+clears all three bars:
 
   accuracy bar      at least ACCURACY_BAR (1.0 percentage point) more correct on the tuning set
   significance bar  paired exact sign test on the tuning set (images fixed vs images broken), one-sided p < P_BAR
@@ -20,6 +22,43 @@ from typing import Any, Callable, Sequence
 
 from .pipeline import _json_from_model
 
+DEFAULT_TEMPLATE = "histology showing {label}"
+TEMPLATE_SOURCES = {
+    # this repository: the validated default, the generic prompt, other benchmark strategies
+    "histopathology repo": ("histology showing {label}", "a histopathology image showing {label}",
+                            "a pathology slide showing {label}", "{label}"),
+    # MUSK benchmarks/clip_benchmark/datasets/histopathology_datasets.py and Quilt-1M (Ikezogwo et al. 2023), Table 10
+    "MUSK / QuiltNet": ("a histopathology slide showing {label}", "histopathology image of {label}",
+                        "pathology tissue showing {label}", "presence of {label} tissue on image"),
+    # CONCH prompts/nsclc_prompts_all_per_class.json (also crc100k), CLASSNAME -> {label}
+    "CONCH": (
+        "{label}.",
+        "a photomicrograph showing {label}.",
+        "a photomicrograph of {label}.",
+        "an image of {label}.",
+        "an image showing {label}.",
+        "an example of {label}.",
+        "{label} is shown.",
+        "this is {label}.",
+        "there is {label}.",
+        "a histopathological image showing {label}.",
+        "a histopathological image of {label}.",
+        "a histopathological photograph of {label}.",
+        "a histopathological photograph showing {label}.",
+        "shows {label}.",
+        "presence of {label}.",
+        "{label} is present.",
+        "an H&E stained image of {label}.",
+        "an H&E stained image showing {label}.",
+        "an H&E image showing {label}.",
+        "an H&E image of {label}.",
+        "{label}, H&E stain.",
+        "{label}, H&E.",
+    ),
+    # PLIP reproducibility/generate_validation_datasets/_dataset_loader.py and scripts/zero_shot_evaluation.py
+    "PLIP": ("An H&E image patch of {label}.", "An H&E image patch of {label} tissue.", "An H&E image of {label}."),
+}
+TEMPLATES = tuple(dict.fromkeys(t for group in TEMPLATE_SOURCES.values() for t in group))
 ACCURACY_BAR = 0.010
 CONFIRM_BAR = 0.005
 P_BAR = 0.05
@@ -35,11 +74,16 @@ CANDIDATE_SYSTEM = (
 )
 
 
-def template_prompts(labels: Sequence[str], phrases: dict[str, str] | None = None) -> dict[str, str]:
-    """MUSK prompts: `histology showing {label}`, plus ` with {phrase}` where a phrase is set."""
+def template_prompts(
+    labels: Sequence[str], phrases: dict[str, str] | None = None, base: str = DEFAULT_TEMPLATE
+) -> dict[str, str]:
+    """Prompts from a base template containing `{label}`; a phrase is inserted right after the label
+    (`an H&E image of {label} with {phrase}.`), so templates with text after the label keep working."""
+    if "{label}" not in base:
+        raise ValueError("A base template must contain {label}.")
     phrases = phrases or {}
     return {
-        label: f"histology showing {label} with {phrases[label]}" if phrases.get(label) else f"histology showing {label}"
+        label: base.replace("{label}", f"{label} with {phrases[label]}" if phrases.get(label) else label)
         for label in labels
     }
 
@@ -138,6 +182,37 @@ def parse_candidates(raw: str, targets: Sequence[str], k: int) -> dict[str, list
 Evaluate = Callable[[dict[str, str]], list[bool]]
 
 
+def select_base(
+    labels: Sequence[str],
+    evaluate_tuning: "Evaluate",
+    evaluate_confirmation: "Evaluate",
+    templates: Sequence[str] = TEMPLATES,
+    default: str = DEFAULT_TEMPLATE,
+    log: list[dict[str, Any]] | None = None,
+) -> str:
+    """Step 0: the model's base template. The most accurate template on the tuning set replaces the default only if
+    it clears the same bars against the default (accuracy, significance, confirmation)."""
+    log = log if log is not None else []
+    results = {t: evaluate_tuning(template_prompts(labels, base=t)) for t in dict.fromkeys([default, *templates])}
+    for template, result in results.items():
+        log.append({"step": "base template", "template": template, "tuning_accuracy": sum(result) / len(result)})
+    best = max(results, key=lambda t: (sum(results[t]), t == default))
+    if best == default:
+        log.append({"step": "base template chosen", "template": default, "reason": "default is the most accurate"})
+        return default
+    comp = compare(results[best], results[default])
+    if not passes_tuning_bars(comp):
+        log.append({"step": "base template chosen", "template": default, "candidate": best, **comp.__dict__,
+                    "reason": "best template did not clear the bars"})
+        return default
+    confirm = compare(evaluate_confirmation(template_prompts(labels, base=best)),
+                      evaluate_confirmation(template_prompts(labels, base=default)))
+    accepted = passes_confirmation(confirm)
+    log.append({"step": "base template chosen", "template": best if accepted else default, "candidate": best,
+                **comp.__dict__, "confirmation_gain": confirm.gain, "accepted": accepted})
+    return best if accepted else default
+
+
 def tune(
     labels: Sequence[str],
     evaluate_tuning: Evaluate,
@@ -145,6 +220,7 @@ def tune(
     propose: Callable[[str | None, str], dict[str, list[str]]],
     confusions: Callable[[dict[str, str]], Counter],
     log: list[dict[str, Any]] | None = None,
+    base: str = DEFAULT_TEMPLATE,
 ) -> dict[str, str]:
     """Return the accepted phrase per label ('' = plain template).
 
@@ -152,14 +228,14 @@ def tune(
     when focus is None). confusions(prompts): Counter of (true, predicted) errors on the tuning set."""
     log = log if log is not None else []
     chosen = {label: "" for label in labels}
-    current = evaluate_tuning(template_prompts(labels, chosen))
+    current = evaluate_tuning(template_prompts(labels, chosen, base))
     log.append({"step": "baseline", "tuning_accuracy": sum(current) / len(current)})
 
     def try_label(label: str, phrases: list[str], step: str) -> None:
         nonlocal current
         best = None
         for phrase in phrases:
-            result = evaluate_tuning(template_prompts(labels, {**chosen, label: phrase}))
+            result = evaluate_tuning(template_prompts(labels, {**chosen, label: phrase}, base))
             comp = compare(result, current)
             log.append({"step": step, "label": label, "phrase": phrase, **comp.__dict__})
             if passes_tuning_bars(comp) and (best is None or comp.gain > best[1].gain):
@@ -169,8 +245,8 @@ def tune(
             return
         phrase, comp, result = best
         confirm = compare(
-            evaluate_confirmation(template_prompts(labels, {**chosen, label: phrase})),
-            evaluate_confirmation(template_prompts(labels, chosen)),
+            evaluate_confirmation(template_prompts(labels, {**chosen, label: phrase}, base)),
+            evaluate_confirmation(template_prompts(labels, chosen, base)),
         )
         accepted = passes_confirmation(confirm)
         log.append({"step": f"{step} confirmation", "label": label, "phrase": phrase,
@@ -185,7 +261,7 @@ def tune(
     for label in labels:
         try_label(label, candidates.get(label, []), "round 1")
 
-    remaining = confusions(template_prompts(labels, chosen))
+    remaining = confusions(template_prompts(labels, chosen, base))
     if remaining:
         (focus, _), _ = remaining.most_common(1)[0]
         confusion = "; ".join(f"{t} called {p} ({n}x)" for (t, p), n in remaining.most_common(3))

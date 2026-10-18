@@ -43,6 +43,30 @@ The gain over original MUSK matches the 450-image test (+4.4 points in both), so
 by reusing those images. These are still LC25000 images (augmented from shared originals); a different lung dataset
 would be the next test of generalisation.
 
+## Per-model template selection (step 0)
+
+Models prefer different wording: in a teammate's per-model run, CONCH scored 94.0% with
+`a histopathology image showing {label}` but 65.1% with `histology showing {label}`. Step 0 therefore chooses the base
+template from 33 candidates before tuning phrases: this repository's 4, the 4 used by MUSK's benchmark code and the
+Quilt-1M paper (Table 10), CONCH's 22 (`prompts/nsclc_prompts_all_per_class.json` in mahmoodlab/CONCH), and PLIP's 3
+(its reproducibility code). A template replaces the default only if it clears the same three bars. Phrases are then
+inserted right after the label (`an H&E image of {label} with {phrase}.`). `--no-template-search` reproduces the
+fixed-template version, which is also tagged `tuning-v1-fixed-template`.
+
+For MUSK, step 0 chose CONCH's `an H&E stained image of {label}.` (tuning +2.4 points, 33 fixed / 11 broken,
+p = 0.0006; confirmation +1.2 points). No gemma-4-31b-it phrase cleared the bars on top of it.
+
+| MUSK prompts | 450 test | 1,500 fresh | Cancer called benign (fresh) | Adeno → squamous | Squamous → adeno |
+|---|---:|---:|---:|---:|---:|
+| Original MUSK | 403 | 1318 (87.9%) | 56 | 96 | 30 |
+| `histology showing {label}` | 416 | 1361 (90.7%) | 23 | 90 | 26 |
+| v1: fixed template + benign phrase | 423 | 1384 (92.3%) | **0** | 90 | 26 |
+| v2: template selection | **427** | **1390 (92.7%)** | 7 | **60** | 43 |
+
+v2 matches or slightly exceeds v1 on accuracy (on the fresh images: 32 fixed, 26 broken, not significant), with a
+different error profile. It separates the two carcinomas better, but calls 7 cancers benign where v1 called none.
+Which to deploy is a clinical choice; missing a cancer is usually the costlier error.
+
 ## Tuned prompts
 
 Only the benign prompt changed; no phrase for the two carcinomas cleared the bars.
