@@ -1,6 +1,7 @@
 # Does a MUSK prompt template carry over to other cancers and tasks?
 
-Experiment, MUSK only. Results will be added after the runs finish.
+Results below are for MUSK. The same two steps run for CONCH, QuiltNet-B-32 and PLIP with `--model` (see
+[`HOW_TO_RUN_MULTITASK.md`](HOW_TO_RUN_MULTITASK.md)).
 
 ## Tasks
 

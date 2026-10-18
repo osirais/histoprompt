@@ -17,6 +17,7 @@ Speed: two-stage screening (all templates on a 25% sample of each tuning set, to
 """
 from __future__ import annotations
 
+import argparse
 import base64
 import json
 import math
@@ -29,13 +30,16 @@ HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[1]
 IMG_ROOT = REPO / ".benchmark-cache" / "multitask"
 sys.path.insert(0, str(REPO))
-from histoprompt.config import Settings  # noqa: E402
-from histoprompt.musk_backend import make_musk_backend  # noqa: E402
+from backends import MODELS, make_backend, output_name  # noqa: E402
 from histoprompt.prompt_tuning import TEMPLATES, compare, passes_confirmation, passes_tuning_bars, sign_test_p, template_prompts  # noqa: E402
 
 BASE = "a histopathology image showing {label}"
 BATCH, WORKERS, SCREEN_FRAC, FINALISTS = 64, 3, 0.25, 8
-musk = make_musk_backend(Settings.from_env())
+parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+parser.add_argument("--model", choices=list(MODELS), default="musk", help="classifier to tune for (default musk)")
+parser.add_argument("--skip-loto", action="store_true", help="only select the general template on all tasks")
+args = parser.parse_args()
+clf = make_backend(args.model)
 man = json.loads((HERE / "manifest.json").read_text())
 tasks = list(man["tasks"])
 data = {t: {s: [("data:image/" + ("png" if r["image"].endswith(".png") else "jpeg") + ";base64,"
@@ -53,7 +57,7 @@ def run(task: str, split: str, template: str, items=None) -> list[bool]:
     prompts = template_prompts(labels[task], base=template)
     chunks = [items[i:i + BATCH] for i in range(0, len(items), BATCH)]
     with ThreadPoolExecutor(WORKERS) as ex:
-        preds = list(ex.map(lambda ch: [p.label for p in musk.classify_batch([x for x, _ in ch], prompts)], chunks))
+        preds = list(ex.map(lambda ch: [p.label for p in clf.classify_batch([x for x, _ in ch], prompts)], chunks))
     ok = [p == t for ps, ch in zip(preds, chunks) for p, (_, t) in zip(ps, ch)]
     cache[key] = ok
     return ok
@@ -136,9 +140,9 @@ def test_row(task, template):
 
 
 t0 = time.time()
-out = {"baseline": BASE, "tasks": {t: {s: len(v) for s, v in data[t].items()} for t in tasks}, "loto": {}, "settings":
+out = {"model": args.model, "baseline": BASE, "tasks": {t: {s: len(v) for s, v in data[t].items()} for t in tasks}, "loto": {}, "settings":
        {"batch": BATCH, "workers": WORKERS, "screen_fraction": SCREEN_FRAC, "finalists": FINALISTS}}
-for held in tasks:
+for held in ([] if args.skip_loto else tasks):
     others = [t for t in tasks if t != held]
     log: list = []
     general, info = accept_general(others, log)
@@ -161,5 +165,5 @@ for t in tasks:
     r = out["general_all_tasks"]["test"][t]
     print(f"   {t}: {r['general']['correct']}/{r['general']['n']} vs baseline {r['baseline']['correct']}", flush=True)
 out["minutes"] = round((time.time() - t0) / 60, 1)
-(HERE / "results.json").write_text(json.dumps(out, indent=1, default=str))
-print("saved results.json", flush=True)
+(HERE / output_name("results", args.model)).write_text(json.dumps(out, indent=1, default=str))
+print("saved", output_name("results", args.model), flush=True)

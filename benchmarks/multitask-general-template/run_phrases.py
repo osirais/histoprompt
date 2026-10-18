@@ -11,6 +11,7 @@ scored once. Batch size matches run_general.py, so the numbers compare directly 
 """
 from __future__ import annotations
 
+import argparse
 import base64
 import json
 import os
@@ -26,7 +27,7 @@ IMG_ROOT = REPO / ".benchmark-cache" / "multitask"
 sys.path.insert(0, str(REPO))
 from histoprompt.config import Settings  # noqa: E402
 from histoprompt.lumen import LumenClient  # noqa: E402
-from histoprompt.musk_backend import make_musk_backend  # noqa: E402
+from backends import MODELS, make_backend, output_name  # noqa: E402
 from histoprompt.prompt_tuning import (  # noqa: E402
     CANDIDATE_SYSTEM, candidate_request, compare, parse_candidates, sign_test_p, template_prompts, tune,
 )
@@ -34,9 +35,12 @@ from histoprompt.prompt_tuning import (  # noqa: E402
 BASE = "a histopathology image showing {label}"
 BATCH, WORKERS, CANDIDATES = 64, 3, 8
 settings = Settings.from_env()
-musk, lumen = make_musk_backend(settings), LumenClient(settings)
+parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+parser.add_argument("--model", choices=list(MODELS), default="musk", help="classifier to tune for (default musk)")
+args = parser.parse_args()
+clf, lumen = make_backend(args.model), LumenClient(settings)
 man = json.loads((HERE / "manifest.json").read_text())
-general = json.loads((HERE / "results.json").read_text())["general_all_tasks"]["template"]
+general = json.loads((HERE / output_name("results", args.model)).read_text())["general_all_tasks"]["template"]
 tasks = list(man["tasks"])
 data = {t: {s: [("data:image/" + ("png" if r["image"].endswith(".png") else "jpeg") + ";base64,"
                  + base64.b64encode((IMG_ROOT / r["image"]).read_bytes()).decode(), r["label"])
@@ -51,7 +55,7 @@ def predict(task: str, split: str, prompts: dict[str, str]) -> list[str]:
         items = data[task][split]
         chunks = [items[i:i + BATCH] for i in range(0, len(items), BATCH)]
         with ThreadPoolExecutor(WORKERS) as ex:
-            preds = list(ex.map(lambda ch: [p.label for p in musk.classify_batch([x for x, _ in ch], prompts)], chunks))
+            preds = list(ex.map(lambda ch: [p.label for p in clf.classify_batch([x for x, _ in ch], prompts)], chunks))
         cache[key] = [p for ps in preds for p in ps]
     return cache[key]
 
@@ -65,7 +69,8 @@ def run_task(task: str) -> dict:
     labs = labels[task]
 
     def propose(focus, confusion):
-        raw, _ = lumen.complete(CANDIDATE_SYSTEM, candidate_request(labs, CANDIDATES, focus, confusion))
+        raw, _ = lumen.complete(CANDIDATE_SYSTEM.replace("MUSK", MODELS[args.model]),
+                                candidate_request(labs, CANDIDATES, focus, confusion).replace("MUSK", MODELS[args.model]))
         return parse_candidates(raw, [focus] if focus else labs, CANDIDATES)
 
     def confusions(prompts):
@@ -95,8 +100,8 @@ def run_task(task: str) -> dict:
 t0 = time.time()
 with ThreadPoolExecutor(len(tasks)) as ex:
     per_task = dict(zip(tasks, ex.map(run_task, tasks)))
-out = {"lumen_model": settings.lumen_model or os.getenv("LUMEN_MODEL", ""), "baseline": BASE,
+out = {"model": args.model, "lumen_model": settings.lumen_model or os.getenv("LUMEN_MODEL", ""), "baseline": BASE,
        "general_template": general, "settings": {"batch": BATCH, "workers": WORKERS, "candidates": CANDIDATES},
        "tasks": per_task, "minutes": round((time.time() - t0) / 60, 1)}
-(HERE / "results_phrases.json").write_text(json.dumps(out, indent=1, default=str))
-print("saved results_phrases.json", flush=True)
+(HERE / output_name("results_phrases", args.model)).write_text(json.dumps(out, indent=1, default=str))
+print("saved", output_name("results_phrases", args.model), flush=True)

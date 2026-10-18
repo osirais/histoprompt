@@ -9,3 +9,4 @@ __pycache__/
 data/corpus.local.jsonl
 .benchmark-cache/
 
+benchmarks/multitask-general-template/logs/

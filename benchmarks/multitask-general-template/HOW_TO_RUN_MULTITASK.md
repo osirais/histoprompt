@@ -43,3 +43,37 @@ LUMEN_MODEL=gemma-4-31b-it LUMEN_MAX_TOKENS=16000 uv run python benchmarks/multi
 | `manifest.json` | every image with its label, source key and SHA-256 |
 | `run_general.py` | template selection across tasks (step 0) |
 | `run_phrases.py` | phrase tuning per task on the general template (step 1) |
+| `backends.py` | MUSK and the hosted CONCH / QuiltNet / PLIP classifiers |
+| `run_all_models.sh` | both steps for several models in parallel |
+
+## Other models: CONCH, QuiltNet-B-32, PLIP
+
+Both scripts take `--model musk|conch|quiltnet|plip` (default `musk`). The method is the same for every model: the
+shared template is selected for that model on all four tasks, then the phrases are tuned for that model per task.
+Nothing is reused from MUSK, because prompts chosen for one model must not be reused for another.
+
+1. Add the model's key and endpoint to `.env.local` (same names as on `main`):
+   `CONCH_API_KEY`, `CONCH_ENDPOINT=http://127.0.0.1:8802`; `QUILTNET_API_KEY`, `QUILTNET_ENDPOINT=http://127.0.0.1:8803`;
+   `PLIP_API_KEY`, `PLIP_ENDPOINT=http://127.0.0.1:8804`.
+2. Start the tunnel with those ports forwarded. `scripts/start_delta_tunnel.sh` on `main` forwards 8802–8804 when
+   `DELTA_CONCH_HOST`, `DELTA_QUILTNET_HOST` and `DELTA_PLIP_HOST` are set.
+3. Run one model:
+   ```bash
+   uv run python benchmarks/multitask-general-template/run_general.py --model conch
+   LUMEN_MODEL=gemma-4-31b-it LUMEN_MAX_TOKENS=16000 uv run python benchmarks/multitask-general-template/run_phrases.py --model conch
+   ```
+   or all three in parallel (logs in `logs/`):
+   ```bash
+   benchmarks/multitask-general-template/run_all_models.sh            # conch quiltnet plip
+   SKIP_LOTO=1 benchmarks/multitask-general-template/run_all_models.sh   # two-part method only, faster
+   ```
+
+Results go to `results_<model>.json` and `results_phrases_<model>.json` (MUSK keeps `results.json` and
+`results_phrases.json`). For each task, `results_phrases_<model>.json` reports the test score for the model's own
+baseline prompt `a histopathology image showing {label}`, the shared template, and the shared template plus phrases.
+Expect about 20 minutes per step per model with the hosted services. `--skip-loto` makes step 0 roughly five times
+faster.
+
+The hosted-model adapter is `backends.py`. It was checked by pointing it at the hosted MUSK endpoint, which uses the
+same `/classify` format: on 18 crc9 images it gave identical predictions to the MUSK backend. It has not been run
+against CONCH, QuiltNet or PLIP themselves.
