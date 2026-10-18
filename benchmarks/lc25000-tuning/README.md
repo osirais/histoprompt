@@ -134,10 +134,10 @@ for another model.
 | Model | Generic | Template | Independently tuned | Selected phrases |
 | --- | ---: | ---: | ---: | --- |
 | MUSK | 403/450 (89.6%) | 416/450 (92.4%) | **423/450 (94.0%)** | benign: `regular alveolar sacs` |
-| CONCH | 423/450 (94.0%) | 293/450 (65.1%) | 317/450 (70.4%) | benign: `preserved lung parenchyma`; squamous: `keratin pearls` (rejected) |
-| QuiltNet-B-32 | 387/450 (86.0%) | 359/450 (79.8%) | 359/450 (79.8%) | none |
-| PLIP | 373/450 (82.9%) | 374/450 (83.1%) | 369/450 (82.0%) | benign: `preserved lung parenchyma` (rejected) |
+| CONCH | 423/450 (94.0%) | 293/450 (65.1%) | **407/450 (90.4%)** | benign: `intact lung parenchyma`; squamous: `squamous eddies` |
+| QuiltNet-B-32 | 387/450 (86.0%) | 359/450 (79.8%) | **376/450 (83.6%)** | adenocarcinoma: `mucus producing cells` |
+| PLIP | 373/450 (82.9%) | 374/450 (83.1%) | **393/450 (87.3%)** | benign: `clear air spaces`; adenocarcinoma: `glandular lumen formation` |
 
-The tuned phrase is promoted only when it clears the accuracy, paired sign-test,
-and confirmation bars. Therefore only the MUSK phrase was accepted in this
-run. Raw outputs are in `results/full-*.json`.
+The tuned phrases are promoted only when they clear the accuracy, paired
+sign-test, and confirmation bars on that model's own scores. Raw outputs are
+in `results/full-*.json`.

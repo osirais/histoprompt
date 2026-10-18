@@ -85,8 +85,15 @@ def main() -> int:
 
     tuning_set = load_set("tuning")
     confirmation_set = load_set("confirmation")
-    tuning_set = [item for label in labels for item in tuning_set if item[1] == label][: args.tuning_per_label]
-    confirmation_set = [item for label in labels for item in confirmation_set if item[1] == label][: args.confirmation_per_label]
+    def limit_per_label(items: list[tuple[str, str]], limit: int) -> list[tuple[str, str]]:
+        return [
+            item
+            for label in labels
+            for item in [candidate for candidate in items if candidate[1] == label][:limit]
+        ]
+
+    tuning_set = limit_per_label(tuning_set, args.tuning_per_label)
+    confirmation_set = limit_per_label(confirmation_set, args.confirmation_per_label)
     test_set = []
     for label in labels:
         for case in [c for c in cases if c.ground_truth == label][: args.test_per_label]:
