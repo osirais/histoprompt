@@ -23,6 +23,13 @@ def _load_dotenv(path: Path) -> None:
             os.environ.setdefault(key, value)
 
 
+def _env_flag(name: str, default: bool = False) -> bool:
+    value = os.getenv(name)
+    if value is None:
+        return default
+    return value.strip().lower() in {"1", "true", "yes", "on"}
+
+
 @dataclass(frozen=True)
 class Settings:
     host: str
@@ -42,6 +49,8 @@ class Settings:
     quiltnet_api_key: str
     plip_endpoint: str
     plip_api_key: str
+    demo_replay: bool = False
+    demo_replay_path: Path = ROOT / "data/demo_replay.json"
 
     @classmethod
     def from_env(cls) -> "Settings":
@@ -50,6 +59,11 @@ class Settings:
         corpus = Path(os.getenv("HISTOPROMPT_CORPUS", "data/corpus.jsonl"))
         if not corpus.is_absolute():
             corpus = ROOT / corpus
+        demo_replay_path = Path(
+            os.getenv("HISTOPROMPT_DEMO_REPLAY_PATH", "data/demo_replay.json")
+        )
+        if not demo_replay_path.is_absolute():
+            demo_replay_path = ROOT / demo_replay_path
         return cls(
             host=os.getenv("HISTOPROMPT_HOST", "127.0.0.1"),
             port=int(os.getenv("HISTOPROMPT_PORT", "8787")),
@@ -70,5 +84,7 @@ class Settings:
             quiltnet_api_key=os.getenv("QUILTNET_API_KEY", ""),
             plip_endpoint=os.getenv("PLIP_ENDPOINT", ""),
             plip_api_key=os.getenv("PLIP_API_KEY", ""),
+            demo_replay=_env_flag("HISTOPROMPT_DEMO_REPLAY"),
+            demo_replay_path=demo_replay_path,
         )
 

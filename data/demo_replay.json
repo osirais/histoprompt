@@ -1,0 +1,91 @@
+{
+  "case_id": "lc25000-lung-adenocarcinoma-row-0",
+  "image_path": "benchmarks/diagnosis-11/images/lc25000/lung-adenocarcinoma/lungaca57.jpeg",
+  "image_sha256": "b1d7a760977f3188da7df2279016d244f53413064cf45937c16723853d2140e6",
+  "image_name": "lungaca57.jpeg · public LC25000 demo",
+  "report": "Lung core biopsy demonstrates malignant gland-forming epithelial cells with mucin production. Tumor cells are strongly positive for TTF-1 and Napsin A and negative for p40.",
+  "labels": [
+    "benign lung tissue",
+    "lung adenocarcinoma",
+    "lung squamous cell carcinoma"
+  ],
+  "result": {
+    "case_specific_prompts": {
+      "benign lung tissue": "benign lung tissue with open alveolar spaces, delicate septa, bland pneumocytes, and no cytologic atypia",
+      "lung adenocarcinoma": "lung adenocarcinoma with malignant gland formation, acinar or lepidic growth, atypical columnar cells, and possible mucin",
+      "lung squamous cell carcinoma": "lung squamous cell carcinoma with atypical squamous nests, keratin pearls, intercellular bridges, and eosinophilic cytoplasm"
+    },
+    "model_results": {
+      "musk": {
+        "name": "MUSK",
+        "baseline": {"label": "lung squamous cell carcinoma", "probability": 0.3425770998},
+        "enhanced": {"label": "lung squamous cell carcinoma", "probability": 0.3579561412},
+        "error": ""
+      },
+      "conch": {
+        "name": "CONCH",
+        "baseline": {"label": "lung adenocarcinoma", "probability": 0.3605535924},
+        "enhanced": {"label": "lung squamous cell carcinoma", "probability": 0.386877805},
+        "error": ""
+      },
+      "quiltnet": {
+        "name": "QuiltNet-B-32",
+        "baseline": {"label": "lung adenocarcinoma", "probability": 0.3353537917},
+        "enhanced": {"label": "lung adenocarcinoma", "probability": 0.3374979198},
+        "error": ""
+      },
+      "plip": {
+        "name": "PLIP",
+        "baseline": {"label": "lung adenocarcinoma", "probability": 0.3356695771},
+        "enhanced": {"label": "lung adenocarcinoma", "probability": 0.3396860361},
+        "error": ""
+      }
+    },
+    "evidence": [
+      {
+        "source_id": "PMID:26447895",
+        "title": "Various antibody clones of Napsin A, TTF-1, and p40 in non-small cell lung carcinoma",
+        "text": "This tissue-microarray study evaluated CK5, p63, and p40 as squamous markers and Napsin A and TTF-1 as lung adenocarcinoma markers. Combining Napsin A with TTF-1 improved sensitivity.",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/26447895/",
+        "year": "2016",
+        "score": 141.5347
+      },
+      {
+        "source_id": "PMID:26137020",
+        "title": "Immunostaining for TTF-1, Napsin A, p40, and cytokeratin 5 aids differential diagnosis of NSCLC",
+        "text": "TTF-1 and Napsin A supported adenocarcinoma, while p40 and CK5 supported squamous differentiation; the combined panel was more informative than a single stain.",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/26137020/",
+        "year": "2015",
+        "score": 76.9672
+      },
+      {
+        "source_id": "PMID:22966403",
+        "title": "Value of Napsin A and thyroid transcription factor-1 in primary lung adenocarcinoma",
+        "text": "Napsin A and TTF-1 were frequently expressed in primary lung adenocarcinoma. Interpretation as a panel is more informative than an isolated marker.",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/22966403/",
+        "year": "2012",
+        "score": 68.1136
+      }
+    ],
+    "review": {
+      "classification": "lung adenocarcinoma",
+      "confidence": 0.91,
+      "assessment": "The case findings support lung adenocarcinoma despite disagreement among the image-only model outputs.",
+      "rationale": [
+        "Malignant gland formation and mucin production favor adenocarcinoma morphology.",
+        "TTF-1 and Napsin A positivity with p40 negativity supports lung adenocarcinoma over squamous carcinoma.",
+        "QuiltNet and PLIP retained lung adenocarcinoma after case-specific prompting; MUSK and CONCH selected squamous carcinoma."
+      ],
+      "recommended_review": [
+        "Confirm gland formation and mucin on the full slide.",
+        "Review TTF-1, Napsin A, and p40 controls and staining distribution.",
+        "Reconcile the image-model disagreement before final sign-out."
+      ]
+    },
+    "final_classification": "lung adenocarcinoma",
+    "llm_model": "gemma-4-31b-it saved review",
+    "prompt_generation_prompt": "Extract short, visually discriminative microscopic features for each candidate using the case findings and retrieved lung-pathology evidence.",
+    "review_prompt": "Compare the case findings, retrieved evidence, candidate-specific prompts, and all four saved model outputs; then prepare a concise review brief.",
+    "notice": "Saved research-demo replay. No live model or Lumen request was made."
+  }
+}

@@ -2,6 +2,7 @@ const $ = (selector) => document.querySelector(selector);
 
 const state = {
   image: "",
+  demoCaseId: "",
   lastResult: null,
   loadingInterval: null,
   loadingStartedAt: 0,
@@ -9,10 +10,9 @@ const state = {
 
 const sampleReport = `Lung core biopsy demonstrates malignant gland-forming epithelial cells with mucin production. Tumor cells are strongly positive for TTF-1 and Napsin A and negative for p40.`;
 const sampleLabels = [
+  "benign lung tissue",
   "lung adenocarcinoma",
   "lung squamous cell carcinoma",
-  "metastatic colorectal adenocarcinoma",
-  "benign lung tissue",
 ];
 const loadingPhases = [
   ["Retrieving relevant evidence", "Searching the frozen local corpus against the case findings and differential."],
@@ -31,8 +31,10 @@ async function checkStatus() {
     const readyModels = modelEntries.filter(([, value]) => value.configured);
     const ready = readyModels.length > 0 && status.lumen.configured && status.corpus.configured;
     const partial = readyModels.length > 0 || status.lumen.configured || status.corpus.configured;
-    holder.innerHTML = `<span class="status-dot ${ready ? "ready" : partial ? "partial" : "waiting"}"></span>${ready ? "Workflow ready" : "Setup incomplete"}`;
-    $("#model-count").textContent = `${readyModels.length}/${modelEntries.length} vision models connected`;
+    holder.innerHTML = `<span class="status-dot ${ready ? "ready" : partial ? "partial" : "waiting"}"></span>${status.demo_replay ? "Saved demo ready" : ready ? "Workflow ready" : "Setup incomplete"}`;
+    $("#model-count").textContent = status.demo_replay
+      ? `${readyModels.length}/${modelEntries.length} models · replay mode`
+      : `${readyModels.length}/${modelEntries.length} vision models connected`;
     holder.title = [
       ...modelEntries.map(([name, value]) => `${name.toUpperCase()}: ${value.detail}`),
       `Lumen: ${status.lumen.detail}`,
@@ -71,12 +73,17 @@ function readImage(file) {
   }
   const reader = new FileReader();
   reader.onload = () => {
-    state.image = reader.result;
-    $("#preview").src = reader.result;
-    $("#dropzone").classList.add("has-image");
-    $("#drop-copy strong").textContent = file.name;
+    setImage(reader.result, file.name);
   };
   reader.readAsDataURL(file);
+}
+
+function setImage(image, name, demoCaseId = "") {
+  state.image = image;
+  state.demoCaseId = demoCaseId;
+  $("#preview").src = image;
+  $("#dropzone").classList.add("has-image");
+  $("#drop-copy strong").textContent = name;
 }
 
 function showOnly(id) {
@@ -275,7 +282,9 @@ function render(data) {
   fillList("#review", review.recommended_review, "Review the slide, supplied differential, and source evidence independently.");
   renderPrompts(data.case_specific_prompts || data.musk_prompts || data.primary_prompts);
   renderEvidence(data.evidence);
-  $("#model-used").textContent = `Reviewed by ${data.llm_model}`;
+  $("#model-used").textContent = data.demo_replay
+    ? `Saved demo · ${data.llm_model}`
+    : `Reviewed by ${data.llm_model}`;
   $("#prompt-generation-prompt").textContent = data.prompt_generation_prompt || "Unavailable";
   $("#review-prompt").textContent = data.review_prompt || "Unavailable";
   showOnly("#results");
@@ -302,9 +311,25 @@ $("#dropzone").addEventListener("drop", event => {
   if (file) readImage(file);
 });
 
-$("#load-sample").addEventListener("click", () => {
-  $("#report").value = sampleReport;
-  $("#labels").value = sampleLabels.join("\n");
+$("#load-sample").addEventListener("click", async () => {
+  const button = $("#load-sample");
+  button.disabled = true;
+  button.textContent = "Loading case…";
+  try {
+    const response = await fetch("/api/demo-case");
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || "Demo case unavailable");
+    setImage(data.image, data.image_name, data.case_id);
+    $("#report").value = data.report;
+    $("#labels").value = data.labels.join("\n");
+  } catch (_) {
+    state.demoCaseId = "";
+    $("#report").value = sampleReport;
+    $("#labels").value = sampleLabels.join("\n");
+  } finally {
+    button.disabled = false;
+    button.textContent = "Load demo case";
+  }
 });
 
 $("#copy-review").addEventListener("click", async () => {
@@ -329,6 +354,7 @@ $("#case-form").addEventListener("submit", async event => {
 
   showOnly("#loading-state");
   startLoading();
+  const requestStartedAt = Date.now();
   $("#run-button").disabled = true;
   try {
     const response = await fetch("/api/analyze", {
@@ -338,12 +364,17 @@ $("#case-form").addEventListener("submit", async event => {
         image: state.image,
         report,
         labels,
+        demo_case_id: state.demoCaseId,
         model: $("#model").value,
         top_k: Number($("#top-k").value),
       }),
     });
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || `Request failed with HTTP ${response.status}`);
+    if (data.demo_replay) {
+      const remaining = 2400 - (Date.now() - requestStartedAt);
+      if (remaining > 0) await new Promise(resolve => window.setTimeout(resolve, remaining));
+    }
     render(data);
   } catch (error) {
     showError(error.message);

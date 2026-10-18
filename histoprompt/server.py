@@ -10,6 +10,7 @@ from urllib.parse import urlparse
 
 from .config import ROOT, Settings
 from .conch_backend import ConchError
+from .demo_replay import demo_case_payload, demo_model_statuses, load_demo_fixture
 from .hosted_backend import HostedModelError, hosted_model_status
 from .lumen import LumenError
 from .musk_backend import MuskError, musk_status
@@ -24,6 +25,8 @@ class HistoPromptServer(ThreadingHTTPServer):
     def __init__(self, address: tuple[str, int], settings: Settings):
         super().__init__(address, HistoPromptHandler)
         self.settings = settings
+        if settings.demo_replay:
+            load_demo_fixture(settings.demo_replay_path)
         self.pipeline = AnalysisPipeline.create(settings)
 
 
@@ -46,21 +49,29 @@ class HistoPromptHandler(BaseHTTPRequestHandler):
         path = urlparse(self.path).path
         if path == "/api/status":
             lumen = self.server.pipeline.lumen
-            model_statuses = {
-                "musk": musk_status(self.server.settings),
-                "conch": hosted_model_status(self.server.settings, "conch"),
-                "quiltnet": hosted_model_status(self.server.settings, "quiltnet"),
-                "plip": hosted_model_status(self.server.settings, "plip"),
-            }
+            demo_replay = self.server.settings.demo_replay
+            model_statuses = (
+                demo_model_statuses()
+                if demo_replay
+                else {
+                    "musk": musk_status(self.server.settings),
+                    "conch": hosted_model_status(self.server.settings, "conch"),
+                    "quiltnet": hosted_model_status(self.server.settings, "quiltnet"),
+                    "plip": hosted_model_status(self.server.settings, "plip"),
+                }
+            )
             self._json(
                 {
+                    "demo_replay": demo_replay,
                     "models": model_statuses,
                     "musk": model_statuses["musk"],
                     "conch": model_statuses["conch"],
                     "lumen": {
-                        "configured": lumen.configured,
+                        "configured": True if demo_replay else lumen.configured,
                         "detail": (
-                            self.server.settings.lumen_base_url
+                            "Saved Lumen review"
+                            if demo_replay
+                            else self.server.settings.lumen_base_url
                             if lumen.configured
                             else "Needs LUMEN_API_KEY"
                         ),
@@ -73,7 +84,16 @@ class HistoPromptHandler(BaseHTTPRequestHandler):
                 }
             )
             return
+        if path == "/api/demo-case":
+            try:
+                self._json(demo_case_payload(self.server.settings.demo_replay_path))
+            except ValueError as exc:
+                self._json({"error": str(exc)}, HTTPStatus.INTERNAL_SERVER_ERROR)
+            return
         if path == "/api/models":
+            if self.server.settings.demo_replay:
+                self._json({"models": ["saved-demo-replay"], "default": "saved-demo-replay"})
+                return
             try:
                 self._json(
                     {
@@ -126,6 +146,8 @@ def main() -> None:
     settings = Settings.from_env()
     server = HistoPromptServer((settings.host, settings.port), settings)
     print(f"HistoPrompt is running at http://{settings.host}:{settings.port}")
+    if settings.demo_replay:
+        print("Saved demo replay is active; no remote model or Lumen requests will be made.")
     print("Research prototype only; do not use for patient care.")
     try:
         server.serve_forever()

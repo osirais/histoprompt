@@ -116,3 +116,13 @@ Risks: PathGen supplies generated image captions rather than authentic clinician
 - [ ] Produce a scripted, cursor-free demo video from the verified live workflow and keep all artifacts local.
 
 Constraints: use only de-identified or public research data; do not commit or push; do not imply clinical validation; preserve the current benchmark process and its saved outputs.
+
+## Local saved-demo replay
+
+- [x] Add an explicit environment-gated replay mode that never calls expired NCSA or Lumen services.
+- [x] Reuse one exact public benchmark image and its saved four-model outputs.
+- [x] Let “Load demo case” populate the image, findings, and differential in one click.
+- [x] Mark the interface as a saved replay rather than claiming the remote models are live.
+- [x] Add focused tests, document the one-command launch, and run the full suite.
+
+Constraints: replay mode must stay off by default; it must reject arbitrary cases rather than attach saved outputs to a different image; do not commit or push unless explicitly requested again.

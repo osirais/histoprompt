@@ -9,31 +9,35 @@ if ! command -v uv >/dev/null 2>&1; then
   exit 1
 fi
 
-if [[ ! -f .env.local ]]; then
+demo_replay="${HISTOPROMPT_DEMO_REPLAY:-0}"
+
+if [[ "$demo_replay" != "1" && ! -f .env.local ]]; then
   echo "Local configuration is missing. Run ./scripts/setup.sh first."
   exit 1
 fi
 
 # shellcheck disable=SC1091
-source .env.local
+if [[ "$demo_replay" != "1" && -f .env.local ]]; then
+  source .env.local
+fi
 
-if [[ -z "${LUMEN_API_KEY:-}" ]]; then
+if [[ "$demo_replay" != "1" && -z "${LUMEN_API_KEY:-}" ]]; then
   echo "LUMEN_API_KEY is missing. Run ./scripts/setup.sh."
   exit 1
 fi
 
-if [[ "${MUSK_BACKEND:-remote}" == "remote" && -z "${MUSK_API_KEY:-}" ]]; then
+if [[ "$demo_replay" != "1" && "${MUSK_BACKEND:-remote}" == "remote" && -z "${MUSK_API_KEY:-}" ]]; then
   echo "MUSK_API_KEY is missing. Run ./scripts/setup.sh."
   exit 1
 fi
 
-if [[ "${MUSK_BACKEND:-remote}" == "local" ]]; then
+if [[ "$demo_replay" != "1" && "${MUSK_BACKEND:-remote}" == "local" ]]; then
   uv sync --extra musk --extra dev
 else
   uv sync --extra dev
 fi
 
-if [[ "${MUSK_BACKEND:-remote}" == "remote" ]]; then
+if [[ "$demo_replay" != "1" && "${MUSK_BACKEND:-remote}" == "remote" ]]; then
   echo "MUSK uses the Delta tunnel. Keep this running in another terminal:"
   echo "  ./scripts/start_delta_tunnel.sh"
 fi

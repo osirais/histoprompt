@@ -16,6 +16,7 @@ from .clinical_workflow import (
     normalize_review_classification,
 )
 from .config import Settings
+from .demo_replay import replay_result
 from .hosted_backend import (
     MODEL_NAMES,
     HostedModelError,
@@ -86,6 +87,14 @@ class AnalysisPipeline:
             raise ValueError("Provide at least two candidate labels for zero-shot comparison.")
         if len(labels) > 30:
             raise ValueError("At most 30 candidate labels are supported in one run.")
+
+        if getattr(self.settings, "demo_replay", False):
+            return replay_result(
+                self.settings.demo_replay_path,
+                str(payload.get("demo_case_id", "")),
+                report,
+                labels,
+            )
 
         query = " ".join([report, *labels])
         evidence = self.evidence_index.search(query, int(payload.get("top_k", 5)))

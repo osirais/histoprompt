@@ -37,6 +37,18 @@ Open <http://127.0.0.1:8787>. The status strip should show MUSK, Lumen, and the 
 
 The hosted path requires three things that cannot be created by cloning: an NCSA account with Delta access, a Lumen API key, and the shared MUSK bearer key. Obtain those separately from the project owner or event organizers. The setup script reports any missing value before starting the app.
 
+## Saved-output video demo
+
+Watch the [34-second clinician-workflow demo](demo/histoprompt-clinician-workflow-demo.mp4).
+
+When the event services are offline, launch the bundled replay instead:
+
+```bash
+./scripts/run_demo.sh
+```
+
+Open <http://127.0.0.1:8787>, select **Load demo case**, then **Analyze case**. This mode uses one public LC25000 image and saved outputs from the four-model diagnosis benchmark. The interface labels it as replay mode, rejects edited or unrelated cases, and makes no requests to NCSA or Lumen. Replay mode is off during a normal `./run.sh` launch.
+
 ## What it adds to MUSK
 
 Plain MUSK receives label-only prompts such as `herpes simplex esophagitis`. Prompt wording can improve a fixed task,
