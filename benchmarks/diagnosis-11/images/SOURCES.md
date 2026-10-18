@@ -1,6 +1,6 @@
 # Benchmark image sources
 
-The repository stores the exact image bytes used by the benchmark. `manifest.json` records the SHA-256 checksum for each image. The runner checks each checksum before it sends an image to MUSK.
+The repository stores the exact image bytes used by the benchmark. `manifest.json` records the SHA-256 checksum for each image. The runner checks each checksum before it sends an image to a hosted model.
 
 ## LC25000
 

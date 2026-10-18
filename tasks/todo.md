@@ -49,3 +49,18 @@ Risks: repeated runs can drift if the remote MUSK service changes; LC25000 augme
 - [ ] Show CONCH's result alongside MUSK and cover the adapter with offline tests.
 
 Risk: the CONCH host, port, and bearer key are supplied by the hackathon organizers and must remain local-only.
+
+## Organized cross-pathology benchmark
+
+- [x] Make one benchmark index the clear entry point, separating active suites from archived exploratory runs.
+- [x] Preserve the 34-image diagnosis suite with its images, checksums, sources, and frozen prompts in one directory.
+- [x] Generalize the benchmark runner and report wording from MUSK-only to any hosted model without exposing credentials.
+- [x] Reject PanNuke as the broad benchmark because its tissue-origin task does not match the system.
+- [x] Select PathMMU as the broad diagnosis/reasoning benchmark target.
+- [ ] Obtain PathMMU dataset approval and build its fixed validation/test manifest.
+- [ ] Run MUSK, CONCH, QuiltNet, and PLIP with original and retrieval-enhanced answer-option prompts.
+- [x] Generate one readable cross-model summary for the currently valid results.
+- [x] Add a one-command suite runner and generated aggregate report.
+- [x] Run final checks and self-review.
+
+Risks: 34 images across 11 labels are useful for broad smoke coverage but not clinical validation; several families have only one or two images per label; within-family candidate sets do not measure unrestricted diagnosis; model-specific tuning remains independently validated only for the LC25000 lung task.

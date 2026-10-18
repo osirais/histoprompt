@@ -1,0 +1,26 @@
+{
+  "lumen_model": "gemma-4-31b-it",
+  "source_run": "20261017T190617Z",
+  "note": "Frozen before cross-model inference. Lumen received labels and retrieved evidence, never benchmark images or answers.",
+  "prompts": {
+    "lung histopathology": {
+      "benign lung tissue": "benign lung tissue with preserved alveolar architecture, thin alveolar walls, absence of cellular atypia",
+      "lung adenocarcinoma": "lung adenocarcinoma with malignant glandular structures, lepidic growth patterns, mucin production",
+      "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, eosinophilic cytoplasm"
+    },
+    "colon histopathology": {
+      "benign colonic tissue": "benign colonic tissue with orderly crypt architecture, mature goblet cells",
+      "colorectal adenocarcinoma": "colorectal adenocarcinoma with malignant glands, desmoplastic stroma, dirty necrosis"
+    },
+    "infectious esophagitis": {
+      "Candida esophagitis": "Candida esophagitis with fungal hyphae and pseudohyphae, spores invading squamous epithelium, neutrophilic inflammation",
+      "herpes simplex virus esophagitis": "herpes simplex virus esophagitis with multinucleated giant squamous cells, nuclear molding, ground-glass intranuclear inclusions, chromatin margination",
+      "cytomegalovirus esophagitis": "cytomegalovirus esophagitis with cytomegaly in endothelial or stromal cells, basophilic intranuclear inclusions with clear halo, owl-eye appearance"
+    },
+    "skin cancer histopathology": {
+      "basal cell carcinoma": "basal cell carcinoma with basophilic tumor islands, peripheral nuclear palisading, stromal retraction, loose mucinous stroma",
+      "cutaneous squamous cell carcinoma": "cutaneous squamous cell carcinoma with pleomorphic keratinocytes, prominent nucleoli, increased mitoses, invasive epidermal islands",
+      "melanoma": "melanoma with irregular nests of melanocytes, single pleomorphic pigmented cells, epidermal and dermal distribution"
+    }
+  }
+}

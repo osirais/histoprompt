@@ -22,11 +22,15 @@ from histoprompt.benchmark import (  # noqa: E402
     load_manifest,
     prompts_for_strategy,
     summarize_results,
+    supports_prompt_selection,
     verify_image_checksum,
 )
 from histoprompt.config import Settings  # noqa: E402
+from histoprompt.hosted_backend import (  # noqa: E402
+    MODEL_NAMES,
+    make_benchmark_backend,
+)
 from histoprompt.lumen import LumenClient  # noqa: E402
-from histoprompt.musk_backend import make_musk_backend  # noqa: E402
 from histoprompt.prompt_selection import select_prompt_candidate  # noqa: E402
 from histoprompt.reporting import markdown_report  # noqa: E402
 from histoprompt.rag import EvidenceIndex  # noqa: E402
@@ -65,11 +69,11 @@ def chunks(values: list[Any], size: int) -> list[list[Any]]:
     return [values[start : start + size] for start in range(0, len(values), size)]
 
 
-def classify_batch(musk: Any, images: list[str], prompts: dict[str, str]) -> list[Any]:
-    batch_method = getattr(musk, "classify_batch", None)
+def classify_batch(model: Any, images: list[str], prompts: dict[str, str]) -> list[Any]:
+    batch_method = getattr(model, "classify_batch", None)
     if callable(batch_method):
         return batch_method(images, prompts)
-    return [musk.classify(image, prompts)[0] for image in images]
+    return [model.classify(image, prompts)[0] for image in images]
 
 
 def display_path(path: Path) -> str:
@@ -82,8 +86,13 @@ def display_path(path: Path) -> str:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run the HistoPrompt multi-disease benchmark.")
-    parser.add_argument("--manifest", type=Path, default=ROOT / "benchmarks" / "manifest.json")
-    parser.add_argument("--output-dir", type=Path, default=ROOT / "benchmarks" / "results")
+    parser.add_argument(
+        "--manifest",
+        type=Path,
+        default=ROOT / "benchmarks" / "diagnosis-11" / "manifest.json",
+    )
+    parser.add_argument("--output-dir", type=Path)
+    parser.add_argument("--model", choices=sorted(MODEL_NAMES), default="musk")
     parser.add_argument("--cache-dir", type=Path, default=ROOT / ".benchmark-cache")
     parser.add_argument("--batch-size", type=int, default=1)
     parser.add_argument(
@@ -98,17 +107,53 @@ def main() -> None:
         help="Keep completed strategies from output-dir/latest.json and run only the requested strategies.",
     )
     parser.add_argument(
+        "--report-only",
+        action="store_true",
+        help="Regenerate latest.md from an existing latest.json without calling a model.",
+    )
+    parser.add_argument(
         "--strategies",
         nargs="+",
         choices=STRATEGIES,
-        default=list(STRATEGIES),
+        help="Prompt strategies to run; defaults to the manifest's main comparison.",
     )
     args = parser.parse_args()
+    if args.output_dir is None:
+        args.output_dir = args.manifest.parent / "results" / args.model
+    if args.report_only:
+        json_path = args.output_dir / "latest.json"
+        if not json_path.exists():
+            parser.error(f"Cannot render report: {json_path} does not exist.")
+        result = json.loads(json_path.read_text(encoding="utf-8"))
+        if args.manifest.exists():
+            current_manifest = json.loads(args.manifest.read_text(encoding="utf-8"))
+            result["benchmark_name"] = current_manifest.get(
+                "name", result.get("benchmark_name", "HistoPrompt benchmark")
+            )
+            result["comparison"] = current_manifest.get(
+                "comparison", result.get("comparison", {})
+            )
+            result["report_context"] = current_manifest.get(
+                "report_context", result.get("report_context", {})
+            )
+        markdown_path = args.output_dir / "latest.md"
+        json_path.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+        markdown_path.write_text(markdown_report(result), encoding="utf-8")
+        print(f"Saved {markdown_path}.")
+        return
     if args.batch_size < 1:
         parser.error("--batch-size must be at least 1")
     if args.max_per_label < 0:
         parser.error("--max-per-label cannot be negative")
     manifest_value = json.loads(args.manifest.read_text(encoding="utf-8"))
+    comparison = dict(manifest_value.get("comparison", {}))
+    comparison.setdefault("baseline_strategy", "generic")
+    comparison.setdefault("candidate_strategy", "evidence_generated")
+    if args.strategies is None:
+        args.strategies = [
+            comparison["baseline_strategy"],
+            comparison["candidate_strategy"],
+        ]
     cases, families = load_manifest(manifest_value)
     if args.max_per_label:
         counts: dict[tuple[str, str], int] = {}
@@ -123,7 +168,7 @@ def main() -> None:
     settings = Settings.from_env()
     lumen = LumenClient(settings)
     evidence_index = EvidenceIndex(settings.corpus_path)
-    musk = make_musk_backend(settings)
+    model_backend = make_benchmark_backend(settings, args.model)
 
     previous: dict[str, Any] = {}
     previous_path = args.output_dir / "latest.json"
@@ -134,13 +179,19 @@ def main() -> None:
         if previous_case_ids != expected_case_ids:
             parser.error("Cannot resume: saved result cases do not match the manifest.")
 
-    generated_by_family: dict[str, dict[str, str]] = dict(
-        previous.get("evidence_generated_prompts", {})
-    )
+    generated_by_family: dict[str, dict[str, str]] = {}
+    prompt_file_value = manifest_value.get("evidence_generated_prompts_file")
+    frozen_prompt_model = ""
+    if prompt_file_value:
+        prompt_path = args.manifest.parent / str(prompt_file_value)
+        frozen_prompt_value = json.loads(prompt_path.read_text(encoding="utf-8"))
+        generated_by_family.update(frozen_prompt_value.get("prompts", {}))
+        frozen_prompt_model = str(frozen_prompt_value.get("lumen_model", ""))
+    generated_by_family.update(previous.get("evidence_generated_prompts", {}))
     evidence_by_family: dict[str, list[dict[str, str | float]]] = dict(
         previous.get("retrieved_evidence", {})
     )
-    prompt_model = str(previous.get("lumen_model", ""))
+    prompt_model = str(previous.get("lumen_model", frozen_prompt_model))
     needs_generated_prompts = any(
         strategy in {
             "evidence_generated",
@@ -161,6 +212,9 @@ def main() -> None:
             print(f"Generated evidence prompts for {family}.", flush=True)
 
     rerun_strategies = set(args.strategies)
+    strategy_prompts: dict[str, dict[str, dict[str, str]]] = dict(
+        previous.get("strategy_prompts", {})
+    )
     rows: list[dict[str, Any]] = [
         row
         for row in previous.get("results", [])
@@ -181,12 +235,13 @@ def main() -> None:
             prompts = prompts_for_strategy(
                 strategy, families[family], generated_by_family.get(family)
             )
+            strategy_prompts.setdefault(family, {})[strategy] = prompts
             for batch_number, batch in enumerate(chunks(prepared_cases, args.batch_size), 1):
                 started = time.perf_counter()
                 error = ""
                 try:
                     predictions = classify_batch(
-                        musk, [encoded for _, encoded in batch], prompts
+                        model_backend, [encoded for _, encoded in batch], prompts
                     )
                 except Exception as exc:
                     predictions = [None] * len(batch)
@@ -202,7 +257,6 @@ def main() -> None:
                             "family": case.family,
                             "ground_truth": case.ground_truth,
                             "strategy": strategy,
-                            "prompts": prompts,
                             "prediction": prediction.label if prediction else None,
                             "score": prediction.probability if prediction else None,
                             "correct": bool(
@@ -233,25 +287,32 @@ def main() -> None:
     all_strategies = list(
         dict.fromkeys([*previous.get("strategies", []), *args.strategies])
     )
-    required_strategies = {"generic", "evidence_generated"}
+    required_strategies = {
+        comparison["baseline_strategy"],
+        comparison["candidate_strategy"],
+    }
     if not required_strategies.issubset(all_strategies):
         parser.error(
-            "The saved and requested strategies together must include generic and "
-            "evidence_generated for the comparison report."
+            "The saved and requested strategies together must include the manifest's "
+            "baseline and candidate strategies for the comparison report."
         )
     result = {
         "run_id": now.strftime("%Y%m%dT%H%M%SZ"),
         "created_at": now.isoformat(),
         "benchmark_name": manifest_value.get("name", "HistoPrompt benchmark"),
+        "model": args.model,
+        "model_display_name": MODEL_NAMES[args.model],
+        "comparison": comparison,
         "report_context": report_context,
         "manifest": display_path(args.manifest),
         "max_per_label": args.max_per_label,
         "lumen_model": prompt_model,
-        "musk_backend": settings.musk_backend,
-        "musk_endpoint": settings.musk_endpoint,
+        "model_backend": settings.musk_backend if args.model == "musk" else "remote",
+        "model_endpoint": getattr(model_backend, "endpoint", "local"),
         "cases": [case.__dict__ for case in cases],
         "evidence_generated_prompts": generated_by_family,
         "retrieved_evidence": evidence_by_family,
+        "strategy_prompts": strategy_prompts,
         "strategies": all_strategies,
         "performance": {
             "scope": "latest invocation",
@@ -266,9 +327,14 @@ def main() -> None:
         "results": rows,
         "summary": summarize_results(rows),
     }
-    result["prompt_selection"] = select_prompt_candidate(
-        rows, result["cases"], all_strategies
-    )
+    if supports_prompt_selection(cases):
+        result["prompt_selection"] = select_prompt_candidate(
+            rows, result["cases"], all_strategies
+        )
+    else:
+        result["prompt_selection_note"] = (
+            "Not run because at least one family/label group has fewer than two cases."
+        )
     args.output_dir.mkdir(parents=True, exist_ok=True)
     json_path = args.output_dir / "latest.json"
     markdown_path = args.output_dir / "latest.md"

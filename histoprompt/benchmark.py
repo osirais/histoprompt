@@ -203,3 +203,16 @@ def summarize_results(rows: list[dict[str, Any]]) -> dict[str, dict[str, float |
             "mean_top_score": round(mean_score, 6),
         }
     return summary
+
+
+def supports_prompt_selection(cases: list[Any]) -> bool:
+    """Return whether every family/label group can be split in two."""
+    counts: dict[tuple[str, str], int] = {}
+    for case in cases:
+        family = case.family if hasattr(case, "family") else case["family"]
+        ground_truth = (
+            case.ground_truth if hasattr(case, "ground_truth") else case["ground_truth"]
+        )
+        key = (family, ground_truth)
+        counts[key] = counts.get(key, 0) + 1
+    return bool(counts) and min(counts.values()) >= 2

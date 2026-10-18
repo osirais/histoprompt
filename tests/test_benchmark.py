@@ -9,6 +9,7 @@ from histoprompt.benchmark import (
     load_manifest,
     prompts_for_strategy,
     summarize_results,
+    supports_prompt_selection,
     verify_image_checksum,
 )
 from histoprompt.rag import Evidence
@@ -213,3 +214,57 @@ def test_markdown_report_explains_held_out_prompt_selection() -> None:
     assert "## Prompt selection without test-set leakage" in report
     assert "remaining 300 images were kept hidden from selection" in report
     assert "compared with **270/300 (90.0%)** for generic MUSK" in report
+
+
+def test_prompt_selection_requires_two_cases_per_family_label() -> None:
+    one_case = type("Case", (), {"family": "skin", "ground_truth": "melanoma"})()
+    two_cases = [one_case, one_case]
+
+    assert supports_prompt_selection([one_case]) is False
+    assert supports_prompt_selection(two_cases) is True
+
+
+def test_markdown_report_supports_model_neutral_strategy_comparison() -> None:
+    case = {"case_id": "case-1", "family": "tissue", "ground_truth": "liver tissue"}
+    result = {
+        "run_id": "test-run",
+        "benchmark_name": "Coverage test",
+        "model_display_name": "CONCH",
+        "comparison": {
+            "baseline_strategy": "generic",
+            "candidate_strategy": "histology_showing",
+            "baseline_name": "Generic prompt",
+            "candidate_name": "Short prompt",
+        },
+        "cases": [case],
+        "results": [
+            {
+                **case,
+                "strategy": "generic",
+                "prompts": {"liver tissue": "a histopathology image showing liver tissue"},
+                "prediction": "liver tissue",
+                "correct": True,
+                "error": "",
+            },
+            {
+                **case,
+                "strategy": "histology_showing",
+                "prompts": {"liver tissue": "histology showing liver tissue"},
+                "prediction": "liver tissue",
+                "correct": True,
+                "error": "",
+            },
+        ],
+        "summary": {
+            "generic": {"correct": 1, "successful": 1, "accuracy": 1.0},
+            "histology_showing": {"correct": 1, "successful": 1, "accuracy": 1.0},
+        },
+        "prompt_selection_note": "Not enough cases.",
+    }
+
+    report = markdown_report(result)
+
+    assert "What CONCH received" in report
+    assert "Generic prompt classified 1 of 1" in report
+    assert "Short prompt classified 1 of 1" in report
+    assert "Not enough cases." in report

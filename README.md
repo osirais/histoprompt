@@ -108,30 +108,18 @@ uv run pytest
 
 Tests cover retrieval, structured response parsing, prompt enrichment order, fallback prompts, and the NCSA MUSK request schema. GitHub Actions does not download the gated checkpoint or call live services.
 
-## Multi-disease prompt benchmark
+## Benchmarks
 
-The repository includes a fixed 34-image engineering benchmark spanning lung cancer, colon cancer, infectious esophagitis, and skin cancer. It compares label-only, generic histology, hand-curated morphology, and locally retrieved evidence converted into morphology prompts by Lumen. Evidence prompts are generated once per candidate family and never receive a report, image contents, or the correct label.
+The organized benchmark entry point is [`benchmarks/README.md`](benchmarks/README.md), and the current human-readable comparison is [`benchmarks/RESULTS.md`](benchmarks/RESULTS.md).
 
-With the Delta tunnel open, run:
-
-```bash
-uv run python scripts/run_benchmark.py
-```
-
-The exact benchmark images are stored in `benchmarks/images/`. The manifest records a SHA-256 checksum for every image, and the runner verifies it before inference. This lets another model receive the same image bytes later. Source, selection, and license details are in `benchmarks/images/SOURCES.md`.
-
-The runner writes auditable raw output to `benchmarks/results/latest.json` plus a readable comparison to `benchmarks/results/latest.md`. This remains an engineering benchmark, not clinical validation: sample counts are small, each task has a tissue-specific candidate list, and the hosted API exposes only its winning label and score.
-
-### Large batched benchmark
-
-The repository also stores a deterministic, balanced 1,000-image LC25000 collection. The completed comparison uses its 600-image lung subset: 200 benign lung images, 200 lung adenocarcinoma images, and 200 lung squamous-cell carcinoma images. Run the same comparison with:
+The current automated suite reruns the fixed 11-label diagnosis smoke test across MUSK, CONCH, QuiltNet, and PLIP and regenerates the aggregate report:
 
 ```bash
-uv run python scripts/run_benchmark.py \
-  --manifest benchmarks/lc25000-600/manifest.json \
-  --output-dir benchmarks/lc25000-600/results \
-  --batch-size 32 \
-  --strategies generic evidence_generated
+uv run python scripts/run_benchmark_suite.py
 ```
 
-Batching reduced measured MUSK time to 0.391 seconds per image and prompt strategy. In the saved run, Original MUSK scored 538/600 (89.7%) and Enhanced MUSK scored 478/600 (79.7%). See `benchmarks/lc25000-600/results/latest.md` for the label-level breakdown and limitations.
+The repository also keeps separate suites for 11 diagnosis labels, individually tuned lung prompts, a 1,000-image lung-and-colon stress set, and the original 600-image RAG comparison. Exploratory prompt screens and the invalid shared-prompt cross-model experiment are clearly archived.
+
+Every active suite stores or identifies fixed source images, records SHA-256 checksums, and keeps raw JSON beside readable Markdown. `scripts/run_benchmark_suite.py` reruns the current suite and regenerates the aggregate report. These are engineering benchmarks, not clinical validation.
+
+The next broad benchmark is PathMMU, which was designed for pathology image understanding and reasoning across multiple organ systems and specialties. It requires separate dataset approval; MUSK model access is not sufficient. The discarded PanNuke experiment is not included because tissue-origin labels do not test HistoPrompt's diagnosis and reasoning workflow.
