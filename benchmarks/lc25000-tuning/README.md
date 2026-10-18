@@ -113,6 +113,8 @@ phrases that won by 2–3 images. On the same 450 test images they tied with or 
 
 ## Reproduce
 
+Step-by-step instructions and all options: [`HOW_TO_RUN.md`](HOW_TO_RUN.md).
+
 You need: this repository (`uv sync`), a Lumen API key (`LUMEN_API_KEY` in `.env.local`), and MUSK access. The hosted
 MUSK needs `MUSK_API_KEY` and the Delta tunnel (`scripts/start_delta_tunnel.sh`); local MUSK needs `MUSK_BACKEND=local`
 and an `HF_TOKEN` with the MUSK terms accepted. About 1.9 GB of disk for LC25000.
