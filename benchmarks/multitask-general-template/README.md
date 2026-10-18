@@ -11,6 +11,8 @@ Experiment, MUSK only. Results will be added after the runs finish.
 | crc9 | 9 tissue classes (NCT-CRC-HE) | NCT-CRC-HE-100K | CRC-VAL-HE-7K (different patients) |
 | pcam | metastasis vs normal lymph node (PatchCamelyon) | `valid` split | `test` split |
 
+Instructions: [`HOW_TO_RUN.md`](HOW_TO_RUN.md).
+
 ## Scripts
 
 - `build_sets.py`: builds the images into `.benchmark-cache/multitask/` and checks them against `manifest.json`.
