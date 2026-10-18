@@ -25,20 +25,26 @@ not equivalent pixels that can be sent through MUSK, CONCH, QuiltNet, and PLIP. 
 
 The per-model selection method was audited at branch tip `81f8c99` from the implementation in commit `00f498b`.
 That branch predated the repository's four-model benchmark runner, so its selection algorithm was ported into
-current `main` instead of replacing newer multi-model work with the older MUSK-only runner. The port preserves the branch's
-33-template search and acceptance gates while running them separately for each hosted model.
+current `main` instead of replacing newer multi-model work with the older MUSK-only runner. The port preserves the
+branch's 33-template search, Lumen phrase-generation stage, and acceptance gates while running them separately for
+each hosted model.
 
 1. Select a base template independently for each model using the separate LC25000 tuning set.
-2. Require at least a 1-point tuning gain, paired one-sided sign-test `p < 0.05`, and at least a 0.5-point gain on
-   the separate confirmation set before replacing the default template.
-3. Freeze the selected template before opening PathGen results.
-4. Verify each original PNG against its frozen SHA-256, then remove EXIF, ICC-profile, and text metadata chunks
+2. Ask Lumen for short, label-specific visible morphology phrases, then score every candidate against that same model.
+3. For both stages, require at least a 1-point tuning gain, paired one-sided sign-test `p < 0.05`, and at least a
+   0.5-point gain on the separate confirmation set before accepting a change.
+4. Freeze the selected template and accepted phrases before opening PathGen results.
+5. Verify each original PNG against its frozen SHA-256, then remove EXIF, ICC-profile, and text metadata chunks
    before upload. The compressed pixel chunks are unchanged; this avoids decoder failures from oversized metadata.
-5. On all 2,141 PathGen tiles, compare the model's original generic prompt with its selected template.
-6. Report tile accuracy, macro project accuracy, each project, each slide, confusion counts, paired fixes/breaks,
+6. On all 2,141 PathGen tiles, compare the original prompt, selected base template, and fully tuned prompt set.
+7. Report tile accuracy, macro project accuracy, each project, each slide, confusion counts, paired fixes/breaks,
    runtime, checksums, and completeness.
 
 The PathGen set is evaluation-only. No PathGen result is used to choose a template or phrase.
+
+The supplied tuning data covers only three lung labels. Therefore the fully tuned condition can apply accepted phrases
+to PathGen's lung adenocarcinoma and lung squamous-cell carcinoma labels; the remaining six labels use the selected
+base template. The report states this coverage explicitly rather than calling those six labels phrase-tuned.
 
 ## Reproduce on NCSA
 

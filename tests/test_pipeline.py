@@ -77,17 +77,15 @@ def test_pipeline_enriches_prompts_before_musk(tmp_path):
 
         def classify(self, image, prompts):
             self.calls += 1
-            events.append(
-                {1: "musk baseline", 2: "musk short-template", 3: "musk enriched"}[self.calls]
-            )
-            if self.calls == 3:
+            events.append({1: "musk baseline", 2: "musk enriched"}[self.calls])
+            if self.calls == 2:
                 captured.update(prompts)
             return [Prediction("tumor", 0.7)]
 
     pipeline = AnalysisPipeline(
         SimpleNamespace(), EvidenceIndex(corpus), FakeLumen()
     )
-    with patch("histoprompt.pipeline.make_musk_backend", return_value=FakeMusk()):
+    with patch("histoprompt.pipeline.make_benchmark_backend", return_value=FakeMusk()):
         result = pipeline.analyze(
             {
                 "image": "data:image/jpeg;base64,YQ==",
@@ -100,13 +98,109 @@ def test_pipeline_enriches_prompts_before_musk(tmp_path):
     assert events == [
         "prompt enrichment",
         "musk baseline",
-        "musk short-template",
         "musk enriched",
         "evidence review",
     ]
     assert captured["tumor"] == "tumor with malignant gland formation"
     assert result["musk_prompts"] == captured
-    assert result["primary_prompts"]["tumor"] == "histology showing tumor"
+    assert result["primary_prompts"] == captured
     assert result["primary_predictions"] == result["musk_predictions"]
-    assert result["primary_classification_source"] == "short histology-template MUSK"
+    assert result["primary_classification_source"] == "case-specific Lumen prompt with MUSK"
+    assert result["final_classification"] == "tumor"
+    assert result["model_results"]["musk"]["enhanced"]["label"] == "tumor"
+
+
+def test_pipeline_compares_each_configured_model_with_case_specific_prompts(tmp_path):
+    corpus = tmp_path / "corpus.jsonl"
+    corpus.write_text(
+        json.dumps(
+            {
+                "source_id": "source-1",
+                "title": "Tumor morphology",
+                "text": "Tumors can show malignant gland formation.",
+            }
+        ),
+        encoding="utf-8",
+    )
+    review_requests = []
+
+    class FakeLumen:
+        calls = 0
+
+        def complete(self, system, prompt, model):
+            self.calls += 1
+            if self.calls == 1:
+                return (
+                    json.dumps(
+                        {
+                            "features": {
+                                "tumor": "malignant gland formation",
+                                "benign": "orderly benign glands",
+                            }
+                        }
+                    ),
+                    "test-model",
+                )
+            review_requests.append(prompt)
+            return (
+                json.dumps(
+                    {
+                        "assessment": "Model outputs support the tumor candidate.",
+                        "classification": "tumor",
+                        "confidence": 0.7,
+                    }
+                ),
+                "test-model",
+            )
+
+    class FakeBackend:
+        def __init__(self, name):
+            self.name = name
+            self.calls = []
+
+        def classify(self, image, prompts):
+            self.calls.append(prompts)
+            score = 0.6 if len(self.calls) == 1 else 0.7
+            return [Prediction("tumor", score)]
+
+    backends = {
+        name: FakeBackend(name) for name in ("musk", "conch", "quiltnet", "plip")
+    }
+    settings = SimpleNamespace(
+        conch_backend="remote",
+        quiltnet_endpoint="http://quiltnet",
+        quiltnet_api_key="quiltnet-key",
+        plip_endpoint="http://plip",
+        plip_api_key="plip-key",
+    )
+    pipeline = AnalysisPipeline(settings, EvidenceIndex(corpus), FakeLumen())
+
+    with patch(
+        "histoprompt.pipeline.make_benchmark_backend",
+        side_effect=lambda _settings, model: backends[model],
+    ):
+        result = pipeline.analyze(
+            {
+                "image": "data:image/jpeg;base64,YQ==",
+                "report": "Malignant gland formation.",
+                "labels": ["tumor", "benign"],
+                "top_k": 1,
+            }
+        )
+
+    assert list(result["model_results"]) == ["musk", "conch", "quiltnet", "plip"]
+    for backend in backends.values():
+        assert backend.calls == [
+            {
+                "tumor": "a histopathology image showing tumor",
+                "benign": "a histopathology image showing benign",
+            },
+            {
+                "tumor": "tumor with malignant gland formation",
+                "benign": "benign with orderly benign glands",
+            },
+        ]
+    assert review_requests
+    for model_name in ("MUSK", "CONCH", "QUILTNET", "PLIP"):
+        assert model_name in review_requests[0]
 

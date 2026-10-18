@@ -1,5 +1,7 @@
 from collections import Counter
 
+import pytest
+
 from histoprompt.prompt_tuning import (
     DEFAULT_TEMPLATE,
     compare,
@@ -7,6 +9,7 @@ from histoprompt.prompt_tuning import (
     parse_candidates,
     passes_confirmation,
     passes_tuning_bars,
+    prompts_from_full_tuning,
     sign_test_p,
     select_base,
     template_prompts,
@@ -78,6 +81,35 @@ def test_template_prompts_supports_a_model_specific_base():
     assert prompts == {
         "benign lung tissue": "an H&E image of benign lung tissue with clear air spaces."
     }
+
+
+def test_prompts_from_full_tuning_rejects_template_only_output():
+    result = {
+        "template_only": True,
+        "base_template": "an H&E image of {label}.",
+        "chosen_phrases": {"lung adenocarcinoma": "glandular lumina"},
+    }
+    with pytest.raises(ValueError, match="full tuning result"):
+        prompts_from_full_tuning(LABELS, result)
+
+
+def test_prompts_from_full_tuning_applies_only_accepted_matching_phrases():
+    result = {
+        "template_only": False,
+        "base_template": "an H&E image of {label}.",
+        "chosen_phrases": {
+            "benign lung tissue": "",
+            "lung adenocarcinoma": "glandular lumina",
+        },
+    }
+    prompts, tuned_labels = prompts_from_full_tuning(
+        ["lung adenocarcinoma", "breast invasive carcinoma"], result
+    )
+    assert prompts == {
+        "lung adenocarcinoma": "an H&E image of lung adenocarcinoma with glandular lumina.",
+        "breast invasive carcinoma": "an H&E image of breast invasive carcinoma.",
+    }
+    assert tuned_labels == ["lung adenocarcinoma"]
 
 
 def _scorer(scores):

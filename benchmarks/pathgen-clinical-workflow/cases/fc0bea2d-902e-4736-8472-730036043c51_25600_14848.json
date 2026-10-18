@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "completed_at_utc": "2026-10-18T21:42:08.223051+00:00",
+  "manifest_sha256": "36c1fb243aa0286896979c1d8af471d3b20bc97fa96cfca74b0e6ae23bd8bf75",
+  "workflow_sha256": "f02d03d42389c531ad53ec96dfd4bf9b7967034ec94546c0e224fda81321c4dd",
+  "case_id": "fc0bea2d-902e-4736-8472-730036043c51_25600_14848",
+  "wsi_id": "TCGA-HT-8018-01Z-00-DX1.1C1BBFD4-8C4A-4A6F-8D64-70A4F41814AF",
+  "participant_id": "TCGA-HT-8018",
+  "project_id": "TCGA-LGG",
+  "ground_truth": "lower-grade glioma",
+  "image_file": "fc0bea2d-902e-4736-8472-730036043c51_25600_14848.png",
+  "image_sha256": "b1c9bcadaee6cd00f744531b28065165d4b20f82c09d4a188d6fa73d7323cf50",
+  "report_source": "PathGen generated caption used as a simulated case report",
+  "report_file": "fc0bea2d-902e-4736-8472-730036043c51_25600_14848.txt",
+  "report_sha256": "011b7e9bf840f5c9a1705d37abe3153a7a2c78d84b859550776ec833d7792b84",
+  "report": "The image shows brain tissue with dense cell aggregations, possibly neurons or glial cells, and a homogenous eosinophilic area suggestive of extracellular matrix or pathological deposition. Scattered erythrocytes, both within and outside vessels, indicate potential hemorrhage or proteinaceous material accumulation. These features suggest a possible pathological process in the brain, though specific diagnosis requires further clinical correlation.",
+  "candidate_labels": [
+    "breast invasive carcinoma",
+    "colon adenocarcinoma",
+    "kidney renal clear cell carcinoma",
+    "lower-grade glioma",
+    "lung adenocarcinoma",
+    "lung squamous cell carcinoma",
+    "prostate adenocarcinoma",
+    "rectal adenocarcinoma"
+  ],
+  "evidence": [
+    {
+      "source_id": "PMID:26447895",
+      "title": "Various antibody clones of Napsin A, TTF-1, and p40 in non-small cell lung carcinoma",
+      "text": "This tissue-microarray study evaluated CK5, p63, and p40 as squamous markers and Napsin A and TTF-1 as lung adenocarcinoma markers. Reported performance varied by marker and antibody clone, and combining Napsin A with TTF-1 improved sensitivity.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/26447895/",
+      "year": "2016",
+      "score": 163.2797
+    },
+    {
+      "source_id": "PMID:26137020",
+      "title": "Immunostaining for TTF-1, Napsin A, p40, and cytokeratin 5 aids differential diagnosis of NSCLC",
+      "text": "The study compared marker combinations for separating lung adenocarcinoma from squamous cell carcinoma. TTF-1 and Napsin A supported adenocarcinoma, while p40 and CK5 supported squamous differentiation; the combined panel was more informative than a single stain.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/26137020/",
+      "year": "2015",
+      "score": 94.9538
+    },
+    {
+      "source_id": "PMC:7944528-SkinCancerMorphology",
+      "title": "Educational case: basal cell carcinoma and its histologic differential",
+      "text": "Basal cell carcinoma shows dermal islands of basophilic tumor cells with peripheral nuclear palisading, stromal retraction, and loose mucinous stroma. Cutaneous squamous cell carcinoma shows invasive islands of pleomorphic keratinocytes arising from the epidermis with prominent nucleoli and increased mitoses. Melanoma can show irregular nests and single pleomorphic pigmented melanocytes within the epidermis and dermis.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7944528/",
+      "year": "2021",
+      "score": 70.1601
+    },
+    {
+      "source_id": "PMID:22966403",
+      "title": "Value of napsin A and thyroid transcription factor-1 in the identification of primary lung adenocarcinoma",
+      "text": "In a cohort containing primary lung cancers and metastases, Napsin A and TTF-1 were frequently expressed in primary lung adenocarcinoma. The study also observed TTF-1 expression outside lung adenocarcinoma, supporting interpretation as a panel rather than as an isolated marker.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/22966403/",
+      "year": "2012",
+      "score": 49.9538
+    },
+    {
+      "source_id": "PMID:37676090",
+      "title": "Decision tree for pulmonary adenocarcinoma with mucinous features versus metastatic colorectal adenocarcinoma",
+      "text": "A decision tree using TTF-1, SATB2, CDX2, and CK7 was developed to distinguish primary pulmonary adenocarcinoma with mucinous features from metastatic colorectal adenocarcinoma. The validation results support using multiple markers and clinical context when assigning a primary site.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/37676090/",
+      "year": "2023",
+      "score": 31.6319
+    }
+  ],
+  "prompt_generation_request": "Extract two to four visually discriminative microscopic features for every candidate label.\n\nDE-IDENTIFIED REPORT\nThe image shows brain tissue with dense cell aggregations, possibly neurons or glial cells, and a homogenous eosinophilic area suggestive of extracellular matrix or pathological deposition. Scattered erythrocytes, both within and outside vessels, indicate potential hemorrhage or proteinaceous material accumulation. These features suggest a possible pathological process in the brain, though specific diagnosis requires further clinical correlation.\n\nCANDIDATE LABELS\n[\n  \"breast invasive carcinoma\",\n  \"colon adenocarcinoma\",\n  \"kidney renal clear cell carcinoma\",\n  \"lower-grade glioma\",\n  \"lung adenocarcinoma\",\n  \"lung squamous cell carcinoma\",\n  \"prostate adenocarcinoma\",\n  \"rectal adenocarcinoma\"\n]\n\nRETRIEVED LOCAL EVIDENCE\n[PMID:26447895] Various antibody clones of Napsin A, TTF-1, and p40 in non-small cell lung carcinoma (2016)\nThis tissue-microarray study evaluated CK5, p63, and p40 as squamous markers and Napsin A and TTF-1 as lung adenocarcinoma markers. Reported performance varied by marker and antibody clone, and combining Napsin A with TTF-1 improved sensitivity.\n\n[PMID:26137020] Immunostaining for TTF-1, Napsin A, p40, and cytokeratin 5 aids differential diagnosis of NSCLC (2015)\nThe study compared marker combinations for separating lung adenocarcinoma from squamous cell carcinoma. TTF-1 and Napsin A supported adenocarcinoma, while p40 and CK5 supported squamous differentiation; the combined panel was more informative than a single stain.\n\n[PMC:7944528-SkinCancerMorphology] Educational case: basal cell carcinoma and its histologic differential (2021)\nBasal cell carcinoma shows dermal islands of basophilic tumor cells with peripheral nuclear palisading, stromal retraction, and loose mucinous stroma. Cutaneous squamous cell carcinoma shows invasive islands of pleomorphic keratinocytes arising from the epidermis with prominent nucleoli and increased mitoses. Melanoma can show irregular nests and single pleomorphic pigmented melanocytes within the epidermis and dermis.\n\n[PMID:22966403] Value of napsin A and thyroid transcription factor-1 in the identification of primary lung adenocarcinoma (2012)\nIn a cohort containing primary lung cancers and metastases, Napsin A and TTF-1 were frequently expressed in primary lung adenocarcinoma. The study also observed TTF-1 expression outside lung adenocarcinoma, supporting interpretation as a panel rather than as an isolated marker.\n\n[PMID:37676090] Decision tree for pulmonary adenocarcinoma with mucinous features versus metastatic colorectal adenocarcinoma (2023)\nA decision tree using TTF-1, SATB2, CDX2, and CK7 was developed to distinguish primary pulmonary adenocarcinoma with mucinous features from metastatic colorectal adenocarcinoma. The validation results support using multiple markers and clinical context when assigning a primary site.\n\nKeep each feature phrase under 25 words, do not repeat the diagnosis label inside it, and retain every candidate label exactly as written. Return exactly:\n{\n  \"features\": {\n    \"exact candidate label\": \"short microscopic feature phrase\"\n  }\n}",
+  "raw_prompt_plan": "```json\n{\n  \"features\": {\n    \"breast invasive carcinoma\": \"irregular nests of malignant epithelial cells, desmoplastic stroma\",\n    \"colon adenocarcinoma\": \"irregular glandular structures, cribriform patterns, intracellular mucin\",\n    \"kidney renal clear cell carcinoma\": \"clear cytoplasm, prominent alveolar capillary network, distinct cell membranes\",\n    \"lower-grade glioma\": \"increased cellularity, nuclear atypia, fibrillary background\",\n    \"lung adenocarcinoma\": \"lepidic growth pattern, acinar structures, mucin production\",\n    \"lung squamous cell carcinoma\": \"keratin pearls, intercellular bridges, eosinophilic cytoplasm\",\n    \"prostate adenocarcinoma\": \"small crowded glands, absent basal cell layer, prominent nucleoli\",\n    \"rectal adenocarcinoma\": \"irregular glandular architecture, desmoplastic reaction, necrotic debris\"\n  }\n}\n```",
+  "parsed_prompt_plan": {
+    "features": {
+      "breast invasive carcinoma": "irregular nests of malignant epithelial cells, desmoplastic stroma",
+      "colon adenocarcinoma": "irregular glandular structures, cribriform patterns, intracellular mucin",
+      "kidney renal clear cell carcinoma": "clear cytoplasm, prominent alveolar capillary network, distinct cell membranes",
+      "lower-grade glioma": "increased cellularity, nuclear atypia, fibrillary background",
+      "lung adenocarcinoma": "lepidic growth pattern, acinar structures, mucin production",
+      "lung squamous cell carcinoma": "keratin pearls, intercellular bridges, eosinophilic cytoplasm",
+      "prostate adenocarcinoma": "small crowded glands, absent basal cell layer, prominent nucleoli",
+      "rectal adenocarcinoma": "irregular glandular architecture, desmoplastic reaction, necrotic debris"
+    }
+  },
+  "baseline_prompts": {
+    "breast invasive carcinoma": "a histopathology image showing breast invasive carcinoma",
+    "colon adenocarcinoma": "a histopathology image showing colon adenocarcinoma",
+    "kidney renal clear cell carcinoma": "a histopathology image showing kidney renal clear cell carcinoma",
+    "lower-grade glioma": "a histopathology image showing lower-grade glioma",
+    "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma",
+    "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma",
+    "prostate adenocarcinoma": "a histopathology image showing prostate adenocarcinoma",
+    "rectal adenocarcinoma": "a histopathology image showing rectal adenocarcinoma"
+  },
+  "enhanced_prompts": {
+    "breast invasive carcinoma": "breast invasive carcinoma with irregular nests of malignant epithelial cells, desmoplastic stroma",
+    "colon adenocarcinoma": "colon adenocarcinoma with irregular glandular structures, cribriform patterns, intracellular mucin",
+    "kidney renal clear cell carcinoma": "kidney renal clear cell carcinoma with clear cytoplasm, prominent alveolar capillary network, distinct cell membranes",
+    "lower-grade glioma": "lower-grade glioma with increased cellularity, nuclear atypia, fibrillary background",
+    "lung adenocarcinoma": "lung adenocarcinoma with lepidic growth pattern, acinar structures, mucin production",
+    "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, eosinophilic cytoplasm",
+    "prostate adenocarcinoma": "prostate adenocarcinoma with small crowded glands, absent basal cell layer, prominent nucleoli",
+    "rectal adenocarcinoma": "rectal adenocarcinoma with irregular glandular architecture, desmoplastic reaction, necrotic debris"
+  },
+  "model_results": {
+    "conch": {
+      "baseline": {
+        "label": "lower-grade glioma",
+        "probability": 0.172265
+      },
+      "enhanced": {
+        "label": "lower-grade glioma",
+        "probability": 0.141518
+      },
+      "timing_seconds": {
+        "baseline": 0.16365421599766705,
+        "enhanced": 0.13838611100800335
+      }
+    },
+    "musk": {
+      "baseline": {
+        "label": "lower-grade glioma",
+        "probability": 0.130412
+      },
+      "enhanced": {
+        "label": "lung squamous cell carcinoma",
+        "probability": 0.128857
+      },
+      "timing_seconds": {
+        "baseline": 0.19337338999321219,
+        "enhanced": 0.18045877499389462
+      }
+    },
+    "plip": {
+      "baseline": {
+        "label": "lower-grade glioma",
+        "probability": 0.130116
+      },
+      "enhanced": {
+        "label": "lower-grade glioma",
+        "probability": 0.130775
+      },
+      "timing_seconds": {
+        "baseline": 0.11097790200437885,
+        "enhanced": 0.11081458599073812
+      }
+    },
+    "quiltnet": {
+      "baseline": {
+        "label": "lower-grade glioma",
+        "probability": 0.127441
+      },
+      "enhanced": {
+        "label": "lower-grade glioma",
+        "probability": 0.126544
+      },
+      "timing_seconds": {
+        "baseline": 0.11090886199963279,
+        "enhanced": 0.10798832000000402
+      }
+    }
+  },
+  "review_request": "Review this research case.\n\nDE-IDENTIFIED REPORT\nThe image shows brain tissue with dense cell aggregations, possibly neurons or glial cells, and a homogenous eosinophilic area suggestive of extracellular matrix or pathological deposition. Scattered erythrocytes, both within and outside vessels, indicate potential hemorrhage or proteinaceous material accumulation. These features suggest a possible pathological process in the brain, though specific diagnosis requires further clinical correlation.\n\nCANDIDATE LABELS\n[\n  \"breast invasive carcinoma\",\n  \"colon adenocarcinoma\",\n  \"kidney renal clear cell carcinoma\",\n  \"lower-grade glioma\",\n  \"lung adenocarcinoma\",\n  \"lung squamous cell carcinoma\",\n  \"prostate adenocarcinoma\",\n  \"rectal adenocarcinoma\"\n]\n\nCASE-SPECIFIC PROMPTS\n{\n  \"breast invasive carcinoma\": \"breast invasive carcinoma with irregular nests of malignant epithelial cells, desmoplastic stroma\",\n  \"colon adenocarcinoma\": \"colon adenocarcinoma with irregular glandular structures, cribriform patterns, intracellular mucin\",\n  \"kidney renal clear cell carcinoma\": \"kidney renal clear cell carcinoma with clear cytoplasm, prominent alveolar capillary network, distinct cell membranes\",\n  \"lower-grade glioma\": \"lower-grade glioma with increased cellularity, nuclear atypia, fibrillary background\",\n  \"lung adenocarcinoma\": \"lung adenocarcinoma with lepidic growth pattern, acinar structures, mucin production\",\n  \"lung squamous cell carcinoma\": \"lung squamous cell carcinoma with keratin pearls, intercellular bridges, eosinophilic cytoplasm\",\n  \"prostate adenocarcinoma\": \"prostate adenocarcinoma with small crowded glands, absent basal cell layer, prominent nucleoli\",\n  \"rectal adenocarcinoma\": \"rectal adenocarcinoma with irregular glandular architecture, desmoplastic reaction, necrotic debris\"\n}\n\nVISION-MODEL OUTPUTS\nCONCH\nIMAGE-ONLY BASELINE: lower-grade glioma (returned score 0.172265)\nCASE-SPECIFIC LUMEN PROMPT: lower-grade glioma (returned score 0.141518)\nMUSK\nIMAGE-ONLY BASELINE: lower-grade glioma (returned score 0.130412)\nCASE-SPECIFIC LUMEN PROMPT: lung squamous cell carcinoma (returned score 0.128857)\nPLIP\nIMAGE-ONLY BASELINE: lower-grade glioma (returned score 0.130116)\nCASE-SPECIFIC LUMEN PROMPT: lower-grade glioma (returned score 0.130775)\nQUILTNET\nIMAGE-ONLY BASELINE: lower-grade glioma (returned score 0.127441)\nCASE-SPECIFIC LUMEN PROMPT: lower-grade glioma (returned score 0.126544)\n\nRETRIEVED LOCAL EVIDENCE\n[PMID:26447895] Various antibody clones of Napsin A, TTF-1, and p40 in non-small cell lung carcinoma (2016)\nThis tissue-microarray study evaluated CK5, p63, and p40 as squamous markers and Napsin A and TTF-1 as lung adenocarcinoma markers. Reported performance varied by marker and antibody clone, and combining Napsin A with TTF-1 improved sensitivity.\n\n[PMID:26137020] Immunostaining for TTF-1, Napsin A, p40, and cytokeratin 5 aids differential diagnosis of NSCLC (2015)\nThe study compared marker combinations for separating lung adenocarcinoma from squamous cell carcinoma. TTF-1 and Napsin A supported adenocarcinoma, while p40 and CK5 supported squamous differentiation; the combined panel was more informative than a single stain.\n\n[PMC:7944528-SkinCancerMorphology] Educational case: basal cell carcinoma and its histologic differential (2021)\nBasal cell carcinoma shows dermal islands of basophilic tumor cells with peripheral nuclear palisading, stromal retraction, and loose mucinous stroma. Cutaneous squamous cell carcinoma shows invasive islands of pleomorphic keratinocytes arising from the epidermis with prominent nucleoli and increased mitoses. Melanoma can show irregular nests and single pleomorphic pigmented melanocytes within the epidermis and dermis.\n\n[PMID:22966403] Value of napsin A and thyroid transcription factor-1 in the identification of primary lung adenocarcinoma (2012)\nIn a cohort containing primary lung cancers and metastases, Napsin A and TTF-1 were frequently expressed in primary lung adenocarcinoma. The study also observed TTF-1 expression outside lung adenocarcinoma, supporting interpretation as a panel rather than as an isolated marker.\n\n[PMID:37676090] Decision tree for pulmonary adenocarcinoma with mucinous features versus metastatic colorectal adenocarcinoma (2023)\nA decision tree using TTF-1, SATB2, CDX2, and CK7 was developed to distinguish primary pulmonary adenocarcinoma with mucinous features from metastatic colorectal adenocarcinoma. The validation results support using multiple markers and clinical context when assigning a primary site.\n\nReturn exactly this JSON object:\n{\n  \"assessment\": \"one concise research assessment\",\n  \"classification\": \"one exact candidate label or indeterminate\",\n  \"confidence\": 0.0,\n  \"rationale\": [\"2-4 short evidence-linked reasons using [source_id] notation\"],\n  \"discrepancies\": [\"conflicts or missing facts\"],\n  \"evidence_used\": [\"source_id\"],\n  \"recommended_review\": [\"specific human review or additional test, not treatment advice\"],\n  \"limitations\": [\"important limitations\"]\n}\nConfidence must be a number from 0 to 1 and must reflect both model uncertainty and evidence quality. The classification must be one exact candidate label or the word indeterminate.",
+  "raw_review": "",
+  "review": {
+    "assessment": "The vision models predominantly align with the de-identified report's description of brain tissue, though the report remains non-specific regarding a definitive diagnosis.",
+    "classification": "lower-grade glioma",
+    "confidence": 0.4,
+    "rationale": [
+      "The de-identified report explicitly identifies the tissue as 'brain tissue' with 'dense cell aggregations', which is anatomically consistent with the 'lower-grade glioma' label.",
+      "Four vision models (CONCH, PLIP, QUILTNET, and MUSK baseline) consistently identified 'lower-grade glioma' as the top candidate.",
+      "The report's mention of 'dense cell aggregations' and 'eosinophilic area' aligns with the case-specific prompt for glioma describing 'increased cellularity' and 'fibrillary background'."
+    ],
+    "discrepancies": [
+      "MUSK case-specific prompt output shifted to 'lung squamous cell carcinoma', contradicting the report's identification of brain tissue.",
+      "The de-identified report is descriptive and does not provide a definitive pathological diagnosis."
+    ],
+    "evidence_used": [],
+    "recommended_review": [
+      "Neuropathology review to differentiate between glioma and other brain pathologies based on the reported cell aggregations.",
+      "Immunohistochemical staining for GFAP or IDH1/2 to confirm glial origin."
+    ],
+    "limitations": [
+      "Retrieved literature focused on lung and skin cancers and provided no evidence relevant to brain tissue or gliomas.",
+      "Low model confidence scores (all < 0.2) indicate high uncertainty in the vision-model classifications."
+    ]
+  },
+  "final_classification": "lower-grade glioma",
+  "lumen_models": {
+    "prompt_generation": "gemma-4-31b-it",
+    "review": "gemma-4-31b-it"
+  },
+  "timing_seconds": {
+    "prompt_generation": 8.299368855005014,
+    "review": 17.216363365994766,
+    "total": 25.92719468899304
+  },
+  "notice": "Research prototype only. Not validated for clinical use or patient care."
+}

@@ -1,0 +1,200 @@
+{
+  "schema_version": 1,
+  "completed_at_utc": "2026-10-18T20:36:46.342539+00:00",
+  "manifest_sha256": "36c1fb243aa0286896979c1d8af471d3b20bc97fa96cfca74b0e6ae23bd8bf75",
+  "workflow_sha256": "f02d03d42389c531ad53ec96dfd4bf9b7967034ec94546c0e224fda81321c4dd",
+  "case_id": "c362b1ce-0af7-43a4-80f5-43d849262abc_6560_12384",
+  "wsi_id": "TCGA-55-8621-01Z-00-DX1.7C519007-D59D-432A-BF4D-23D14A1C8BB6",
+  "participant_id": "TCGA-55-8621",
+  "project_id": "TCGA-LUAD",
+  "ground_truth": "lung adenocarcinoma",
+  "image_file": "c362b1ce-0af7-43a4-80f5-43d849262abc_6560_12384.png",
+  "image_sha256": "729dfa60314ee00ab864f9a7aedbf022ca269ecda149247b6e279d63b5e1ab53",
+  "report_source": "PathGen generated caption used as a simulated case report",
+  "report_file": "c362b1ce-0af7-43a4-80f5-43d849262abc_6560_12384.txt",
+  "report_sha256": "1def076abcbafc9710a9363617a32ce4099922007b8ecd94cead0e44548959cc",
+  "report": "The lung tissue image exhibits pleomorphic cells with eosinophilic cytoplasm and hyperchromatic nuclei, dense cell clusters, mitotic figures, necrosis, and hemorrhage. Disrupted architecture indicates a malignant process, likely adenocarcinoma. Confirmation could come from TTF-1 and Napsin A immunostaining, commonly positive in lung adenocarcinoma.",
+  "candidate_labels": [
+    "breast invasive carcinoma",
+    "colon adenocarcinoma",
+    "kidney renal clear cell carcinoma",
+    "lower-grade glioma",
+    "lung adenocarcinoma",
+    "lung squamous cell carcinoma",
+    "prostate adenocarcinoma",
+    "rectal adenocarcinoma"
+  ],
+  "evidence": [
+    {
+      "source_id": "PMID:26447895",
+      "title": "Various antibody clones of Napsin A, TTF-1, and p40 in non-small cell lung carcinoma",
+      "text": "This tissue-microarray study evaluated CK5, p63, and p40 as squamous markers and Napsin A and TTF-1 as lung adenocarcinoma markers. Reported performance varied by marker and antibody clone, and combining Napsin A with TTF-1 improved sensitivity.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/26447895/",
+      "year": "2016",
+      "score": 275.5489
+    },
+    {
+      "source_id": "PMID:22966403",
+      "title": "Value of napsin A and thyroid transcription factor-1 in the identification of primary lung adenocarcinoma",
+      "text": "In a cohort containing primary lung cancers and metastases, Napsin A and TTF-1 were frequently expressed in primary lung adenocarcinoma. The study also observed TTF-1 expression outside lung adenocarcinoma, supporting interpretation as a panel rather than as an isolated marker.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/22966403/",
+      "year": "2012",
+      "score": 140.6616
+    },
+    {
+      "source_id": "PMID:26137020",
+      "title": "Immunostaining for TTF-1, Napsin A, p40, and cytokeratin 5 aids differential diagnosis of NSCLC",
+      "text": "The study compared marker combinations for separating lung adenocarcinoma from squamous cell carcinoma. TTF-1 and Napsin A supported adenocarcinoma, while p40 and CK5 supported squamous differentiation; the combined panel was more informative than a single stain.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/26137020/",
+      "year": "2015",
+      "score": 129.0402
+    },
+    {
+      "source_id": "PMC:7944528-SkinCancerMorphology",
+      "title": "Educational case: basal cell carcinoma and its histologic differential",
+      "text": "Basal cell carcinoma shows dermal islands of basophilic tumor cells with peripheral nuclear palisading, stromal retraction, and loose mucinous stroma. Cutaneous squamous cell carcinoma shows invasive islands of pleomorphic keratinocytes arising from the epidermis with prominent nucleoli and increased mitoses. Melanoma can show irregular nests and single pleomorphic pigmented melanocytes within the epidermis and dermis.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7944528/",
+      "year": "2021",
+      "score": 75.8044
+    },
+    {
+      "source_id": "PMC:3418538-ColorectalMorphology",
+      "title": "Colorectal carcinoma: pathologic aspects",
+      "text": "Colorectal adenocarcinoma commonly forms malignant glands. Invasion can be accompanied by desmoplastic stroma, and glandular lumina frequently contain characteristic dirty necrosis. Benign colonic mucosa retains orderly crypt architecture and mature goblet cells without dysplasia.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3418538/",
+      "year": "2012",
+      "score": 60.3049
+    }
+  ],
+  "prompt_generation_request": "Extract two to four visually discriminative microscopic features for every candidate label.\n\nDE-IDENTIFIED REPORT\nThe lung tissue image exhibits pleomorphic cells with eosinophilic cytoplasm and hyperchromatic nuclei, dense cell clusters, mitotic figures, necrosis, and hemorrhage. Disrupted architecture indicates a malignant process, likely adenocarcinoma. Confirmation could come from TTF-1 and Napsin A immunostaining, commonly positive in lung adenocarcinoma.\n\nCANDIDATE LABELS\n[\n  \"breast invasive carcinoma\",\n  \"colon adenocarcinoma\",\n  \"kidney renal clear cell carcinoma\",\n  \"lower-grade glioma\",\n  \"lung adenocarcinoma\",\n  \"lung squamous cell carcinoma\",\n  \"prostate adenocarcinoma\",\n  \"rectal adenocarcinoma\"\n]\n\nRETRIEVED LOCAL EVIDENCE\n[PMID:26447895] Various antibody clones of Napsin A, TTF-1, and p40 in non-small cell lung carcinoma (2016)\nThis tissue-microarray study evaluated CK5, p63, and p40 as squamous markers and Napsin A and TTF-1 as lung adenocarcinoma markers. Reported performance varied by marker and antibody clone, and combining Napsin A with TTF-1 improved sensitivity.\n\n[PMID:22966403] Value of napsin A and thyroid transcription factor-1 in the identification of primary lung adenocarcinoma (2012)\nIn a cohort containing primary lung cancers and metastases, Napsin A and TTF-1 were frequently expressed in primary lung adenocarcinoma. The study also observed TTF-1 expression outside lung adenocarcinoma, supporting interpretation as a panel rather than as an isolated marker.\n\n[PMID:26137020] Immunostaining for TTF-1, Napsin A, p40, and cytokeratin 5 aids differential diagnosis of NSCLC (2015)\nThe study compared marker combinations for separating lung adenocarcinoma from squamous cell carcinoma. TTF-1 and Napsin A supported adenocarcinoma, while p40 and CK5 supported squamous differentiation; the combined panel was more informative than a single stain.\n\n[PMC:7944528-SkinCancerMorphology] Educational case: basal cell carcinoma and its histologic differential (2021)\nBasal cell carcinoma shows dermal islands of basophilic tumor cells with peripheral nuclear palisading, stromal retraction, and loose mucinous stroma. Cutaneous squamous cell carcinoma shows invasive islands of pleomorphic keratinocytes arising from the epidermis with prominent nucleoli and increased mitoses. Melanoma can show irregular nests and single pleomorphic pigmented melanocytes within the epidermis and dermis.\n\n[PMC:3418538-ColorectalMorphology] Colorectal carcinoma: pathologic aspects (2012)\nColorectal adenocarcinoma commonly forms malignant glands. Invasion can be accompanied by desmoplastic stroma, and glandular lumina frequently contain characteristic dirty necrosis. Benign colonic mucosa retains orderly crypt architecture and mature goblet cells without dysplasia.\n\nKeep each feature phrase under 25 words, do not repeat the diagnosis label inside it, and retain every candidate label exactly as written. Return exactly:\n{\n  \"features\": {\n    \"exact candidate label\": \"short microscopic feature phrase\"\n  }\n}",
+  "raw_prompt_plan": "```json\n{\n  \"features\": {\n    \"breast invasive carcinoma\": \"irregular nests, desmoplastic stroma, pleomorphic nuclei\",\n    \"colon adenocarcinoma\": \"malignant glands, dirty necrosis, desmoplastic stroma\",\n    \"kidney renal clear cell carcinoma\": \"clear cytoplasm, prominent alveolar vasculature, nested growth\",\n    \"lower-grade glioma\": \"hypercellular glia, fibrillary background, nuclear atypia\",\n    \"lung adenocarcinoma\": \"glandular formation, pleomorphic cells, eosinophilic cytoplasm\",\n    \"lung squamous cell carcinoma\": \"keratin pearls, intercellular bridges, eosinophilic cytoplasm\",\n    \"prostate adenocarcinoma\": \"small crowded glands, absent basal cells, prominent nucleoli\",\n    \"rectal adenocarcinoma\": \"malignant glands, dirty necrosis, invasive growth\"\n  }\n}\n```",
+  "parsed_prompt_plan": {
+    "features": {
+      "breast invasive carcinoma": "irregular nests, desmoplastic stroma, pleomorphic nuclei",
+      "colon adenocarcinoma": "malignant glands, dirty necrosis, desmoplastic stroma",
+      "kidney renal clear cell carcinoma": "clear cytoplasm, prominent alveolar vasculature, nested growth",
+      "lower-grade glioma": "hypercellular glia, fibrillary background, nuclear atypia",
+      "lung adenocarcinoma": "glandular formation, pleomorphic cells, eosinophilic cytoplasm",
+      "lung squamous cell carcinoma": "keratin pearls, intercellular bridges, eosinophilic cytoplasm",
+      "prostate adenocarcinoma": "small crowded glands, absent basal cells, prominent nucleoli",
+      "rectal adenocarcinoma": "malignant glands, dirty necrosis, invasive growth"
+    }
+  },
+  "baseline_prompts": {
+    "breast invasive carcinoma": "a histopathology image showing breast invasive carcinoma",
+    "colon adenocarcinoma": "a histopathology image showing colon adenocarcinoma",
+    "kidney renal clear cell carcinoma": "a histopathology image showing kidney renal clear cell carcinoma",
+    "lower-grade glioma": "a histopathology image showing lower-grade glioma",
+    "lung adenocarcinoma": "a histopathology image showing lung adenocarcinoma",
+    "lung squamous cell carcinoma": "a histopathology image showing lung squamous cell carcinoma",
+    "prostate adenocarcinoma": "a histopathology image showing prostate adenocarcinoma",
+    "rectal adenocarcinoma": "a histopathology image showing rectal adenocarcinoma"
+  },
+  "enhanced_prompts": {
+    "breast invasive carcinoma": "breast invasive carcinoma with irregular nests, desmoplastic stroma, pleomorphic nuclei",
+    "colon adenocarcinoma": "colon adenocarcinoma with malignant glands, dirty necrosis, desmoplastic stroma",
+    "kidney renal clear cell carcinoma": "kidney renal clear cell carcinoma with clear cytoplasm, prominent alveolar vasculature, nested growth",
+    "lower-grade glioma": "lower-grade glioma with hypercellular glia, fibrillary background, nuclear atypia",
+    "lung adenocarcinoma": "lung adenocarcinoma with glandular formation, pleomorphic cells, eosinophilic cytoplasm",
+    "lung squamous cell carcinoma": "lung squamous cell carcinoma with keratin pearls, intercellular bridges, eosinophilic cytoplasm",
+    "prostate adenocarcinoma": "prostate adenocarcinoma with small crowded glands, absent basal cells, prominent nucleoli",
+    "rectal adenocarcinoma": "rectal adenocarcinoma with malignant glands, dirty necrosis, invasive growth"
+  },
+  "model_results": {
+    "conch": {
+      "baseline": {
+        "label": "lung adenocarcinoma",
+        "probability": 0.160607
+      },
+      "enhanced": {
+        "label": "breast invasive carcinoma",
+        "probability": 0.170341
+      },
+      "timing_seconds": {
+        "baseline": 0.15757785199093632,
+        "enhanced": 0.1409953870024765
+      }
+    },
+    "musk": {
+      "baseline": {
+        "label": "lung squamous cell carcinoma",
+        "probability": 0.130607
+      },
+      "enhanced": {
+        "label": "lung adenocarcinoma",
+        "probability": 0.13427
+      },
+      "timing_seconds": {
+        "baseline": 0.27402358000108507,
+        "enhanced": 0.18521270099154208
+      }
+    },
+    "plip": {
+      "baseline": {
+        "label": "kidney renal clear cell carcinoma",
+        "probability": 0.129472
+      },
+      "enhanced": {
+        "label": "kidney renal clear cell carcinoma",
+        "probability": 0.132496
+      },
+      "timing_seconds": {
+        "baseline": 0.11929810300352983,
+        "enhanced": 0.09881204999692272
+      }
+    },
+    "quiltnet": {
+      "baseline": {
+        "label": "lung squamous cell carcinoma",
+        "probability": 0.126853
+      },
+      "enhanced": {
+        "label": "lung adenocarcinoma",
+        "probability": 0.128958
+      },
+      "timing_seconds": {
+        "baseline": 0.09644669400586281,
+        "enhanced": 0.11234276799950749
+      }
+    }
+  },
+  "review_request": "Review this research case.\n\nDE-IDENTIFIED REPORT\nThe lung tissue image exhibits pleomorphic cells with eosinophilic cytoplasm and hyperchromatic nuclei, dense cell clusters, mitotic figures, necrosis, and hemorrhage. Disrupted architecture indicates a malignant process, likely adenocarcinoma. Confirmation could come from TTF-1 and Napsin A immunostaining, commonly positive in lung adenocarcinoma.\n\nCANDIDATE LABELS\n[\n  \"breast invasive carcinoma\",\n  \"colon adenocarcinoma\",\n  \"kidney renal clear cell carcinoma\",\n  \"lower-grade glioma\",\n  \"lung adenocarcinoma\",\n  \"lung squamous cell carcinoma\",\n  \"prostate adenocarcinoma\",\n  \"rectal adenocarcinoma\"\n]\n\nCASE-SPECIFIC PROMPTS\n{\n  \"breast invasive carcinoma\": \"breast invasive carcinoma with irregular nests, desmoplastic stroma, pleomorphic nuclei\",\n  \"colon adenocarcinoma\": \"colon adenocarcinoma with malignant glands, dirty necrosis, desmoplastic stroma\",\n  \"kidney renal clear cell carcinoma\": \"kidney renal clear cell carcinoma with clear cytoplasm, prominent alveolar vasculature, nested growth\",\n  \"lower-grade glioma\": \"lower-grade glioma with hypercellular glia, fibrillary background, nuclear atypia\",\n  \"lung adenocarcinoma\": \"lung adenocarcinoma with glandular formation, pleomorphic cells, eosinophilic cytoplasm\",\n  \"lung squamous cell carcinoma\": \"lung squamous cell carcinoma with keratin pearls, intercellular bridges, eosinophilic cytoplasm\",\n  \"prostate adenocarcinoma\": \"prostate adenocarcinoma with small crowded glands, absent basal cells, prominent nucleoli\",\n  \"rectal adenocarcinoma\": \"rectal adenocarcinoma with malignant glands, dirty necrosis, invasive growth\"\n}\n\nVISION-MODEL OUTPUTS\nCONCH\nIMAGE-ONLY BASELINE: lung adenocarcinoma (returned score 0.160607)\nCASE-SPECIFIC LUMEN PROMPT: breast invasive carcinoma (returned score 0.170341)\nMUSK\nIMAGE-ONLY BASELINE: lung squamous cell carcinoma (returned score 0.130607)\nCASE-SPECIFIC LUMEN PROMPT: lung adenocarcinoma (returned score 0.134270)\nPLIP\nIMAGE-ONLY BASELINE: kidney renal clear cell carcinoma (returned score 0.129472)\nCASE-SPECIFIC LUMEN PROMPT: kidney renal clear cell carcinoma (returned score 0.132496)\nQUILTNET\nIMAGE-ONLY BASELINE: lung squamous cell carcinoma (returned score 0.126853)\nCASE-SPECIFIC LUMEN PROMPT: lung adenocarcinoma (returned score 0.128958)\n\nRETRIEVED LOCAL EVIDENCE\n[PMID:26447895] Various antibody clones of Napsin A, TTF-1, and p40 in non-small cell lung carcinoma (2016)\nThis tissue-microarray study evaluated CK5, p63, and p40 as squamous markers and Napsin A and TTF-1 as lung adenocarcinoma markers. Reported performance varied by marker and antibody clone, and combining Napsin A with TTF-1 improved sensitivity.\n\n[PMID:22966403] Value of napsin A and thyroid transcription factor-1 in the identification of primary lung adenocarcinoma (2012)\nIn a cohort containing primary lung cancers and metastases, Napsin A and TTF-1 were frequently expressed in primary lung adenocarcinoma. The study also observed TTF-1 expression outside lung adenocarcinoma, supporting interpretation as a panel rather than as an isolated marker.\n\n[PMID:26137020] Immunostaining for TTF-1, Napsin A, p40, and cytokeratin 5 aids differential diagnosis of NSCLC (2015)\nThe study compared marker combinations for separating lung adenocarcinoma from squamous cell carcinoma. TTF-1 and Napsin A supported adenocarcinoma, while p40 and CK5 supported squamous differentiation; the combined panel was more informative than a single stain.\n\n[PMC:7944528-SkinCancerMorphology] Educational case: basal cell carcinoma and its histologic differential (2021)\nBasal cell carcinoma shows dermal islands of basophilic tumor cells with peripheral nuclear palisading, stromal retraction, and loose mucinous stroma. Cutaneous squamous cell carcinoma shows invasive islands of pleomorphic keratinocytes arising from the epidermis with prominent nucleoli and increased mitoses. Melanoma can show irregular nests and single pleomorphic pigmented melanocytes within the epidermis and dermis.\n\n[PMC:3418538-ColorectalMorphology] Colorectal carcinoma: pathologic aspects (2012)\nColorectal adenocarcinoma commonly forms malignant glands. Invasion can be accompanied by desmoplastic stroma, and glandular lumina frequently contain characteristic dirty necrosis. Benign colonic mucosa retains orderly crypt architecture and mature goblet cells without dysplasia.\n\nReturn exactly this JSON object:\n{\n  \"assessment\": \"one concise research assessment\",\n  \"classification\": \"one exact candidate label or indeterminate\",\n  \"confidence\": 0.0,\n  \"rationale\": [\"2-4 short evidence-linked reasons using [source_id] notation\"],\n  \"discrepancies\": [\"conflicts or missing facts\"],\n  \"evidence_used\": [\"source_id\"],\n  \"recommended_review\": [\"specific human review or additional test, not treatment advice\"],\n  \"limitations\": [\"important limitations\"]\n}\nConfidence must be a number from 0 to 1 and must reflect both model uncertainty and evidence quality. The classification must be one exact candidate label or the word indeterminate.",
+  "raw_review": "",
+  "review": {
+    "assessment": "The pathology report describes a malignant process in lung tissue with features consistent with adenocarcinoma, supported by the suggestion of TTF-1 and Napsin A staining, though vision models show significant disagreement.",
+    "classification": "lung adenocarcinoma",
+    "confidence": 0.7,
+    "rationale": [
+      "The de-identified report explicitly identifies the tissue as lung and suggests a likely diagnosis of adenocarcinoma based on pleomorphic cells and eosinophilic cytoplasm.",
+      "The report's recommendation for TTF-1 and Napsin A immunostaining aligns with established literature for identifying primary lung adenocarcinoma [PMID:26447895, PMID:22966403, PMID:26137020].",
+      "Multiple vision models (CONCH, MUSK, QUILTNET) identified lung adenocarcinoma or lung squamous cell carcinoma, though scores are low."
+    ],
+    "discrepancies": [
+      "Vision models are highly inconsistent: PLIP suggests kidney renal clear cell carcinoma, and CONCH (prompted) suggests breast invasive carcinoma.",
+      "MUSK and QUILTNET (baseline) suggest squamous cell carcinoma, which contradicts the report's adenocarcinoma preference."
+    ],
+    "evidence_used": [
+      "PMID:26447895",
+      "PMID:22966403",
+      "PMID:26137020"
+    ],
+    "recommended_review": [
+      "Perform TTF-1 and Napsin A immunostaining to confirm adenocarcinoma vs. p40/CK5 for squamous differentiation."
+    ],
+    "limitations": [
+      "Low confidence scores across all vision models indicate poor image-to-label alignment.",
+      "Final diagnosis is pending the immunostaining mentioned in the report."
+    ]
+  },
+  "final_classification": "lung adenocarcinoma",
+  "lumen_models": {
+    "prompt_generation": "gemma-4-31b-it",
+    "review": "gemma-4-31b-it"
+  },
+  "timing_seconds": {
+    "prompt_generation": 8.41478156899393,
+    "review": 18.678147768994677,
+    "total": 27.7239612830017
+  },
+  "notice": "Research prototype only. Not validated for clinical use or patient care."
+}

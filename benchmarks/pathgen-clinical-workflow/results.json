@@ -1,0 +1,3477 @@
+{
+  "schema_version": 1,
+  "completed_at_utc": "2026-10-18T21:49:37.309917+00:00",
+  "manifest_sha256": "36c1fb243aa0286896979c1d8af471d3b20bc97fa96cfca74b0e6ae23bd8bf75",
+  "workflow_sha256": "f02d03d42389c531ad53ec96dfd4bf9b7967034ec94546c0e224fda81321c4dd",
+  "workflow_configuration": {
+    "schema_version": 1,
+    "candidate_labels": [
+      "breast invasive carcinoma",
+      "colon adenocarcinoma",
+      "kidney renal clear cell carcinoma",
+      "lower-grade glioma",
+      "lung adenocarcinoma",
+      "lung squamous cell carcinoma",
+      "prostate adenocarcinoma",
+      "rectal adenocarcinoma"
+    ],
+    "models": [
+      "conch",
+      "musk",
+      "plip",
+      "quiltnet"
+    ],
+    "top_k": 5,
+    "lumen_model": "gemma-4-31b-it",
+    "corpus_path": "/projects/bfqi/osirais/histoprompt/data/corpus.jsonl",
+    "corpus_sha256": "c2ee9b8e5a4ae91709d0a233a145948cb53b9ac09a16b1a911db35370363c979",
+    "source_sha256": {
+      "scripts/run_pathgen_clinical_workflow.py": "a93841f2323ec99d54827f700e53838f03b834a549599ebe46c6099e83d86b6c",
+      "histoprompt/clinical_workflow.py": "7dc8dba1c372c67cf822bf9d84a107ac4c87434cf1e2f374f1bb63c57813dc26",
+      "histoprompt/hosted_backend.py": "a435ee18693adb3e206ee18bc0f7561b153c49105996686f433003f4c70d162f",
+      "histoprompt/lumen.py": "947b28b32572951d62d56501f554dd0a750fefab42262cd59cce8916de1bdb30",
+      "histoprompt/pathgen_benchmark.py": "c274e10b2fdd91479212ee85c26c2a46333c5389e3783fbd396b18514877d0a8",
+      "histoprompt/pathgen_workflow.py": "de691289dfbcb6a8f1c8880914bbc7d7a3a711d8be49eb1d5173c884905b1f59",
+      "histoprompt/rag.py": "0fd60da11fd8ed6da594506b00c1ed600649bd62e39ac0fd1cef9a7384f542c0"
+    }
+  },
+  "report_source": "PathGen generated captions used as simulated case reports",
+  "candidate_labels": [
+    "breast invasive carcinoma",
+    "colon adenocarcinoma",
+    "kidney renal clear cell carcinoma",
+    "lower-grade glioma",
+    "lung adenocarcinoma",
+    "lung squamous cell carcinoma",
+    "prostate adenocarcinoma",
+    "rectal adenocarcinoma"
+  ],
+  "models": [
+    "conch",
+    "musk",
+    "plip",
+    "quiltnet"
+  ],
+  "coverage": {
+    "selected_cases": 2141,
+    "source_cases": 2141,
+    "complete_source_coverage": true
+  },
+  "wall_time_seconds": 7165.919665424008,
+  "summary": {
+    "cases": 2141,
+    "models": {
+      "conch": {
+        "baseline": {
+          "correct": 1091,
+          "total": 2141,
+          "accuracy": 0.5095749649696404,
+          "macro_project_accuracy": 0.5160394462738438,
+          "per_project": {
+            "TCGA-BRCA": {
+              "correct": 56,
+              "total": 216,
+              "accuracy": 0.25925925925925924
+            },
+            "TCGA-COAD": {
+              "correct": 77,
+              "total": 422,
+              "accuracy": 0.18246445497630331
+            },
+            "TCGA-KIRC": {
+              "correct": 276,
+              "total": 438,
+              "accuracy": 0.6301369863013698
+            },
+            "TCGA-LGG": {
+              "correct": 201,
+              "total": 204,
+              "accuracy": 0.9852941176470589
+            },
+            "TCGA-LUAD": {
+              "correct": 181,
+              "total": 234,
+              "accuracy": 0.7735042735042735
+            },
+            "TCGA-LUSC": {
+              "correct": 163,
+              "total": 263,
+              "accuracy": 0.6197718631178707
+            },
+            "TCGA-PRAD": {
+              "correct": 125,
+              "total": 208,
+              "accuracy": 0.6009615384615384
+            },
+            "TCGA-READ": {
+              "correct": 12,
+              "total": 156,
+              "accuracy": 0.07692307692307693
+            }
+          },
+          "per_slide": {
+            "TCGA-22-5474-01Z-00-DX1.8736FB24-7E65-4ACB-9325-382D7F864F62": {
+              "correct": 163,
+              "total": 263,
+              "accuracy": 0.6197718631178707
+            },
+            "TCGA-55-8621-01Z-00-DX1.7C519007-D59D-432A-BF4D-23D14A1C8BB6": {
+              "correct": 181,
+              "total": 234,
+              "accuracy": 0.7735042735042735
+            },
+            "TCGA-AA-3844-01Z-00-DX1.bf88ce1f-0601-40c8-813e-4e3df51bd2f0": {
+              "correct": 31,
+              "total": 182,
+              "accuracy": 0.17032967032967034
+            },
+            "TCGA-AH-6547-01Z-00-DX1.73040c3e-8219-4d21-88f2-613218d32297": {
+              "correct": 12,
+              "total": 156,
+              "accuracy": 0.07692307692307693
+            },
+            "TCGA-BP-4770-01Z-00-DX1.d8a5f4f9-c07d-4465-823f-6c4b3759b4ad": {
+              "correct": 141,
+              "total": 236,
+              "accuracy": 0.597457627118644
+            },
+            "TCGA-CJ-6033-01Z-00-DX1.5DD2C8F4-50E1-47C3-B5D4-058AE04095DD": {
+              "correct": 135,
+              "total": 202,
+              "accuracy": 0.6683168316831684
+            },
+            "TCGA-CM-4746-01Z-00-DX1.c83b9795-bf45-4100-9052-a7e485e0f770": {
+              "correct": 46,
+              "total": 240,
+              "accuracy": 0.19166666666666668
+            },
+            "TCGA-D8-A1JM-01Z-00-DX1.3CD15BC8-08B3-4BEE-9FD7-A8BEED33268E": {
+              "correct": 56,
+              "total": 216,
+              "accuracy": 0.25925925925925924
+            },
+            "TCGA-H9-A6BY-01Z-00-DX1.304BEB19-3F0A-4676-B077-A4650F5C84A5": {
+              "correct": 125,
+              "total": 208,
+              "accuracy": 0.6009615384615384
+            },
+            "TCGA-HT-8018-01Z-00-DX1.1C1BBFD4-8C4A-4A6F-8D64-70A4F41814AF": {
+              "correct": 201,
+              "total": 204,
+              "accuracy": 0.9852941176470589
+            }
+          },
+          "confusion": [
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 56
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 48
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 14
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 1
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 83
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 14
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 3
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 77
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 10
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 62
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 48
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 59
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 115
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 48
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 33
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 276
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 27
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 17
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 79
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 5
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 1
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 1
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "lower-grade glioma",
+              "count": 201
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "lung adenocarcinoma",
+              "count": 1
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 1
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 4
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 5
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 181
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 42
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 2
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 8
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 1
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 1
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 87
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 163
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 3
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 1
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 5
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 3
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 67
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 125
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 7
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 53
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 2
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 3
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 14
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 38
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 34
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 12
+            }
+          ]
+        },
+        "enhanced": {
+          "correct": 983,
+          "total": 2141,
+          "accuracy": 0.4591312470808034,
+          "macro_project_accuracy": 0.4666952926219866,
+          "per_project": {
+            "TCGA-BRCA": {
+              "correct": 75,
+              "total": 216,
+              "accuracy": 0.3472222222222222
+            },
+            "TCGA-COAD": {
+              "correct": 197,
+              "total": 422,
+              "accuracy": 0.466824644549763
+            },
+            "TCGA-KIRC": {
+              "correct": 165,
+              "total": 438,
+              "accuracy": 0.3767123287671233
+            },
+            "TCGA-LGG": {
+              "correct": 181,
+              "total": 204,
+              "accuracy": 0.8872549019607843
+            },
+            "TCGA-LUAD": {
+              "correct": 154,
+              "total": 234,
+              "accuracy": 0.6581196581196581
+            },
+            "TCGA-LUSC": {
+              "correct": 44,
+              "total": 263,
+              "accuracy": 0.16730038022813687
+            },
+            "TCGA-PRAD": {
+              "correct": 150,
+              "total": 208,
+              "accuracy": 0.7211538461538461
+            },
+            "TCGA-READ": {
+              "correct": 17,
+              "total": 156,
+              "accuracy": 0.10897435897435898
+            }
+          },
+          "per_slide": {
+            "TCGA-22-5474-01Z-00-DX1.8736FB24-7E65-4ACB-9325-382D7F864F62": {
+              "correct": 44,
+              "total": 263,
+              "accuracy": 0.16730038022813687
+            },
+            "TCGA-55-8621-01Z-00-DX1.7C519007-D59D-432A-BF4D-23D14A1C8BB6": {
+              "correct": 154,
+              "total": 234,
+              "accuracy": 0.6581196581196581
+            },
+            "TCGA-AA-3844-01Z-00-DX1.bf88ce1f-0601-40c8-813e-4e3df51bd2f0": {
+              "correct": 64,
+              "total": 182,
+              "accuracy": 0.3516483516483517
+            },
+            "TCGA-AH-6547-01Z-00-DX1.73040c3e-8219-4d21-88f2-613218d32297": {
+              "correct": 17,
+              "total": 156,
+              "accuracy": 0.10897435897435898
+            },
+            "TCGA-BP-4770-01Z-00-DX1.d8a5f4f9-c07d-4465-823f-6c4b3759b4ad": {
+              "correct": 93,
+              "total": 236,
+              "accuracy": 0.3940677966101695
+            },
+            "TCGA-CJ-6033-01Z-00-DX1.5DD2C8F4-50E1-47C3-B5D4-058AE04095DD": {
+              "correct": 72,
+              "total": 202,
+              "accuracy": 0.3564356435643564
+            },
+            "TCGA-CM-4746-01Z-00-DX1.c83b9795-bf45-4100-9052-a7e485e0f770": {
+              "correct": 133,
+              "total": 240,
+              "accuracy": 0.5541666666666667
+            },
+            "TCGA-D8-A1JM-01Z-00-DX1.3CD15BC8-08B3-4BEE-9FD7-A8BEED33268E": {
+              "correct": 75,
+              "total": 216,
+              "accuracy": 0.3472222222222222
+            },
+            "TCGA-H9-A6BY-01Z-00-DX1.304BEB19-3F0A-4676-B077-A4650F5C84A5": {
+              "correct": 150,
+              "total": 208,
+              "accuracy": 0.7211538461538461
+            },
+            "TCGA-HT-8018-01Z-00-DX1.1C1BBFD4-8C4A-4A6F-8D64-70A4F41814AF": {
+              "correct": 181,
+              "total": 204,
+              "accuracy": 0.8872549019607843
+            }
+          },
+          "confusion": [
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 75
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 105
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 17
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 1
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 5
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 8
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 3
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 2
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 16
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 197
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 7
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 16
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 9
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 1
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 126
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 50
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 23
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 66
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 165
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 9
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 65
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 11
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 85
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 14
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "colon adenocarcinoma",
+              "count": 5
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "lower-grade glioma",
+              "count": 181
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "lung adenocarcinoma",
+              "count": 3
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 5
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 9
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 1
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 67
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 3
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 2
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 154
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 3
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 4
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 1
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 65
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 34
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 5
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 3
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 86
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 44
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 24
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 2
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 55
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 3
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 150
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 7
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 121
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 1
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 1
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 3
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 2
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 4
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 17
+            }
+          ]
+        },
+        "paired": {
+          "fixed": 305,
+          "broken": 413,
+          "unchanged_correct": 678,
+          "unchanged_wrong": 745,
+          "per_project": {
+            "TCGA-BRCA": {
+              "fixed": 43,
+              "broken": 24,
+              "unchanged_correct": 32,
+              "unchanged_wrong": 117
+            },
+            "TCGA-COAD": {
+              "fixed": 141,
+              "broken": 21,
+              "unchanged_correct": 56,
+              "unchanged_wrong": 204
+            },
+            "TCGA-KIRC": {
+              "fixed": 19,
+              "broken": 130,
+              "unchanged_correct": 146,
+              "unchanged_wrong": 143
+            },
+            "TCGA-LGG": {
+              "fixed": 1,
+              "broken": 21,
+              "unchanged_correct": 180,
+              "unchanged_wrong": 2
+            },
+            "TCGA-LUAD": {
+              "fixed": 20,
+              "broken": 47,
+              "unchanged_correct": 134,
+              "unchanged_wrong": 33
+            },
+            "TCGA-LUSC": {
+              "fixed": 1,
+              "broken": 120,
+              "unchanged_correct": 43,
+              "unchanged_wrong": 99
+            },
+            "TCGA-PRAD": {
+              "fixed": 67,
+              "broken": 42,
+              "unchanged_correct": 83,
+              "unchanged_wrong": 16
+            },
+            "TCGA-READ": {
+              "fixed": 13,
+              "broken": 8,
+              "unchanged_correct": 4,
+              "unchanged_wrong": 131
+            }
+          }
+        }
+      },
+      "musk": {
+        "baseline": {
+          "correct": 868,
+          "total": 2141,
+          "accuracy": 0.40541802895843065,
+          "macro_project_accuracy": 0.4465991396806151,
+          "per_project": {
+            "TCGA-BRCA": {
+              "correct": 58,
+              "total": 216,
+              "accuracy": 0.26851851851851855
+            },
+            "TCGA-COAD": {
+              "correct": 129,
+              "total": 422,
+              "accuracy": 0.3056872037914692
+            },
+            "TCGA-KIRC": {
+              "correct": 89,
+              "total": 438,
+              "accuracy": 0.20319634703196346
+            },
+            "TCGA-LGG": {
+              "correct": 174,
+              "total": 204,
+              "accuracy": 0.8529411764705882
+            },
+            "TCGA-LUAD": {
+              "correct": 127,
+              "total": 234,
+              "accuracy": 0.5427350427350427
+            },
+            "TCGA-LUSC": {
+              "correct": 138,
+              "total": 263,
+              "accuracy": 0.5247148288973384
+            },
+            "TCGA-PRAD": {
+              "correct": 66,
+              "total": 208,
+              "accuracy": 0.3173076923076923
+            },
+            "TCGA-READ": {
+              "correct": 87,
+              "total": 156,
+              "accuracy": 0.5576923076923077
+            }
+          },
+          "per_slide": {
+            "TCGA-22-5474-01Z-00-DX1.8736FB24-7E65-4ACB-9325-382D7F864F62": {
+              "correct": 138,
+              "total": 263,
+              "accuracy": 0.5247148288973384
+            },
+            "TCGA-55-8621-01Z-00-DX1.7C519007-D59D-432A-BF4D-23D14A1C8BB6": {
+              "correct": 127,
+              "total": 234,
+              "accuracy": 0.5427350427350427
+            },
+            "TCGA-AA-3844-01Z-00-DX1.bf88ce1f-0601-40c8-813e-4e3df51bd2f0": {
+              "correct": 46,
+              "total": 182,
+              "accuracy": 0.25274725274725274
+            },
+            "TCGA-AH-6547-01Z-00-DX1.73040c3e-8219-4d21-88f2-613218d32297": {
+              "correct": 87,
+              "total": 156,
+              "accuracy": 0.5576923076923077
+            },
+            "TCGA-BP-4770-01Z-00-DX1.d8a5f4f9-c07d-4465-823f-6c4b3759b4ad": {
+              "correct": 44,
+              "total": 236,
+              "accuracy": 0.1864406779661017
+            },
+            "TCGA-CJ-6033-01Z-00-DX1.5DD2C8F4-50E1-47C3-B5D4-058AE04095DD": {
+              "correct": 45,
+              "total": 202,
+              "accuracy": 0.22277227722772278
+            },
+            "TCGA-CM-4746-01Z-00-DX1.c83b9795-bf45-4100-9052-a7e485e0f770": {
+              "correct": 83,
+              "total": 240,
+              "accuracy": 0.3458333333333333
+            },
+            "TCGA-D8-A1JM-01Z-00-DX1.3CD15BC8-08B3-4BEE-9FD7-A8BEED33268E": {
+              "correct": 58,
+              "total": 216,
+              "accuracy": 0.26851851851851855
+            },
+            "TCGA-H9-A6BY-01Z-00-DX1.304BEB19-3F0A-4676-B077-A4650F5C84A5": {
+              "correct": 66,
+              "total": 208,
+              "accuracy": 0.3173076923076923
+            },
+            "TCGA-HT-8018-01Z-00-DX1.1C1BBFD4-8C4A-4A6F-8D64-70A4F41814AF": {
+              "correct": 174,
+              "total": 204,
+              "accuracy": 0.8529411764705882
+            }
+          },
+          "confusion": [
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 58
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 2
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 17
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 5
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 132
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 1
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 1
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 11
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 129
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 10
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 29
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 34
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 35
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 4
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 170
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 77
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 34
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 89
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 20
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 39
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 124
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 40
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 15
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "colon adenocarcinoma",
+              "count": 3
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 3
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "lower-grade glioma",
+              "count": 174
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "lung adenocarcinoma",
+              "count": 3
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 20
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 1
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 4
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 1
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 1
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 1
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 127
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 98
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 2
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 14
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 5
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 93
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 138
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 2
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 11
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 14
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 22
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 13
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 20
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 15
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 66
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 58
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 58
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 5
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 6
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 87
+            }
+          ]
+        },
+        "enhanced": {
+          "correct": 871,
+          "total": 2141,
+          "accuracy": 0.40681924334423164,
+          "macro_project_accuracy": 0.45210288632572015,
+          "per_project": {
+            "TCGA-BRCA": {
+              "correct": 39,
+              "total": 216,
+              "accuracy": 0.18055555555555555
+            },
+            "TCGA-COAD": {
+              "correct": 77,
+              "total": 422,
+              "accuracy": 0.18246445497630331
+            },
+            "TCGA-KIRC": {
+              "correct": 136,
+              "total": 438,
+              "accuracy": 0.3105022831050228
+            },
+            "TCGA-LGG": {
+              "correct": 165,
+              "total": 204,
+              "accuracy": 0.8088235294117647
+            },
+            "TCGA-LUAD": {
+              "correct": 124,
+              "total": 234,
+              "accuracy": 0.5299145299145299
+            },
+            "TCGA-LUSC": {
+              "correct": 159,
+              "total": 263,
+              "accuracy": 0.6045627376425855
+            },
+            "TCGA-PRAD": {
+              "correct": 60,
+              "total": 208,
+              "accuracy": 0.28846153846153844
+            },
+            "TCGA-READ": {
+              "correct": 111,
+              "total": 156,
+              "accuracy": 0.7115384615384616
+            }
+          },
+          "per_slide": {
+            "TCGA-22-5474-01Z-00-DX1.8736FB24-7E65-4ACB-9325-382D7F864F62": {
+              "correct": 159,
+              "total": 263,
+              "accuracy": 0.6045627376425855
+            },
+            "TCGA-55-8621-01Z-00-DX1.7C519007-D59D-432A-BF4D-23D14A1C8BB6": {
+              "correct": 124,
+              "total": 234,
+              "accuracy": 0.5299145299145299
+            },
+            "TCGA-AA-3844-01Z-00-DX1.bf88ce1f-0601-40c8-813e-4e3df51bd2f0": {
+              "correct": 46,
+              "total": 182,
+              "accuracy": 0.25274725274725274
+            },
+            "TCGA-AH-6547-01Z-00-DX1.73040c3e-8219-4d21-88f2-613218d32297": {
+              "correct": 111,
+              "total": 156,
+              "accuracy": 0.7115384615384616
+            },
+            "TCGA-BP-4770-01Z-00-DX1.d8a5f4f9-c07d-4465-823f-6c4b3759b4ad": {
+              "correct": 73,
+              "total": 236,
+              "accuracy": 0.3093220338983051
+            },
+            "TCGA-CJ-6033-01Z-00-DX1.5DD2C8F4-50E1-47C3-B5D4-058AE04095DD": {
+              "correct": 63,
+              "total": 202,
+              "accuracy": 0.3118811881188119
+            },
+            "TCGA-CM-4746-01Z-00-DX1.c83b9795-bf45-4100-9052-a7e485e0f770": {
+              "correct": 31,
+              "total": 240,
+              "accuracy": 0.12916666666666668
+            },
+            "TCGA-D8-A1JM-01Z-00-DX1.3CD15BC8-08B3-4BEE-9FD7-A8BEED33268E": {
+              "correct": 39,
+              "total": 216,
+              "accuracy": 0.18055555555555555
+            },
+            "TCGA-H9-A6BY-01Z-00-DX1.304BEB19-3F0A-4676-B077-A4650F5C84A5": {
+              "correct": 60,
+              "total": 208,
+              "accuracy": 0.28846153846153844
+            },
+            "TCGA-HT-8018-01Z-00-DX1.1C1BBFD4-8C4A-4A6F-8D64-70A4F41814AF": {
+              "correct": 165,
+              "total": 204,
+              "accuracy": 0.8088235294117647
+            }
+          },
+          "confusion": [
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 39
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 2
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 29
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 1
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 136
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 9
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 13
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 77
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 16
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 29
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 32
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 35
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 9
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 211
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 48
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 8
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 136
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 19
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 34
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 124
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 29
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 40
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "colon adenocarcinoma",
+              "count": 3
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 7
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "lower-grade glioma",
+              "count": 165
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "lung adenocarcinoma",
+              "count": 1
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 19
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 9
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 6
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 1
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 4
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 1
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 124
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 93
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 2
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 3
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 14
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 8
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 1
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 64
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 159
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 2
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 15
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 26
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 5
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 16
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 8
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 11
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 60
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 82
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 34
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 1
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 1
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 8
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 1
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 111
+            }
+          ]
+        },
+        "paired": {
+          "fixed": 199,
+          "broken": 196,
+          "unchanged_correct": 672,
+          "unchanged_wrong": 1074,
+          "per_project": {
+            "TCGA-BRCA": {
+              "fixed": 6,
+              "broken": 25,
+              "unchanged_correct": 33,
+              "unchanged_wrong": 152
+            },
+            "TCGA-COAD": {
+              "fixed": 30,
+              "broken": 82,
+              "unchanged_correct": 47,
+              "unchanged_wrong": 263
+            },
+            "TCGA-KIRC": {
+              "fixed": 60,
+              "broken": 13,
+              "unchanged_correct": 76,
+              "unchanged_wrong": 289
+            },
+            "TCGA-LGG": {
+              "fixed": 0,
+              "broken": 9,
+              "unchanged_correct": 165,
+              "unchanged_wrong": 30
+            },
+            "TCGA-LUAD": {
+              "fixed": 15,
+              "broken": 18,
+              "unchanged_correct": 109,
+              "unchanged_wrong": 92
+            },
+            "TCGA-LUSC": {
+              "fixed": 34,
+              "broken": 13,
+              "unchanged_correct": 125,
+              "unchanged_wrong": 91
+            },
+            "TCGA-PRAD": {
+              "fixed": 12,
+              "broken": 18,
+              "unchanged_correct": 48,
+              "unchanged_wrong": 130
+            },
+            "TCGA-READ": {
+              "fixed": 42,
+              "broken": 18,
+              "unchanged_correct": 69,
+              "unchanged_wrong": 27
+            }
+          }
+        }
+      },
+      "plip": {
+        "baseline": {
+          "correct": 904,
+          "total": 2141,
+          "accuracy": 0.422232601588043,
+          "macro_project_accuracy": 0.40062740856151546,
+          "per_project": {
+            "TCGA-BRCA": {
+              "correct": 2,
+              "total": 216,
+              "accuracy": 0.009259259259259259
+            },
+            "TCGA-COAD": {
+              "correct": 163,
+              "total": 422,
+              "accuracy": 0.3862559241706161
+            },
+            "TCGA-KIRC": {
+              "correct": 262,
+              "total": 438,
+              "accuracy": 0.5981735159817352
+            },
+            "TCGA-LGG": {
+              "correct": 191,
+              "total": 204,
+              "accuracy": 0.9362745098039216
+            },
+            "TCGA-LUAD": {
+              "correct": 9,
+              "total": 234,
+              "accuracy": 0.038461538461538464
+            },
+            "TCGA-LUSC": {
+              "correct": 101,
+              "total": 263,
+              "accuracy": 0.3840304182509506
+            },
+            "TCGA-PRAD": {
+              "correct": 172,
+              "total": 208,
+              "accuracy": 0.8269230769230769
+            },
+            "TCGA-READ": {
+              "correct": 4,
+              "total": 156,
+              "accuracy": 0.02564102564102564
+            }
+          },
+          "per_slide": {
+            "TCGA-22-5474-01Z-00-DX1.8736FB24-7E65-4ACB-9325-382D7F864F62": {
+              "correct": 101,
+              "total": 263,
+              "accuracy": 0.3840304182509506
+            },
+            "TCGA-55-8621-01Z-00-DX1.7C519007-D59D-432A-BF4D-23D14A1C8BB6": {
+              "correct": 9,
+              "total": 234,
+              "accuracy": 0.038461538461538464
+            },
+            "TCGA-AA-3844-01Z-00-DX1.bf88ce1f-0601-40c8-813e-4e3df51bd2f0": {
+              "correct": 72,
+              "total": 182,
+              "accuracy": 0.3956043956043956
+            },
+            "TCGA-AH-6547-01Z-00-DX1.73040c3e-8219-4d21-88f2-613218d32297": {
+              "correct": 4,
+              "total": 156,
+              "accuracy": 0.02564102564102564
+            },
+            "TCGA-BP-4770-01Z-00-DX1.d8a5f4f9-c07d-4465-823f-6c4b3759b4ad": {
+              "correct": 178,
+              "total": 236,
+              "accuracy": 0.7542372881355932
+            },
+            "TCGA-CJ-6033-01Z-00-DX1.5DD2C8F4-50E1-47C3-B5D4-058AE04095DD": {
+              "correct": 84,
+              "total": 202,
+              "accuracy": 0.4158415841584158
+            },
+            "TCGA-CM-4746-01Z-00-DX1.c83b9795-bf45-4100-9052-a7e485e0f770": {
+              "correct": 91,
+              "total": 240,
+              "accuracy": 0.37916666666666665
+            },
+            "TCGA-D8-A1JM-01Z-00-DX1.3CD15BC8-08B3-4BEE-9FD7-A8BEED33268E": {
+              "correct": 2,
+              "total": 216,
+              "accuracy": 0.009259259259259259
+            },
+            "TCGA-H9-A6BY-01Z-00-DX1.304BEB19-3F0A-4676-B077-A4650F5C84A5": {
+              "correct": 172,
+              "total": 208,
+              "accuracy": 0.8269230769230769
+            },
+            "TCGA-HT-8018-01Z-00-DX1.1C1BBFD4-8C4A-4A6F-8D64-70A4F41814AF": {
+              "correct": 191,
+              "total": 204,
+              "accuracy": 0.9362745098039216
+            }
+          },
+          "confusion": [
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 2
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 1
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 125
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 39
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 49
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 4
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 163
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 51
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 63
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 10
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 32
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 94
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 5
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 38
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 3
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 262
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 97
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 4
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 17
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 16
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 1
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 10
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "lower-grade glioma",
+              "count": 191
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 3
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 3
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 170
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 37
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 9
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 8
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 7
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 22
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 19
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 44
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 29
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 13
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 101
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 35
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 4
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 1
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 30
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 1
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 172
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 2
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 119
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 11
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 6
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 5
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 6
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 3
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 4
+            }
+          ]
+        },
+        "enhanced": {
+          "correct": 558,
+          "total": 2141,
+          "accuracy": 0.2606258757589911,
+          "macro_project_accuracy": 0.2688633941668057,
+          "per_project": {
+            "TCGA-BRCA": {
+              "correct": 11,
+              "total": 216,
+              "accuracy": 0.05092592592592592
+            },
+            "TCGA-COAD": {
+              "correct": 10,
+              "total": 422,
+              "accuracy": 0.023696682464454975
+            },
+            "TCGA-KIRC": {
+              "correct": 180,
+              "total": 438,
+              "accuracy": 0.410958904109589
+            },
+            "TCGA-LGG": {
+              "correct": 184,
+              "total": 204,
+              "accuracy": 0.9019607843137255
+            },
+            "TCGA-LUAD": {
+              "correct": 7,
+              "total": 234,
+              "accuracy": 0.029914529914529916
+            },
+            "TCGA-LUSC": {
+              "correct": 85,
+              "total": 263,
+              "accuracy": 0.3231939163498099
+            },
+            "TCGA-PRAD": {
+              "correct": 68,
+              "total": 208,
+              "accuracy": 0.3269230769230769
+            },
+            "TCGA-READ": {
+              "correct": 13,
+              "total": 156,
+              "accuracy": 0.08333333333333333
+            }
+          },
+          "per_slide": {
+            "TCGA-22-5474-01Z-00-DX1.8736FB24-7E65-4ACB-9325-382D7F864F62": {
+              "correct": 85,
+              "total": 263,
+              "accuracy": 0.3231939163498099
+            },
+            "TCGA-55-8621-01Z-00-DX1.7C519007-D59D-432A-BF4D-23D14A1C8BB6": {
+              "correct": 7,
+              "total": 234,
+              "accuracy": 0.029914529914529916
+            },
+            "TCGA-AA-3844-01Z-00-DX1.bf88ce1f-0601-40c8-813e-4e3df51bd2f0": {
+              "correct": 1,
+              "total": 182,
+              "accuracy": 0.005494505494505495
+            },
+            "TCGA-AH-6547-01Z-00-DX1.73040c3e-8219-4d21-88f2-613218d32297": {
+              "correct": 13,
+              "total": 156,
+              "accuracy": 0.08333333333333333
+            },
+            "TCGA-BP-4770-01Z-00-DX1.d8a5f4f9-c07d-4465-823f-6c4b3759b4ad": {
+              "correct": 131,
+              "total": 236,
+              "accuracy": 0.5550847457627118
+            },
+            "TCGA-CJ-6033-01Z-00-DX1.5DD2C8F4-50E1-47C3-B5D4-058AE04095DD": {
+              "correct": 49,
+              "total": 202,
+              "accuracy": 0.24257425742574257
+            },
+            "TCGA-CM-4746-01Z-00-DX1.c83b9795-bf45-4100-9052-a7e485e0f770": {
+              "correct": 9,
+              "total": 240,
+              "accuracy": 0.0375
+            },
+            "TCGA-D8-A1JM-01Z-00-DX1.3CD15BC8-08B3-4BEE-9FD7-A8BEED33268E": {
+              "correct": 11,
+              "total": 216,
+              "accuracy": 0.05092592592592592
+            },
+            "TCGA-H9-A6BY-01Z-00-DX1.304BEB19-3F0A-4676-B077-A4650F5C84A5": {
+              "correct": 68,
+              "total": 208,
+              "accuracy": 0.3269230769230769
+            },
+            "TCGA-HT-8018-01Z-00-DX1.1C1BBFD4-8C4A-4A6F-8D64-70A4F41814AF": {
+              "correct": 184,
+              "total": 204,
+              "accuracy": 0.9019607843137255
+            }
+          },
+          "confusion": [
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 11
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 79
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 12
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 113
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 1
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 45
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 10
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 10
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 18
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 20
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 59
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 258
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 2
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 91
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 3
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 180
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 26
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 3
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 65
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 66
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 4
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "breast invasive carcinoma",
+              "count": 8
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "colon adenocarcinoma",
+              "count": 2
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 7
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "lower-grade glioma",
+              "count": 184
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "lung adenocarcinoma",
+              "count": 1
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 1
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 1
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 33
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 126
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 11
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 7
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 48
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 8
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 1
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 88
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 7
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 2
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 6
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 85
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 74
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 1
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 125
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 3
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 4
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 2
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 5
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 68
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 1
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 13
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 3
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 4
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 9
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 22
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 92
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 13
+            }
+          ]
+        },
+        "paired": {
+          "fixed": 76,
+          "broken": 422,
+          "unchanged_correct": 482,
+          "unchanged_wrong": 1161,
+          "per_project": {
+            "TCGA-BRCA": {
+              "fixed": 11,
+              "broken": 2,
+              "unchanged_correct": 0,
+              "unchanged_wrong": 203
+            },
+            "TCGA-COAD": {
+              "fixed": 6,
+              "broken": 159,
+              "unchanged_correct": 4,
+              "unchanged_wrong": 253
+            },
+            "TCGA-KIRC": {
+              "fixed": 18,
+              "broken": 100,
+              "unchanged_correct": 162,
+              "unchanged_wrong": 158
+            },
+            "TCGA-LGG": {
+              "fixed": 0,
+              "broken": 7,
+              "unchanged_correct": 184,
+              "unchanged_wrong": 13
+            },
+            "TCGA-LUAD": {
+              "fixed": 4,
+              "broken": 6,
+              "unchanged_correct": 3,
+              "unchanged_wrong": 221
+            },
+            "TCGA-LUSC": {
+              "fixed": 24,
+              "broken": 40,
+              "unchanged_correct": 61,
+              "unchanged_wrong": 138
+            },
+            "TCGA-PRAD": {
+              "fixed": 1,
+              "broken": 105,
+              "unchanged_correct": 67,
+              "unchanged_wrong": 35
+            },
+            "TCGA-READ": {
+              "fixed": 12,
+              "broken": 3,
+              "unchanged_correct": 1,
+              "unchanged_wrong": 140
+            }
+          }
+        }
+      },
+      "quiltnet": {
+        "baseline": {
+          "correct": 695,
+          "total": 2141,
+          "accuracy": 0.3246146660439047,
+          "macro_project_accuracy": 0.41811946073823236,
+          "per_project": {
+            "TCGA-BRCA": {
+              "correct": 25,
+              "total": 216,
+              "accuracy": 0.11574074074074074
+            },
+            "TCGA-COAD": {
+              "correct": 15,
+              "total": 422,
+              "accuracy": 0.035545023696682464
+            },
+            "TCGA-KIRC": {
+              "correct": 37,
+              "total": 438,
+              "accuracy": 0.08447488584474885
+            },
+            "TCGA-LGG": {
+              "correct": 191,
+              "total": 204,
+              "accuracy": 0.9362745098039216
+            },
+            "TCGA-LUAD": {
+              "correct": 163,
+              "total": 234,
+              "accuracy": 0.6965811965811965
+            },
+            "TCGA-LUSC": {
+              "correct": 6,
+              "total": 263,
+              "accuracy": 0.022813688212927757
+            },
+            "TCGA-PRAD": {
+              "correct": 125,
+              "total": 208,
+              "accuracy": 0.6009615384615384
+            },
+            "TCGA-READ": {
+              "correct": 133,
+              "total": 156,
+              "accuracy": 0.8525641025641025
+            }
+          },
+          "per_slide": {
+            "TCGA-22-5474-01Z-00-DX1.8736FB24-7E65-4ACB-9325-382D7F864F62": {
+              "correct": 6,
+              "total": 263,
+              "accuracy": 0.022813688212927757
+            },
+            "TCGA-55-8621-01Z-00-DX1.7C519007-D59D-432A-BF4D-23D14A1C8BB6": {
+              "correct": 163,
+              "total": 234,
+              "accuracy": 0.6965811965811965
+            },
+            "TCGA-AA-3844-01Z-00-DX1.bf88ce1f-0601-40c8-813e-4e3df51bd2f0": {
+              "correct": 5,
+              "total": 182,
+              "accuracy": 0.027472527472527472
+            },
+            "TCGA-AH-6547-01Z-00-DX1.73040c3e-8219-4d21-88f2-613218d32297": {
+              "correct": 133,
+              "total": 156,
+              "accuracy": 0.8525641025641025
+            },
+            "TCGA-BP-4770-01Z-00-DX1.d8a5f4f9-c07d-4465-823f-6c4b3759b4ad": {
+              "correct": 28,
+              "total": 236,
+              "accuracy": 0.11864406779661017
+            },
+            "TCGA-CJ-6033-01Z-00-DX1.5DD2C8F4-50E1-47C3-B5D4-058AE04095DD": {
+              "correct": 9,
+              "total": 202,
+              "accuracy": 0.04455445544554455
+            },
+            "TCGA-CM-4746-01Z-00-DX1.c83b9795-bf45-4100-9052-a7e485e0f770": {
+              "correct": 10,
+              "total": 240,
+              "accuracy": 0.041666666666666664
+            },
+            "TCGA-D8-A1JM-01Z-00-DX1.3CD15BC8-08B3-4BEE-9FD7-A8BEED33268E": {
+              "correct": 25,
+              "total": 216,
+              "accuracy": 0.11574074074074074
+            },
+            "TCGA-H9-A6BY-01Z-00-DX1.304BEB19-3F0A-4676-B077-A4650F5C84A5": {
+              "correct": 125,
+              "total": 208,
+              "accuracy": 0.6009615384615384
+            },
+            "TCGA-HT-8018-01Z-00-DX1.1C1BBFD4-8C4A-4A6F-8D64-70A4F41814AF": {
+              "correct": 191,
+              "total": 204,
+              "accuracy": 0.9362745098039216
+            }
+          },
+          "confusion": [
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 25
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 13
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 18
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 11
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 39
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 101
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 4
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 5
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 28
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 15
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 30
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 41
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 19
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 2
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 21
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 266
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 97
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 37
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 148
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 106
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 5
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 19
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 26
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "breast invasive carcinoma",
+              "count": 1
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "lower-grade glioma",
+              "count": 191
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "lung adenocarcinoma",
+              "count": 5
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 3
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 4
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 15
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 2
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 163
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 41
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 2
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 11
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 45
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 19
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 109
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 6
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 7
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 77
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 64
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 1
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 1
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 2
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 1
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 125
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 14
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 5
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 8
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 8
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 2
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 133
+            }
+          ]
+        },
+        "enhanced": {
+          "correct": 729,
+          "total": 2141,
+          "accuracy": 0.3404950957496497,
+          "macro_project_accuracy": 0.3911932175353668,
+          "per_project": {
+            "TCGA-BRCA": {
+              "correct": 77,
+              "total": 216,
+              "accuracy": 0.35648148148148145
+            },
+            "TCGA-COAD": {
+              "correct": 119,
+              "total": 422,
+              "accuracy": 0.28199052132701424
+            },
+            "TCGA-KIRC": {
+              "correct": 62,
+              "total": 438,
+              "accuracy": 0.1415525114155251
+            },
+            "TCGA-LGG": {
+              "correct": 177,
+              "total": 204,
+              "accuracy": 0.8676470588235294
+            },
+            "TCGA-LUAD": {
+              "correct": 67,
+              "total": 234,
+              "accuracy": 0.2863247863247863
+            },
+            "TCGA-LUSC": {
+              "correct": 43,
+              "total": 263,
+              "accuracy": 0.1634980988593156
+            },
+            "TCGA-PRAD": {
+              "correct": 92,
+              "total": 208,
+              "accuracy": 0.4423076923076923
+            },
+            "TCGA-READ": {
+              "correct": 92,
+              "total": 156,
+              "accuracy": 0.5897435897435898
+            }
+          },
+          "per_slide": {
+            "TCGA-22-5474-01Z-00-DX1.8736FB24-7E65-4ACB-9325-382D7F864F62": {
+              "correct": 43,
+              "total": 263,
+              "accuracy": 0.1634980988593156
+            },
+            "TCGA-55-8621-01Z-00-DX1.7C519007-D59D-432A-BF4D-23D14A1C8BB6": {
+              "correct": 67,
+              "total": 234,
+              "accuracy": 0.2863247863247863
+            },
+            "TCGA-AA-3844-01Z-00-DX1.bf88ce1f-0601-40c8-813e-4e3df51bd2f0": {
+              "correct": 63,
+              "total": 182,
+              "accuracy": 0.34615384615384615
+            },
+            "TCGA-AH-6547-01Z-00-DX1.73040c3e-8219-4d21-88f2-613218d32297": {
+              "correct": 92,
+              "total": 156,
+              "accuracy": 0.5897435897435898
+            },
+            "TCGA-BP-4770-01Z-00-DX1.d8a5f4f9-c07d-4465-823f-6c4b3759b4ad": {
+              "correct": 49,
+              "total": 236,
+              "accuracy": 0.2076271186440678
+            },
+            "TCGA-CJ-6033-01Z-00-DX1.5DD2C8F4-50E1-47C3-B5D4-058AE04095DD": {
+              "correct": 13,
+              "total": 202,
+              "accuracy": 0.06435643564356436
+            },
+            "TCGA-CM-4746-01Z-00-DX1.c83b9795-bf45-4100-9052-a7e485e0f770": {
+              "correct": 56,
+              "total": 240,
+              "accuracy": 0.23333333333333334
+            },
+            "TCGA-D8-A1JM-01Z-00-DX1.3CD15BC8-08B3-4BEE-9FD7-A8BEED33268E": {
+              "correct": 77,
+              "total": 216,
+              "accuracy": 0.35648148148148145
+            },
+            "TCGA-H9-A6BY-01Z-00-DX1.304BEB19-3F0A-4676-B077-A4650F5C84A5": {
+              "correct": 92,
+              "total": 208,
+              "accuracy": 0.4423076923076923
+            },
+            "TCGA-HT-8018-01Z-00-DX1.1C1BBFD4-8C4A-4A6F-8D64-70A4F41814AF": {
+              "correct": 177,
+              "total": 204,
+              "accuracy": 0.8676470588235294
+            }
+          },
+          "confusion": [
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 77
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 34
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 41
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 1
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 4
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 57
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 1
+            },
+            {
+              "truth": "breast invasive carcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 1
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 34
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 119
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 29
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 36
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 12
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 11
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 59
+            },
+            {
+              "truth": "colon adenocarcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 122
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 45
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 48
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 62
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 104
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 86
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 44
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 7
+            },
+            {
+              "truth": "kidney renal clear cell carcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 42
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "breast invasive carcinoma",
+              "count": 1
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "colon adenocarcinoma",
+              "count": 11
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 7
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "lower-grade glioma",
+              "count": 177
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 2
+            },
+            {
+              "truth": "lower-grade glioma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 6
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 37
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 8
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 6
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 13
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 67
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 93
+            },
+            {
+              "truth": "lung adenocarcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 10
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 28
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 42
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "kidney renal clear cell carcinoma",
+              "count": 14
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 21
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 48
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 43
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 6
+            },
+            {
+              "truth": "lung squamous cell carcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 61
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 81
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 15
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 9
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 2
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "prostate adenocarcinoma",
+              "count": 92
+            },
+            {
+              "truth": "prostate adenocarcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 9
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "breast invasive carcinoma",
+              "count": 8
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "colon adenocarcinoma",
+              "count": 35
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "lower-grade glioma",
+              "count": 1
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "lung adenocarcinoma",
+              "count": 15
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "lung squamous cell carcinoma",
+              "count": 5
+            },
+            {
+              "truth": "rectal adenocarcinoma",
+              "prediction": "rectal adenocarcinoma",
+              "count": 92
+            }
+          ]
+        },
+        "paired": {
+          "fixed": 288,
+          "broken": 254,
+          "unchanged_correct": 441,
+          "unchanged_wrong": 1158,
+          "per_project": {
+            "TCGA-BRCA": {
+              "fixed": 59,
+              "broken": 7,
+              "unchanged_correct": 18,
+              "unchanged_wrong": 132
+            },
+            "TCGA-COAD": {
+              "fixed": 109,
+              "broken": 5,
+              "unchanged_correct": 10,
+              "unchanged_wrong": 298
+            },
+            "TCGA-KIRC": {
+              "fixed": 38,
+              "broken": 13,
+              "unchanged_correct": 24,
+              "unchanged_wrong": 363
+            },
+            "TCGA-LGG": {
+              "fixed": 1,
+              "broken": 15,
+              "unchanged_correct": 176,
+              "unchanged_wrong": 12
+            },
+            "TCGA-LUAD": {
+              "fixed": 11,
+              "broken": 107,
+              "unchanged_correct": 56,
+              "unchanged_wrong": 60
+            },
+            "TCGA-LUSC": {
+              "fixed": 39,
+              "broken": 2,
+              "unchanged_correct": 4,
+              "unchanged_wrong": 218
+            },
+            "TCGA-PRAD": {
+              "fixed": 25,
+              "broken": 58,
+              "unchanged_correct": 67,
+              "unchanged_wrong": 58
+            },
+            "TCGA-READ": {
+              "fixed": 6,
+              "broken": 47,
+              "unchanged_correct": 86,
+              "unchanged_wrong": 17
+            }
+          }
+        }
+      }
+    },
+    "final_review": {
+      "correct": 609,
+      "total": 2141,
+      "accuracy": 0.2844465203176086,
+      "macro_project_accuracy": 0.29833059401730394,
+      "per_project": {
+        "TCGA-BRCA": {
+          "correct": 147,
+          "total": 216,
+          "accuracy": 0.6805555555555556
+        },
+        "TCGA-COAD": {
+          "correct": 98,
+          "total": 422,
+          "accuracy": 0.23222748815165878
+        },
+        "TCGA-KIRC": {
+          "correct": 131,
+          "total": 438,
+          "accuracy": 0.2990867579908676
+        },
+        "TCGA-LGG": {
+          "correct": 68,
+          "total": 204,
+          "accuracy": 0.3333333333333333
+        },
+        "TCGA-LUAD": {
+          "correct": 20,
+          "total": 234,
+          "accuracy": 0.08547008547008547
+        },
+        "TCGA-LUSC": {
+          "correct": 10,
+          "total": 263,
+          "accuracy": 0.03802281368821293
+        },
+        "TCGA-PRAD": {
+          "correct": 92,
+          "total": 208,
+          "accuracy": 0.4423076923076923
+        },
+        "TCGA-READ": {
+          "correct": 43,
+          "total": 156,
+          "accuracy": 0.27564102564102566
+        }
+      },
+      "per_slide": {
+        "TCGA-22-5474-01Z-00-DX1.8736FB24-7E65-4ACB-9325-382D7F864F62": {
+          "correct": 10,
+          "total": 263,
+          "accuracy": 0.03802281368821293
+        },
+        "TCGA-55-8621-01Z-00-DX1.7C519007-D59D-432A-BF4D-23D14A1C8BB6": {
+          "correct": 20,
+          "total": 234,
+          "accuracy": 0.08547008547008547
+        },
+        "TCGA-AA-3844-01Z-00-DX1.bf88ce1f-0601-40c8-813e-4e3df51bd2f0": {
+          "correct": 47,
+          "total": 182,
+          "accuracy": 0.25824175824175827
+        },
+        "TCGA-AH-6547-01Z-00-DX1.73040c3e-8219-4d21-88f2-613218d32297": {
+          "correct": 43,
+          "total": 156,
+          "accuracy": 0.27564102564102566
+        },
+        "TCGA-BP-4770-01Z-00-DX1.d8a5f4f9-c07d-4465-823f-6c4b3759b4ad": {
+          "correct": 72,
+          "total": 236,
+          "accuracy": 0.3050847457627119
+        },
+        "TCGA-CJ-6033-01Z-00-DX1.5DD2C8F4-50E1-47C3-B5D4-058AE04095DD": {
+          "correct": 59,
+          "total": 202,
+          "accuracy": 0.29207920792079206
+        },
+        "TCGA-CM-4746-01Z-00-DX1.c83b9795-bf45-4100-9052-a7e485e0f770": {
+          "correct": 51,
+          "total": 240,
+          "accuracy": 0.2125
+        },
+        "TCGA-D8-A1JM-01Z-00-DX1.3CD15BC8-08B3-4BEE-9FD7-A8BEED33268E": {
+          "correct": 147,
+          "total": 216,
+          "accuracy": 0.6805555555555556
+        },
+        "TCGA-H9-A6BY-01Z-00-DX1.304BEB19-3F0A-4676-B077-A4650F5C84A5": {
+          "correct": 92,
+          "total": 208,
+          "accuracy": 0.4423076923076923
+        },
+        "TCGA-HT-8018-01Z-00-DX1.1C1BBFD4-8C4A-4A6F-8D64-70A4F41814AF": {
+          "correct": 68,
+          "total": 204,
+          "accuracy": 0.3333333333333333
+        }
+      },
+      "confusion": [
+        {
+          "truth": "breast invasive carcinoma",
+          "prediction": "breast invasive carcinoma",
+          "count": 147
+        },
+        {
+          "truth": "breast invasive carcinoma",
+          "prediction": "indeterminate",
+          "count": 67
+        },
+        {
+          "truth": "breast invasive carcinoma",
+          "prediction": "kidney renal clear cell carcinoma",
+          "count": 1
+        },
+        {
+          "truth": "breast invasive carcinoma",
+          "prediction": "lung squamous cell carcinoma",
+          "count": 1
+        },
+        {
+          "truth": "colon adenocarcinoma",
+          "prediction": "colon adenocarcinoma",
+          "count": 98
+        },
+        {
+          "truth": "colon adenocarcinoma",
+          "prediction": "indeterminate",
+          "count": 318
+        },
+        {
+          "truth": "colon adenocarcinoma",
+          "prediction": "rectal adenocarcinoma",
+          "count": 6
+        },
+        {
+          "truth": "kidney renal clear cell carcinoma",
+          "prediction": "indeterminate",
+          "count": 306
+        },
+        {
+          "truth": "kidney renal clear cell carcinoma",
+          "prediction": "kidney renal clear cell carcinoma",
+          "count": 131
+        },
+        {
+          "truth": "kidney renal clear cell carcinoma",
+          "prediction": "lung squamous cell carcinoma",
+          "count": 1
+        },
+        {
+          "truth": "lower-grade glioma",
+          "prediction": "indeterminate",
+          "count": 136
+        },
+        {
+          "truth": "lower-grade glioma",
+          "prediction": "lower-grade glioma",
+          "count": 68
+        },
+        {
+          "truth": "lung adenocarcinoma",
+          "prediction": "indeterminate",
+          "count": 212
+        },
+        {
+          "truth": "lung adenocarcinoma",
+          "prediction": "lung adenocarcinoma",
+          "count": 20
+        },
+        {
+          "truth": "lung adenocarcinoma",
+          "prediction": "lung squamous cell carcinoma",
+          "count": 2
+        },
+        {
+          "truth": "lung squamous cell carcinoma",
+          "prediction": "indeterminate",
+          "count": 236
+        },
+        {
+          "truth": "lung squamous cell carcinoma",
+          "prediction": "lung adenocarcinoma",
+          "count": 17
+        },
+        {
+          "truth": "lung squamous cell carcinoma",
+          "prediction": "lung squamous cell carcinoma",
+          "count": 10
+        },
+        {
+          "truth": "prostate adenocarcinoma",
+          "prediction": "indeterminate",
+          "count": 116
+        },
+        {
+          "truth": "prostate adenocarcinoma",
+          "prediction": "prostate adenocarcinoma",
+          "count": 92
+        },
+        {
+          "truth": "rectal adenocarcinoma",
+          "prediction": "colon adenocarcinoma",
+          "count": 3
+        },
+        {
+          "truth": "rectal adenocarcinoma",
+          "prediction": "indeterminate",
+          "count": 110
+        },
+        {
+          "truth": "rectal adenocarcinoma",
+          "prediction": "rectal adenocarcinoma",
+          "count": 43
+        }
+      ]
+    }
+  },
+  "case_result_directory": "benchmarks/pathgen-clinical-workflow/cases"
+}

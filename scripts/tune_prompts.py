@@ -166,6 +166,7 @@ def main() -> int:
     print(f"base template: {base}", flush=True)
     chosen = {label: "" for label in labels}
     if not args.template_only:
+        print("phrase tuning: generating and validating candidates", flush=True)
         chosen = tune(
             labels,
             correctness(tuning_set),
@@ -175,6 +176,8 @@ def main() -> int:
             log,
             base,
         )
+        accepted = {label: phrase for label, phrase in chosen.items() if phrase}
+        print(f"phrase tuning complete: {accepted or 'no phrases accepted'}", flush=True)
 
     evaluate_test = correctness(test_set)
     original_name = f"original {args.model.upper()} (generic)"

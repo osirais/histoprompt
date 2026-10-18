@@ -77,3 +77,42 @@ Risks: 34 images across 11 labels are useful for broad smoke coverage but not cl
 - [x] Run final tests, self-review, commit, push, and verify CI.
 
 Risks: the materialized NCSA pixel set is 2,141 tiles from only 10 slides, so tile counts must not be mistaken for patient-level sample size; PathGen captions are generated and are not used as ground-truth labels; the larger 1,620,876-region inventory currently has precomputed CONCH features but not raw pixels for a fair four-model image benchmark.
+
+## Correct full per-model tuning run
+
+- [x] Re-read `validated-prompt-tuning`'s `HOW_TO_RUN.md` and identify why the previous run skipped phrase tuning.
+- [x] Pull and fetch all branches; confirm the four model services, Lumen, and 1,800 LC25000 tuning/confirmation images are available.
+- [ ] Run both documented stages independently for MUSK, CONCH, QuiltNet, and PLIP: base-template selection followed by Lumen phrase tuning.
+- [ ] Keep PathGen evaluation-only and clearly distinguish lung-tuned prompts from broad multi-organ evaluation.
+- [ ] Update the PathGen runner to apply accepted tuned phrases when a benchmark label matches, and label untuned labels honestly.
+- [ ] Run focused and full tests, rerun the affected benchmark conditions, replace the misleading report, commit, push, and verify CI.
+
+Risks: the documented tuning corpus contains only three lung labels, so it cannot honestly claim to tune breast, colon, kidney, brain, prostate, or rectal prompts. PathGen must not be reused as tuning data if it remains the held-out benchmark.
+
+Status: stopped at the user's direction. The target benchmark is the live clinician-style workflow, not offline prompt selection.
+
+## Full PathGen clinician-workflow benchmark
+
+- [x] Stop the unfinished offline prompt-tuning and selected-prompt PathGen processes.
+- [x] Prove one PathGen case through the current live pipeline using its image, simulated report, eight candidates, retrieval, Lumen prompt generation, image-model inference, and Lumen review.
+- [ ] Extract the clinician workflow into reusable, tested steps shared by the live app and benchmark runner.
+- [ ] Include MUSK, CONCH, QuiltNet, and PLIP in the same per-case comparison without model-specific offline tuning.
+- [ ] Add a resumable runner that verifies all image and report checksums and processes all 2,141 cases.
+- [ ] Record image-only baseline, case-specific prompt result, and final Lumen-review classification separately for every case and model.
+- [ ] Run a small balanced smoke set, inspect the saved prompts and reviews, then run every materialized PathGen case.
+- [ ] Generate a readable overall, per-project, per-slide, latency, and failure report.
+- [x] Add a reproducible organ-by-model table with baseline accuracy, case-specific accuracy, percentage-point change, and paired fixed/broken counts.
+- [ ] Run the full checks and self-review. Do not commit or push unless the user explicitly asks.
+
+Risks: PathGen supplies generated image captions rather than authentic clinician reports, and some captions name the organ or likely diagnosis. They are acceptable as simulated workflow inputs but can make final-review accuracy much easier than image-only classification. The report must therefore keep the three stages separate and preserve the exact supplied text for auditability.
+
+## Clinician-workflow UI and recorded demo
+
+- [x] Preserve a pre-change end-to-end smoke run using a public LC25000 image and the built-in de-identified report.
+- [ ] Align the live app with the benchmarked clinician workflow: eight candidate-aware prompts, four available vision models, baseline versus case-specific output, and a separate Lumen evidence review.
+- [ ] Replace diagnosis/confidence framing with explicit research-only ranking scores, agreement/disagreement, limitations, and human-review guidance.
+- [ ] Rework the responsive interface for a practical single-case review and a polished full-window demonstration.
+- [ ] Add focused behavior tests, run the full suite, and execute a post-change browser smoke test.
+- [ ] Produce a scripted, cursor-free demo video from the verified live workflow and keep all artifacts local.
+
+Constraints: use only de-identified or public research data; do not commit or push; do not imply clinical validation; preserve the current benchmark process and its saved outputs.

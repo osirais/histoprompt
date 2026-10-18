@@ -11,6 +11,7 @@ from histoprompt.pathgen_benchmark import (
     participant_id,
     strip_png_metadata,
 )
+from histoprompt.pathgen_workflow import select_cases, summarize_workflow
 
 
 def _sha(raw: bytes) -> str:
@@ -122,3 +123,86 @@ def test_strip_png_metadata_preserves_pixel_chunks():
 def test_strip_png_metadata_rejects_truncated_png():
     with pytest.raises(ValueError, match="truncated"):
         strip_png_metadata(b"\x89PNG\r\n\x1a\n" + b"\x00\x00\x00")
+
+
+def test_select_cases_balances_projects_before_global_limit():
+    cases = [
+        {"case_id": "a1", "project_id": "A"},
+        {"case_id": "a2", "project_id": "A"},
+        {"case_id": "b1", "project_id": "B"},
+        {"case_id": "b2", "project_id": "B"},
+    ]
+
+    assert [case["case_id"] for case in select_cases(cases, per_project=1)] == [
+        "a1",
+        "b1",
+    ]
+    assert [
+        case["case_id"]
+        for case in select_cases(cases, per_project=2, limit=3)
+    ] == ["a1", "a2", "b1"]
+
+
+def test_workflow_summary_keeps_each_decision_layer_separate():
+    cases = [
+        {
+            "case_id": "one",
+            "ground_truth": "a",
+            "project_id": "A",
+            "wsi_id": "slide-a",
+        },
+        {
+            "case_id": "two",
+            "ground_truth": "b",
+            "project_id": "B",
+            "wsi_id": "slide-b",
+        },
+    ]
+    results = [
+        {
+            "case_id": "one",
+            "model_results": {
+                "musk": {
+                    "baseline": {"label": "x"},
+                    "enhanced": {"label": "a"},
+                }
+            },
+            "final_classification": "a",
+        },
+        {
+            "case_id": "two",
+            "model_results": {
+                "musk": {
+                    "baseline": {"label": "b"},
+                    "enhanced": {"label": "x"},
+                }
+            },
+            "final_classification": "indeterminate",
+        },
+    ]
+
+    summary = summarize_workflow(cases, results, ["musk"])
+
+    assert summary["models"]["musk"]["baseline"]["correct"] == 1
+    assert summary["models"]["musk"]["enhanced"]["correct"] == 1
+    assert summary["models"]["musk"]["paired"] == {
+        "fixed": 1,
+        "broken": 1,
+        "unchanged_correct": 0,
+        "unchanged_wrong": 0,
+        "per_project": {
+            "A": {
+                "fixed": 1,
+                "broken": 0,
+                "unchanged_correct": 0,
+                "unchanged_wrong": 0,
+            },
+            "B": {
+                "fixed": 0,
+                "broken": 1,
+                "unchanged_correct": 0,
+                "unchanged_wrong": 0,
+            },
+        },
+    }
+    assert summary["final_review"]["correct"] == 1

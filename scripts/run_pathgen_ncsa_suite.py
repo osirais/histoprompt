@@ -22,40 +22,48 @@ def _render_summary(results: dict[str, dict]) -> str:
         "# Complete materialized NCSA PathGen benchmark",
         "",
         "Every model was evaluated on all 2,141 materialized PathGen PNGs from 10 slides and 8 TCGA projects. "
-        "The selected base template for each model was frozen using separate LC25000 tuning and confirmation sets.",
+        "Each model completed the documented two-stage LC25000 process: base-template selection followed by "
+        "Lumen phrase generation, tuning, and confirmation.",
         "",
-        "| Model | Original | Selected template | Change | Fixed / broken | Macro-project selected | Time |",
-        "|---|---:|---:|---:|---:|---:|---:|",
+        "| Model | Original | Selected base | Fully tuned | Tuned change | Fixed / broken | Macro-project tuned | Time |",
+        "|---|---:|---:|---:|---:|---:|---:|---:|",
     ]
     for model in MODELS:
         result = results[model]
         original = result["summaries"]["original"]
         selected = result["summaries"]["selected_template"]
-        paired = result["paired_changes"]
+        tuned = result["summaries"]["fully_tuned"]
+        paired = result["paired_comparisons"]["fully_tuned_vs_original"]
         elapsed = sum(result["timing_seconds"].values())
         lines.append(
             f"| {result['model_name']} | {original['correct']:,}/{original['total']:,} "
             f"({original['accuracy']:.1%}) | {selected['correct']:,}/{selected['total']:,} "
-            f"({selected['accuracy']:.1%}) | "
-            f"{(selected['accuracy'] - original['accuracy']) * 100:+.1f} points | "
+            f"({selected['accuracy']:.1%}) | {tuned['correct']:,}/{tuned['total']:,} "
+            f"({tuned['accuracy']:.1%}) | "
+            f"{(tuned['accuracy'] - original['accuracy']) * 100:+.1f} points | "
             f"{paired['fixed']} / {paired['broken']} | "
-            f"{selected['macro_project_accuracy']:.1%} | {elapsed / 60:.1f} min |"
+            f"{tuned['macro_project_accuracy']:.1%} | {elapsed / 60:.1f} min |"
         )
     lines += [
         "",
         "## Frozen prompt selected for each model",
         "",
-        "| Model | Selected template |",
-        "|---|---|",
+        "| Model | Selected base | Accepted phrases applicable to PathGen |",
+        "|---|---|---|",
     ]
     for model in MODELS:
         result = results[model]
-        lines.append(f"| {result['model_name']} | `{result['selected_template']}` |")
+        phrases = "; ".join(
+            f"{label}: `{phrase}`" for label, phrase in result["accepted_phrases"].items()
+        )
+        lines.append(
+            f"| {result['model_name']} | `{result['selected_template']}` | {phrases or 'None'} |"
+        )
     lines += [
         "",
         "## Results by TCGA project",
         "",
-        "Each cell is original accuracy → selected-template accuracy (percentage-point change).",
+        "Each cell is original accuracy → fully tuned accuracy (percentage-point change).",
         "",
         "| Project | Tiles | MUSK | CONCH | QuiltNet-B-32 | PLIP |",
         "|---|---:|---:|---:|---:|---:|",
@@ -66,7 +74,7 @@ def _render_summary(results: dict[str, dict]) -> str:
         cells = [project, f"{original['total']:,}"]
         for model in MODELS:
             before = results[model]["summaries"]["original"]["per_project"][project]
-            after = results[model]["summaries"]["selected_template"]["per_project"][project]
+            after = results[model]["summaries"]["fully_tuned"]["per_project"][project]
             change = (after["accuracy"] - before["accuracy"]) * 100
             cells.append(
                 f"{before['accuracy']:.1%} → {after['accuracy']:.1%} ({change:+.1f})"
@@ -78,7 +86,7 @@ def _render_summary(results: dict[str, dict]) -> str:
         "",
         "This is an eight-way TCGA cancer-project classification stress test over every PathGen tile that was "
         "physically available in the shared NCSA PathGen collection. It compares each model's original generic "
-        "prompt with that model's independently selected base template.",
+        "prompt with that model's independently selected and phrase-tuned prompt set.",
         "",
         "## Limitations",
         "",

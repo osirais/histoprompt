@@ -38,6 +38,10 @@ class Settings:
     conch_backend: str
     conch_endpoint: str
     conch_api_key: str
+    quiltnet_endpoint: str
+    quiltnet_api_key: str
+    plip_endpoint: str
+    plip_api_key: str
 
     @classmethod
     def from_env(cls) -> "Settings":
@@ -62,5 +66,9 @@ class Settings:
             conch_backend=os.getenv("CONCH_BACKEND", "disabled").lower(),
             conch_endpoint=os.getenv("CONCH_ENDPOINT", ""),
             conch_api_key=os.getenv("CONCH_API_KEY", ""),
+            quiltnet_endpoint=os.getenv("QUILTNET_ENDPOINT", ""),
+            quiltnet_api_key=os.getenv("QUILTNET_API_KEY", ""),
+            plip_endpoint=os.getenv("PLIP_ENDPOINT", ""),
+            plip_api_key=os.getenv("PLIP_API_KEY", ""),
         )
 

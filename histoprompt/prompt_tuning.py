@@ -101,6 +101,27 @@ def template_prompts(
     }
 
 
+def prompts_from_full_tuning(
+    labels: Sequence[str], result: dict[str, Any]
+) -> tuple[dict[str, str], list[str]]:
+    """Build frozen prompts from a completed two-stage tuning result."""
+    if result.get("template_only") is not False:
+        raise ValueError("A full tuning result is required; template-only output is invalid.")
+    base = result.get("base_template")
+    phrases = result.get("chosen_phrases")
+    if not isinstance(base, str) or not isinstance(phrases, dict):
+        raise ValueError("Full tuning result is missing its base template or phrases.")
+    invalid = {
+        label: phrase
+        for label, phrase in phrases.items()
+        if not isinstance(label, str) or not isinstance(phrase, str)
+    }
+    if invalid:
+        raise ValueError("Full tuning phrases must map string labels to strings.")
+    tuned_labels = sorted(label for label in labels if phrases.get(label))
+    return template_prompts(labels, phrases, base), tuned_labels
+
+
 def sign_test_p(fixed: int, broken: int) -> float:
     """One-sided exact sign test: probability of at least `fixed` wins among the changed images by chance."""
     changed = fixed + broken

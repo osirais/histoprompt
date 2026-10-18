@@ -3,34 +3,30 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>HistoPrompt · Evidence-guided MUSK</title>
+  <title>HistoPrompt · Pathology review workspace</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
   <header class="topbar">
     <a class="brand" href="/" aria-label="HistoPrompt home">
       <span class="brand-mark">H</span>
-      <span>HistoPrompt</span>
+      <span><strong>HistoPrompt</strong><small>Pathology review workspace</small></span>
     </a>
-    <div class="pipeline-status" id="pipeline-status" aria-live="polite">
-      <span class="status-dot waiting"></span>
-      Checking pipeline…
+    <div class="status-cluster">
+      <span class="model-count" id="model-count">Checking services</span>
+      <div class="pipeline-status" id="pipeline-status" aria-live="polite">
+        <span class="status-dot waiting"></span>
+        Checking workflow…
+      </div>
     </div>
   </header>
 
   <main>
     <section class="hero">
-      <p class="eyebrow">PATHOLOGY DECISION SUPPORT · RESEARCH PROTOTYPE</p>
-      <h1>Give MUSK better questions.</h1>
-      <p class="lede">HistoPrompt combines the report with local evidence to create case-specific visual prompts, sends those prompts to MUSK, and checks the result for human review.</p>
-      <div class="flow" aria-label="Analysis flow">
-        <div><span>01</span><strong>Slide + report</strong></div>
-        <i>→</i>
-        <div><span>02</span><strong>Retrieve evidence</strong></div>
-        <i>→</i>
-        <div><span>03</span><strong>Enrich prompts</strong></div>
-        <i>→</i>
-        <div><span>04</span><strong>MUSK + review</strong></div>
+      <div>
+        <p class="eyebrow">RESEARCH-ONLY PATHOLOGY DECISION SUPPORT</p>
+        <h1>Review image-model signals in clinical context.</h1>
+        <p class="lede">Compare four pathology foundation models, retrieve relevant literature, and turn disagreement into an evidence-linked review brief for the pathologist.</p>
       </div>
     </section>
 
@@ -38,132 +34,141 @@
       <form id="case-form" class="case-panel">
         <div class="section-heading">
           <div>
-            <p class="step">CASE INPUT</p>
-            <h2>Analyze a de-identified case</h2>
+            <p class="step">CASE WORKSPACE</p>
+            <h2>Start a review</h2>
           </div>
-          <button class="text-button" type="button" id="load-sample">Load sample text</button>
+          <button class="text-button" type="button" id="load-sample">Load demo case</button>
         </div>
 
         <label class="dropzone" id="dropzone" for="image-input">
           <input id="image-input" type="file" accept="image/png,image/jpeg,image/webp" required>
           <img id="preview" alt="Selected pathology image preview">
           <div id="drop-copy">
-            <span class="upload-icon">↥</span>
-            <strong>Drop a pathology image here</strong>
-            <small>PNG, JPEG, or WebP · max 25 MB</small>
+            <span class="upload-icon">+</span>
+            <strong>Add pathology image</strong>
+            <small>One representative tile · PNG, JPEG, or WebP · max 25 MB</small>
           </div>
         </label>
 
         <label>
-          <span>De-identified pathology report</span>
-          <textarea id="report" rows="8" placeholder="Paste morphology, immunostains, and relevant clinical context…" required></textarea>
+          <span>Case findings</span>
+          <textarea id="report" rows="7" placeholder="Paste morphology, immunostains, specimen context, and relevant clinical findings. Do not include patient identifiers." required></textarea>
         </label>
 
         <label>
-          <span>Candidate labels <em>one per line</em></span>
-          <textarea id="labels" rows="4" required>lung adenocarcinoma
+          <span>Working differential <em>one candidate per line</em></span>
+          <textarea id="labels" rows="5" required>lung adenocarcinoma
 lung squamous cell carcinoma
 metastatic colorectal adenocarcinoma
 benign lung tissue</textarea>
         </label>
 
-        <div class="form-row">
-          <label>
-            <span>Lumen model</span>
-            <select id="model"><option value="">Auto-select available model</option></select>
-          </label>
-          <label>
-            <span>Evidence results</span>
-            <select id="top-k">
-              <option>3</option>
-              <option selected>5</option>
-              <option>7</option>
-            </select>
-          </label>
-        </div>
+        <details class="settings-panel">
+          <summary>Analysis settings</summary>
+          <div class="form-row">
+            <label>
+              <span>Lumen review model</span>
+              <select id="model"><option value="">Auto-select available model</option></select>
+            </label>
+            <label>
+              <span>Evidence passages</span>
+              <select id="top-k">
+                <option>3</option>
+                <option selected>5</option>
+                <option>7</option>
+              </select>
+            </label>
+          </div>
+        </details>
 
         <button class="primary-button" type="submit" id="run-button">
-          <span>Run prompt-enhanced review</span><b>→</b>
+          <span>Analyze case</span><b>→</b>
         </button>
-        <p class="privacy-note">Use de-identified or public research data only. This prototype is not validated for clinical use.</p>
+        <p class="privacy-note"><strong>Research use only.</strong> This tool ranks supplied candidates and supports review; it does not establish a diagnosis.</p>
       </form>
 
       <section class="results-panel" aria-live="polite">
         <div class="empty-state" id="empty-state">
-          <div class="empty-orbit"><span></span></div>
-          <h2>Your evidence trail will appear here</h2>
-          <p>Run a case to compare MUSK’s image classification with the report and local literature.</p>
+          <div class="empty-visual" aria-hidden="true"><span></span><i></i><b></b></div>
+          <p class="step">READY FOR REVIEW</p>
+          <h2>One case. Four model perspectives.</h2>
+          <p>Results will separate image-only output, case-specific prompting, source-linked evidence, and the next human review step.</p>
+          <div class="empty-checks"><span>✓ Source-linked evidence</span><span>✓ Model disagreement surfaced</span><span>✓ Human review retained</span></div>
         </div>
 
         <div class="loading-state hidden" id="loading-state">
           <div class="scan-card"><div></div></div>
-          <h2 id="loading-title">Building case-specific prompts…</h2>
-          <p>Retrieving evidence, enriching the candidate descriptions, then running MUSK.</p>
+          <p class="step">ANALYSIS IN PROGRESS</p>
+          <h2 id="loading-title">Retrieving relevant evidence</h2>
+          <p id="loading-copy">Searching the frozen local corpus against the case findings and differential.</p>
+          <ol class="loading-steps" id="loading-steps">
+            <li class="active">Retrieve evidence</li>
+            <li>Build case-specific prompts</li>
+            <li>Compare vision models</li>
+            <li>Prepare review brief</li>
+          </ol>
+          <small id="elapsed-time">0 seconds elapsed</small>
         </div>
 
         <div class="error-card hidden" id="error-card">
-          <p class="step">PIPELINE NEEDS ATTENTION</p>
-          <h2>Couldn’t complete the review</h2>
+          <p class="step">WORKFLOW NEEDS ATTENTION</p>
+          <h2>The review could not be completed</h2>
           <p id="error-message"></p>
         </div>
 
         <div class="results hidden" id="results">
           <div class="result-header">
             <div>
-              <p class="step">MUSK CLASSIFICATION · EVIDENCE REVIEW</p>
+              <p class="step">EVIDENCE REVIEW · NOT A FINAL DIAGNOSIS</p>
               <h2 id="classification">—</h2>
+              <p class="result-subtitle" id="agreement-summary"></p>
             </div>
-            <div class="confidence-ring" id="confidence-ring"><span id="confidence">—</span><small>model score</small></div>
           </div>
           <p class="assessment" id="assessment"></p>
 
-          <div class="result-section">
-            <h3>Primary short-template prompts sent to MUSK</h3>
-            <div id="musk-prompts" class="evidence-cards"></div>
+          <div class="result-actions">
+            <button class="secondary-button" type="button" id="copy-review">Copy review brief</button>
           </div>
 
-          <div class="result-grid">
-            <div class="result-section">
-              <h3>Plain MUSK baseline</h3>
-              <div id="baseline-prediction-bars" class="prediction-bars"></div>
-            </div>
-            <div class="result-section">
-              <h3>Validated short-template MUSK</h3>
-              <div id="prediction-bars" class="prediction-bars"></div>
-            </div>
-          </div>
-          <div class="result-section hidden" id="conch-section">
-            <h3>CONCH · NCSA hosted comparison</h3>
-            <div id="conch-prediction-bars" class="prediction-bars"></div>
-          </div>
-          <p class="privacy-note" id="prompt-effect"></p>
-
-          <div class="result-grid">
-            <div class="result-section">
-              <h3>Why this assessment</h3>
-              <ul id="rationale"></ul>
-            </div>
-            <div class="result-section">
-              <h3>Discrepancies & review</h3>
-              <ul id="discrepancies"></ul>
-              <ul id="review"></ul>
-            </div>
-          </div>
-
-          <div class="result-section">
+          <section class="result-section">
             <div class="section-heading compact">
-              <h3>Retrieved evidence</h3>
-              <span id="model-used"></span>
+              <div>
+                <p class="step">MODEL COMPARISON</p>
+                <h3>Image-only vs case-specific prompting</h3>
+              </div>
             </div>
-            <div id="evidence-cards" class="evidence-cards"></div>
+            <div id="model-results" class="model-table-wrap"></div>
+          </section>
+
+          <div class="clinical-grid">
+            <section class="result-section clinical-card wide-card">
+              <p class="step">WHY THIS REVIEW</p>
+              <h3>Evidence-linked rationale</h3>
+              <ul id="rationale"></ul>
+            </section>
+            <section class="result-section clinical-card">
+              <p class="step">PATHOLOGIST ACTION</p>
+              <h3>Recommended next review</h3>
+              <ul id="review"></ul>
+            </section>
           </div>
 
-          <details>
-            <summary>Show prompt-generation request</summary>
-            <pre id="prompt-generation-prompt"></pre>
+          <details class="result-details">
+            <summary>Case-specific visual prompts</summary>
+            <p class="detail-intro">Lumen generated these descriptions from the case findings and retrieved evidence. Each model received the same candidate-specific descriptions.</p>
+            <div id="case-prompts" class="prompt-list"></div>
           </details>
-          <details>
-            <summary>Show final review request</summary>
+
+          <details class="result-details">
+            <summary>Source evidence <span id="model-used"></span></summary>
+            <div id="evidence-cards" class="evidence-cards"></div>
+          </details>
+
+          <details class="result-details audit-details">
+            <summary>Audit trail and exact Lumen requests</summary>
+            <h4>Prompt-generation request</h4>
+            <pre id="prompt-generation-prompt"></pre>
+            <h4>Final-review request</h4>
             <pre id="review-prompt"></pre>
           </details>
         </div>
@@ -174,4 +179,3 @@ benign lung tissue</textarea>
   <script src="/app.js"></script>
 </body>
 </html>
-

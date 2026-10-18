@@ -26,7 +26,10 @@ from histoprompt.pathgen_benchmark import (  # noqa: E402
     strip_png_metadata,
 )
 from histoprompt.pipeline import _generic_prompt  # noqa: E402
-from histoprompt.prompt_tuning import template_prompts  # noqa: E402
+from histoprompt.prompt_tuning import (  # noqa: E402
+    prompts_from_full_tuning,
+    template_prompts,
+)
 
 
 DEFAULT_IMAGE_DIR = Path(
@@ -57,43 +60,48 @@ def _render_report(result: dict[str, Any]) -> str:
         f"Model: **{result['model_name']}**",
         f"Cases: **{result['coverage']['included_cases']:,} tiles from "
         f"{result['coverage']['slides']} slides and {result['coverage']['projects']} TCGA projects**",
-        f"Selected template: `{result['selected_template']}`",
+        f"Selected base template: `{result['selected_template']}`",
+        f"Phrase-tuned benchmark labels: **{len(result['phrase_tuned_benchmark_labels'])}/"
+        f"{result['coverage']['projects']}**",
         "",
         "## Overall comparison",
         "",
         "| Prompt set | Correct | Tile accuracy | Macro project accuracy | Inference time |",
         "|---|---:|---:|---:|---:|",
     ]
-    for strategy in ("original", "selected_template"):
+    for strategy in ("original", "selected_template", "fully_tuned"):
         summary = result["summaries"][strategy]
         lines.append(
             f"| {strategy.replace('_', ' ').title()} | {summary['correct']:,}/{summary['total']:,} | "
             f"{summary['accuracy']:.1%} | {summary['macro_project_accuracy']:.1%} | "
             f"{result['timing_seconds'][strategy]:.1f} s |"
         )
-    paired = result["paired_changes"]
+    paired = result["paired_comparisons"]["fully_tuned_vs_original"]
     delta = (
-        result["summaries"]["selected_template"]["accuracy"]
+        result["summaries"]["fully_tuned"]["accuracy"]
         - result["summaries"]["original"]["accuracy"]
     )
     lines += [
         "",
-        f"The selected template changed accuracy by **{delta * 100:+.1f} percentage points**: "
+        f"The fully tuned prompts changed accuracy by **{delta * 100:+.1f} percentage points**: "
         f"{paired['fixed']} tiles fixed and {paired['broken']} broken.",
         "",
         "## Per-project results",
         "",
-        "| TCGA project | Tiles | Original | Selected template | Change |",
-        "|---|---:|---:|---:|---:|",
+        "| TCGA project | Tiles | Original | Selected base | Fully tuned | Tuned vs original |",
+        "|---|---:|---:|---:|---:|---:|",
     ]
     original = result["summaries"]["original"]["per_project"]
     selected = result["summaries"]["selected_template"]["per_project"]
+    tuned = result["summaries"]["fully_tuned"]["per_project"]
     for project in sorted(original):
         before = original[project]
-        after = selected[project]
+        base = selected[project]
+        after = tuned[project]
         lines.append(
             f"| {project} | {before['total']:,} | {before['accuracy']:.1%} | "
-            f"{after['accuracy']:.1%} | {(after['accuracy'] - before['accuracy']) * 100:+.1f} points |"
+            f"{base['accuracy']:.1%} | {after['accuracy']:.1%} | "
+            f"{(after['accuracy'] - before['accuracy']) * 100:+.1f} points |"
         )
     lines += [
         "",
@@ -130,7 +138,7 @@ def main() -> int:
             / "benchmarks"
             / "lc25000-tuning"
             / "results"
-            / "template-selection"
+            / "full-tuning"
             / f"{args.model}.json"
         )
     if args.output_dir is None:
@@ -147,9 +155,16 @@ def main() -> int:
         raise SystemExit("Template-selection result belongs to a different model.")
     selected_template = str(template_result["base_template"])
     labels = list(manifest["labels"].values())
+    try:
+        fully_tuned_prompts, tuned_labels = prompts_from_full_tuning(
+            labels, template_result
+        )
+    except ValueError as exc:
+        raise SystemExit(str(exc)) from exc
     prompts = {
         "original": {label: _generic_prompt(label) for label in labels},
         "selected_template": template_prompts(labels, base=selected_template),
+        "fully_tuned": fully_tuned_prompts,
     }
 
     settings = Settings.from_env()
@@ -208,13 +223,19 @@ def main() -> int:
         for strategy in prompts
     }
     result = {
-        "schema_version": 1,
+        "schema_version": 2,
         "completed_at_utc": datetime.now(timezone.utc).isoformat(),
         "model": args.model,
         "model_name": MODEL_NAMES[args.model],
         "manifest_sha256": progress["manifest_sha256"],
         "template_result_sha256": progress["template_result_sha256"],
         "selected_template": selected_template,
+        "accepted_phrases": {
+            label: template_result["chosen_phrases"][label]
+            for label in tuned_labels
+        },
+        "phrase_tuned_benchmark_labels": tuned_labels,
+        "untuned_benchmark_labels": sorted(set(labels) - set(tuned_labels)),
         "image_preprocessing": (
             "Verify the original PNG SHA-256, then remove EXIF, ICC, and text metadata "
             "chunks without changing compressed pixel data."
@@ -226,8 +247,25 @@ def main() -> int:
         "paired_changes": paired_changes(
             cases,
             progress["predictions"]["original"],
-            progress["predictions"]["selected_template"],
+            progress["predictions"]["fully_tuned"],
         ),
+        "paired_comparisons": {
+            "selected_template_vs_original": paired_changes(
+                cases,
+                progress["predictions"]["original"],
+                progress["predictions"]["selected_template"],
+            ),
+            "fully_tuned_vs_original": paired_changes(
+                cases,
+                progress["predictions"]["original"],
+                progress["predictions"]["fully_tuned"],
+            ),
+            "fully_tuned_vs_selected_template": paired_changes(
+                cases,
+                progress["predictions"]["selected_template"],
+                progress["predictions"]["fully_tuned"],
+            ),
+        },
         "predictions": [
             {
                 "case_id": case["case_id"],
@@ -238,6 +276,8 @@ def main() -> int:
                 "original_score": progress["scores"]["original"][index],
                 "selected_template": progress["predictions"]["selected_template"][index],
                 "selected_template_score": progress["scores"]["selected_template"][index],
+                "fully_tuned": progress["predictions"]["fully_tuned"][index],
+                "fully_tuned_score": progress["scores"]["fully_tuned"][index],
             }
             for index, case in enumerate(cases)
         ],

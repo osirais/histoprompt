@@ -6,6 +6,7 @@ import pytest
 from histoprompt.hosted_backend import (
     HostedModelError,
     RemoteHostedModel,
+    hosted_model_status,
     make_benchmark_backend,
 )
 
@@ -81,3 +82,29 @@ def test_benchmark_backend_reads_quiltnet_environment(monkeypatch) -> None:
 
     assert backend.model_name == "QuiltNet-B-32"
     assert backend.endpoint == "http://127.0.0.1:8803"
+
+
+def test_hosted_model_status_does_not_expose_credentials() -> None:
+    class FakeResponse:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return None
+
+        def read(self):
+            return b'{"status":"ok","model":"PLIP"}'
+
+    settings = SimpleNamespace(
+        plip_endpoint="http://127.0.0.1:8804/classify",
+        plip_api_key="secret",
+    )
+    with patch("histoprompt.hosted_backend.urllib.request.urlopen", return_value=FakeResponse()):
+        status = hosted_model_status(settings, "plip")
+
+    assert status == {
+        "configured": True,
+        "backend": "remote",
+        "detail": "NCSA-hosted PLIP",
+    }
+    assert "secret" not in str(status)

@@ -19,6 +19,22 @@ MODEL_NAMES = {
 }
 
 
+def _endpoint_credentials(settings: Settings, model: str) -> tuple[str, str]:
+    if model == "conch":
+        return settings.conch_endpoint, settings.conch_api_key
+    if model == "quiltnet":
+        return (
+            getattr(settings, "quiltnet_endpoint", os.getenv("QUILTNET_ENDPOINT", "")),
+            getattr(settings, "quiltnet_api_key", os.getenv("QUILTNET_API_KEY", "")),
+        )
+    if model == "plip":
+        return (
+            getattr(settings, "plip_endpoint", os.getenv("PLIP_ENDPOINT", "")),
+            getattr(settings, "plip_api_key", os.getenv("PLIP_API_KEY", "")),
+        )
+    raise HostedModelError(f"Unknown hosted model: {model}")
+
+
 class HostedModelError(RuntimeError):
     """An unavailable or malformed hosted pathology-model response."""
 
@@ -100,15 +116,38 @@ def make_benchmark_backend(settings: Settings, model: str) -> Any:
     """Build one benchmark backend without placing credentials in result files."""
     if model == "musk":
         return make_musk_backend(settings)
-    if model == "conch":
-        endpoint = settings.conch_endpoint
-        api_key = settings.conch_api_key
-    elif model == "quiltnet":
-        endpoint = os.getenv("QUILTNET_ENDPOINT", "")
-        api_key = os.getenv("QUILTNET_API_KEY", "")
-    elif model == "plip":
-        endpoint = os.getenv("PLIP_ENDPOINT", "")
-        api_key = os.getenv("PLIP_API_KEY", "")
-    else:
-        raise HostedModelError(f"Unknown benchmark model: {model}")
+    endpoint, api_key = _endpoint_credentials(settings, model)
     return RemoteHostedModel(MODEL_NAMES[model], endpoint, api_key)
+
+
+def hosted_model_status(settings: Settings, model: str) -> dict[str, Any]:
+    """Return a small, credential-free health summary for an optional model."""
+    endpoint, api_key = _endpoint_credentials(settings, model)
+    if not endpoint or not api_key:
+        return {
+            "configured": False,
+            "backend": "remote",
+            "detail": f"{MODEL_NAMES[model]} is not configured",
+        }
+    health_url = endpoint.rstrip("/")
+    if health_url.endswith("/classify"):
+        health_url = health_url[: -len("/classify")]
+    try:
+        request = urllib.request.Request(
+            f"{health_url}/health",
+            headers={"Authorization": f"Bearer {api_key}"},
+            method="GET",
+        )
+        with urllib.request.urlopen(request, timeout=2) as response:
+            health = json.loads(response.read().decode("utf-8"))
+        return {
+            "configured": health.get("status") == "ok",
+            "backend": "remote",
+            "detail": f"NCSA-hosted {health.get('model', MODEL_NAMES[model])}",
+        }
+    except Exception:
+        return {
+            "configured": False,
+            "backend": "remote",
+            "detail": f"{MODEL_NAMES[model]} tunnel is not connected",
+        }
