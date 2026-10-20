@@ -9,4 +9,5 @@ __pycache__/
 data/corpus.local.jsonl
 .benchmark-cache/
 benchmarks/pathgen-ncsa/results/*/progress.json
+slides/.build/
 
